@@ -19,6 +19,18 @@ npx prisma init --datasource-provider sqlite
 
 `schme.prisma` ファイルにモデルを追加
 
+> `prisma-client`の出力先を指定する場合は下記を参考に実施
+
+generatedファイル生成場所を指定
+
+`prisma\schema.prisma`  
+```prisma
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/main/lib/data-access-db/generated"
+}
+```
+
 ### 3. マイグレーション
 
 スキーマをDBテーブルに反映  
@@ -41,7 +53,13 @@ npx prisma generate
 
 ```ts
 // prisma初期化
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
+});
 
 ...
 
@@ -70,7 +88,7 @@ e.g.
 `src\main\api\dummies\dummies.service.ts`
 
 ```ts
-import { Dummy, PrismaClient } from '@prisma/client';
+import { Dummy, PrismaClient } from '@main/lib/data-access-db/generated';
 
 const getDummies = async (prisma: PrismaClient): Promise<Dummy[]> => {
   return await prisma.dummy.findMany();
@@ -124,25 +142,33 @@ e.g.
 
 2. API処理用のカスタムフックを作成
 
-`src\main\api\dummies\dummies.service.ts`
+`src\renderer\features\dummy\hooks\useDummies.ts`
 
 ```ts
-import { Dummy, PrismaClient } from '@prisma/client';
+import { CreateDummyInput } from '@api/dummies/dto/create-dummy-input.dto';
+import { Dummy } from '@main/lib/data-access-db/generated';
 
-const getDummies = async (prisma: PrismaClient): Promise<Dummy[]> => {
-  return await prisma.dummy.findMany();
+export const useDummies = () => {
+  const getDummies = async (): Promise<Dummy[]> => {
+    try {
+      return await window.db.loadDummies();
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const createDummy = async (
+    createDummyInput: CreateDummyInput,
+  ): Promise<Dummy> => {
+    try {
+      return await window.db.createDummy(createDummyInput);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  return { getDummies, createDummy };
 };
-
-const createDummy = async (
-  prisma: PrismaClient,
-  dummy: Dummy,
-): Promise<Dummy> => {
-  return await prisma.dummy.create({
-    data: dummy,
-  });
-};
-
-export { createDummy, getDummies };
 ```
 
 3. カスタムフックを利用

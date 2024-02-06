@@ -37,3 +37,4 @@ src/renderer/index.ejs
 src/renderer/lib/utils.ts
 src/renderer/components/ui/*
 postcss.config.js
+src/main/lib/data-access-db/generated

@@ -9,12 +9,12 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import { CreateDummyInput } from '@api/dummies/dto/create-dummy-input.dto';
-import { PrismaClient } from '@prisma/client';
 import { BrowserWindow, app, ipcMain, shell } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
 import { createDummy, getDummies } from './api/dummies/dummies.service';
+import { PrismaClient } from './lib/data-access-db/generated';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 

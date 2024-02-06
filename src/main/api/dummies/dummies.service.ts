@@ -1,4 +1,4 @@
-import { Dummy, PrismaClient } from '@prisma/client';
+import { Dummy, PrismaClient } from '@main/lib/data-access-db/generated';
 import { CreateDummyInput } from './dto/create-dummy-input.dto';
 
 const getDummies = async (prisma: PrismaClient): Promise<Dummy[]> => {

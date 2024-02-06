@@ -23,6 +23,9 @@
       ],
       "@api/*": [
         "./src/main/api/*"
+      ],
+      "@main/lib/*": [
+        "./src/main/lib/*"
       ]
     }
   },
