@@ -15,12 +15,17 @@ function Home() {
     setDummies(await getDummies());
   };
 
-  const handAddButtonClick = async () => {
+  const handleAddButtonClick = async () => {
     console.log('Add button clicked');
     const data: CreateDummyInput = {
       text: 'test message...',
     };
     await createDummy(data);
+  };
+
+  const handleConfigButtonClick = async () => {
+    const value = await window.config.getItem('dummy');
+    console.log(value);
   };
 
   return (
@@ -30,8 +35,16 @@ function Home() {
         データ取得ボタン
       </Button>
 
-      <Button variant="default" className="m-4" onClick={handAddButtonClick}>
+      <Button variant="default" className="m-4" onClick={handleAddButtonClick}>
         データ追加ボタン
+      </Button>
+
+      <Button
+        variant="default"
+        className="m-4"
+        onClick={handleConfigButtonClick}
+      >
+        Config変更
       </Button>
 
       <ul className="m-4">

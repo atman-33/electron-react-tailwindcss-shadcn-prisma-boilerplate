@@ -10,6 +10,9 @@ declare global {
       loadDummies: () => Promise<Dummy[]>;
       createDummy: (createDummyInput: CreateDummyInput) => Promise<Dummy>;
     };
+    config: {
+      getItem: (key: string) => Promise<any>;
+    };
   }
 }
 

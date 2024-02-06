@@ -14,6 +14,7 @@ import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
 import { createDummy, getDummies } from './api/dummies/dummies.service';
+import { Config } from './lib/config/config';
 import { PrismaClient } from './lib/data-access-db/generated';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
@@ -161,12 +162,19 @@ app
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-ipcMain.handle('load-dummies', (event) => {
-  console.log('load-dummies');
+ipcMain.handle('db-load-dummies', (event) => {
   return getDummies(prisma);
 });
 
-ipcMain.handle('create-dummy', (event, createDummyInput: CreateDummyInput) => {
-  console.log(createDummyInput);
-  return createDummy(prisma, createDummyInput);
+ipcMain.handle(
+  'db-create-dummy',
+  (event, createDummyInput: CreateDummyInput) => {
+    return createDummy(prisma, createDummyInput);
+  },
+);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ipcMain.handle('config-get-item', (event, key: string) => {
+  const config = new Config();
+  return config.getItem(key);
 });

@@ -111,14 +111,25 @@ export { createDummy, getDummies };
 `src\main\main.ts`  
 
 ```ts
-ipcMain.handle('load-dummies', (event, message: any) => {
+ipcMain.handle('db-load-dummies', (event, message: any) => {
   console.log(message);
   return getDummies(prisma);
 });
 
-ipcMain.handle('create-dummy', (event, dummy: any) => {
+ipcMain.handle('db-create-dummy', (event, dummy: any) => {
   console.log(dummy);
   return createDummy(prisma, dummy);
+});
+```
+
+4. preload ファイルに、IPC通信用の処理を追加
+
+`src\main\preload.ts`  
+
+```ts
+contextBridge.exposeInMainWorld('db', {
+  loadDummies: () => ipcRenderer.invoke('db-load-dummies'),
+  createDummy: (dummy: Dummy) => ipcRenderer.invoke('db-create-dummy', dummy),
 });
 ```
 

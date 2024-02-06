@@ -31,8 +31,12 @@ contextBridge.exposeInMainWorld('electron', electronHandler);
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 contextBridge.exposeInMainWorld('db', {
-  loadDummies: () => ipcRenderer.invoke('load-dummies'),
-  createDummy: (dummy: Dummy) => ipcRenderer.invoke('create-dummy', dummy),
+  loadDummies: () => ipcRenderer.invoke('db-load-dummies'),
+  createDummy: (dummy: Dummy) => ipcRenderer.invoke('db-create-dummy', dummy),
+});
+
+contextBridge.exposeInMainWorld('config', {
+  getItem: () => ipcRenderer.invoke('config-get-item'),
 });
 
 export type ElectronHandler = typeof electronHandler;
