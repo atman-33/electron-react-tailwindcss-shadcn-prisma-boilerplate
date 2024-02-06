@@ -21,11 +21,19 @@ npx prisma init --datasource-provider sqlite
 
 ### 3. マイグレーション
 
+スキーマをDBテーブルに反映  
+
 ```bash
 npx prisma migrate dev --name init
 ```
 
-### 4. メインプロセス側にDBアクセス処理を追加
+### 4. PrismaClient生成
+
+```bash
+npx prisma generate
+```
+
+### 5. メインプロセス側にDBアクセス処理を追加
 
 1. main ファイルに、「Prisma初期化」と「DBクローズ」を追加
 
@@ -96,7 +104,7 @@ ipcMain.handle('create-dummy', (event, dummy: any) => {
 });
 ```
 
-### 5. レンダープロセス側にDBアクセス処理を追加
+### 6. レンダープロセス側にDBアクセス処理を追加
 
 1. preload.d.ts に db アクセスの処理を追加
 
