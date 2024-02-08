@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint global-require: off, no-console: off, promise/always-return: off */
 
 /**
@@ -14,7 +15,7 @@ import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
 import { createDummy, getDummies } from './api/dummies/dummies.service';
-import { Config } from './lib/config/config';
+import { ConfigStore, getConfig } from './lib/config';
 import { PrismaClient } from './lib/data-access-db/generated';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
@@ -161,7 +162,6 @@ app
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 ipcMain.handle('db-load-dummies', (event) => {
   return getDummies(prisma);
 });
@@ -173,8 +173,16 @@ ipcMain.handle(
   },
 );
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 ipcMain.handle('config-get-item', (event, key: string) => {
-  const config = new Config();
+  const config = new ConfigStore();
   return config.getItem(key);
+});
+
+ipcMain.handle('config-set-item', (event, key: string, value: any) => {
+  const config = new ConfigStore();
+  return config.setItem(key, value);
+});
+
+ipcMain.handle('config-get-config', (event) => {
+  return getConfig();
 });
