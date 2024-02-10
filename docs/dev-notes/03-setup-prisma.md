@@ -48,13 +48,14 @@ npx prisma generate
 
 ### 5. メインプロセス側にDBアクセス処理を追加
 
-#### 1. main ファイルに、「Prisma初期化」と「DBクローズ」を追加
+#### 1. PrismaClient 生成ファイルを作成
 
-`src\main\main.ts`  
+`src\main\lib\prisma-client\index.ts`
 
 ```ts
-// prisma初期化
-const prisma = new PrismaClient({
+import { PrismaClient } from '@prisma/client';
+
+const prismaClient = new PrismaClient({
   datasources: {
     db: {
       url: process.env.DATABASE_URL,
@@ -62,13 +63,22 @@ const prisma = new PrismaClient({
   },
 });
 
+export { prismaClient };
+```
+
+#### 2. main ファイルに、「DBクローズ」を追加
+
+`src\main\main.ts`  
+
+```ts
+import { prismaClient } from './lib/prisma-client';
 ...
 
 /**
  * DBコネクションをクローズ
  */
 const closeDB = async () => {
-  await prisma.$disconnect();
+  await prismaClient.$disconnect();
 };
 
 app.on('window-all-closed', () => {
@@ -82,48 +92,51 @@ app.on('window-all-closed', () => {
 });
 ```
 
-#### 2. service ファイルを追加
+#### 3. service ファイルを追加
 
 e.g.  
 
 `src\main\api\dummies\dummies.service.ts`
 
 ```ts
-import { Dummy, PrismaClient } from '@main/lib/data-access-db/generated';
+import { Dummy } from '../../lib/data-access-db/generated';
+import { prismaClient } from '../../lib/prisma-client';
+import { CreateDummyInput } from './dto/create-dummy-input.dto';
 
-const getDummies = async (prisma: PrismaClient): Promise<Dummy[]> => {
-  return await prisma.dummy.findMany();
+const getDummies = async (): Promise<Dummy[]> => {
+  return await prismaClient.dummy.findMany();
 };
 
 const createDummy = async (
-  prisma: PrismaClient,
-  dummy: Dummy,
+  createDummyInput: CreateDummyInput,
 ): Promise<Dummy> => {
-  return await prisma.dummy.create({
-    data: dummy,
+  return await prismaClient.dummy.create({
+    data: createDummyInput,
   });
 };
 
 export { createDummy, getDummies };
+
 ```
 
-#### 3. main ファイルに、IPC通信用の処理を追加
+#### 4. main ファイルに、IPC通信用の処理を追加
 
 `src\main\main.ts`  
 
 ```ts
-ipcMain.handle('db-load-dummies', (event, message: any) => {
-  console.log(message);
-  return getDummies(prisma);
+ipcMain.handle('db-load-dummies', (event) => {
+  return getDummies();
 });
 
-ipcMain.handle('db-create-dummy', (event, dummy: any) => {
-  console.log(dummy);
-  return createDummy(prisma, dummy);
-});
+ipcMain.handle(
+  'db-create-dummy',
+  (event, createDummyInput: CreateDummyInput) => {
+    return createDummy(createDummyInput);
+  },
+);
 ```
 
-#### 4. preload ファイルに、IPC通信用の処理を追加
+#### 5. preload ファイルに、IPC通信用の処理を追加
 
 `src\main\preload.ts`  
 

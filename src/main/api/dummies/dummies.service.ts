@@ -1,15 +1,15 @@
-import { Dummy, PrismaClient } from '@main/lib/data-access-db/generated';
+import { Dummy } from '../../lib/data-access-db/generated';
+import { prismaClient } from '../../lib/prisma-client';
 import { CreateDummyInput } from './dto/create-dummy-input.dto';
 
-const getDummies = async (prisma: PrismaClient): Promise<Dummy[]> => {
-  return await prisma.dummy.findMany();
+const getDummies = async (): Promise<Dummy[]> => {
+  return await prismaClient.dummy.findMany();
 };
 
 const createDummy = async (
-  prisma: PrismaClient,
   createDummyInput: CreateDummyInput,
 ): Promise<Dummy> => {
-  return await prisma.dummy.create({
+  return await prismaClient.dummy.create({
     data: createDummyInput,
   });
 };

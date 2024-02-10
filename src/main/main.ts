@@ -9,25 +9,16 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-import { CreateDummyInput } from '@main/api/dummies/dto/create-dummy-input.dto';
 import { BrowserWindow, app, ipcMain, shell } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
+import { CreateDummyInput } from './api/dummies/dto/create-dummy-input.dto';
 import { createDummy, getDummies } from './api/dummies/dummies.service';
 import { ConfigStore } from './lib/config';
-import { PrismaClient } from './lib/data-access-db/generated';
+import { prismaClient } from './lib/prisma-client';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-
-// prisma初期化
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL,
-    },
-  },
-});
 
 class AppUpdater {
   constructor() {
@@ -134,7 +125,7 @@ const createWindow = async () => {
  * DBコネクションをクローズ
  */
 const closeDB = async () => {
-  await prisma.$disconnect();
+  await prismaClient.$disconnect();
 };
 
 app.on('window-all-closed', () => {
@@ -163,13 +154,13 @@ app
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 ipcMain.handle('db-load-dummies', (event) => {
-  return getDummies(prisma);
+  return getDummies();
 });
 
 ipcMain.handle(
   'db-create-dummy',
   (event, createDummyInput: CreateDummyInput) => {
-    return createDummy(prisma, createDummyInput);
+    return createDummy(createDummyInput);
   },
 );
 
