@@ -17,6 +17,7 @@ module.exports = {
     'no-console': 'off',
     'import/prefer-default-export': 'off',
     'no-useless-catch': 'off',
+    'react/function-component-definition': 'off',
   },
   parserOptions: {
     ecmaVersion: 2022,
