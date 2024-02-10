@@ -2,7 +2,7 @@
 
 ## 現象
 
-e.g. 
+e.g.
 
 ```bash
 PS C:\Repos\bulletin-board-electron> npx shadcn-ui@latest add button

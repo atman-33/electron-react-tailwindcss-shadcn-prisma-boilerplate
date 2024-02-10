@@ -2,9 +2,9 @@
 
 ## 参考URL
 
-https://www.prisma.io/docs/getting-started/quickstart
+<https://www.prisma.io/docs/getting-started/quickstart>
 
-https://zenn.dev/forest1040/articles/7f6794d8651fd4
+<https://zenn.dev/forest1040/articles/7f6794d8651fd4>
 
 ## 導入ステップ
 
@@ -24,6 +24,7 @@ npx prisma init --datasource-provider sqlite
 generatedファイル生成場所を指定
 
 `prisma\schema.prisma`  
+
 ```prisma
 generator client {
   provider = "prisma-client-js"
@@ -47,7 +48,7 @@ npx prisma generate
 
 ### 5. メインプロセス側にDBアクセス処理を追加
 
-1. main ファイルに、「Prisma初期化」と「DBクローズ」を追加
+#### 1. main ファイルに、「Prisma初期化」と「DBクローズ」を追加
 
 `src\main\main.ts`  
 
@@ -81,7 +82,7 @@ app.on('window-all-closed', () => {
 });
 ```
 
-2. service ファイルを追加
+#### 2. service ファイルを追加
 
 e.g.  
 
@@ -106,7 +107,7 @@ const createDummy = async (
 export { createDummy, getDummies };
 ```
 
-3. main ファイルに、IPC通信用の処理を追加
+#### 3. main ファイルに、IPC通信用の処理を追加
 
 `src\main\main.ts`  
 
@@ -122,7 +123,7 @@ ipcMain.handle('db-create-dummy', (event, dummy: any) => {
 });
 ```
 
-4. preload ファイルに、IPC通信用の処理を追加
+#### 4. preload ファイルに、IPC通信用の処理を追加
 
 `src\main\preload.ts`  
 
@@ -135,7 +136,7 @@ contextBridge.exposeInMainWorld('db', {
 
 ### 6. レンダープロセス側にDBアクセス処理を追加
 
-1. preload.d.ts に db アクセスの処理を追加
+#### 1. preload.d.ts に db アクセスの処理を追加
 
 `src\renderer\preload.d.ts`
 
@@ -151,7 +152,7 @@ e.g.
   }
 ```
 
-2. API処理用のカスタムフックを作成
+#### 2. API処理用のカスタムフックを作成
 
 `src\renderer\features\dummy\hooks\useDummies.ts`
 
@@ -182,7 +183,7 @@ export const useDummies = () => {
 };
 ```
 
-3. カスタムフックを利用
+#### 3. カスタムフックを利用
 
 e.g.  
 
