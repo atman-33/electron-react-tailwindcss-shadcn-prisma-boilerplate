@@ -39,7 +39,6 @@ contextBridge.exposeInMainWorld('config', {
   getItem: () => ipcRenderer.invoke('config-get-item'),
   setItem: (key: string, value: any) =>
     ipcRenderer.invoke('config-set-item', key, value),
-  getConfig: () => ipcRenderer.invoke('config-get-config'),
 });
 
 export type ElectronHandler = typeof electronHandler;

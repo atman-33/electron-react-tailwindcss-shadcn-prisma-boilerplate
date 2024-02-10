@@ -1,4 +1,4 @@
-import { CreateDummyInput } from '@api/dummies/dto/create-dummy-input.dto';
+import { CreateDummyInput } from '@main/api/dummies/dto/create-dummy-input.dto';
 import { Dummy } from '@prisma/client';
 
 export const useDummies = () => {

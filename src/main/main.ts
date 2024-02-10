@@ -9,13 +9,13 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-import { CreateDummyInput } from '@api/dummies/dto/create-dummy-input.dto';
+import { CreateDummyInput } from '@main/api/dummies/dto/create-dummy-input.dto';
 import { BrowserWindow, app, ipcMain, shell } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
 import { createDummy, getDummies } from './api/dummies/dummies.service';
-import { ConfigStore, getConfig } from './lib/config';
+import { ConfigStore } from './lib/config';
 import { PrismaClient } from './lib/data-access-db/generated';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
@@ -181,8 +181,4 @@ ipcMain.handle('config-get-item', (event, key: string) => {
 ipcMain.handle('config-set-item', (event, key: string, value: any) => {
   const config = new ConfigStore();
   return config.setItem(key, value);
-});
-
-ipcMain.handle('config-get-config', (event) => {
-  return getConfig();
 });

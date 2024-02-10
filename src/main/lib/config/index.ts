@@ -4,20 +4,14 @@ import { app } from 'electron';
 import ElectronStore from 'electron-store';
 import path from 'path';
 
-// 各設定値の型
-type ConfigType = {
-  dummy: string | undefined;
-  dbPath: string | undefined;
-};
-
 /**
  * Electron Storeを使用して設定値を取得・保存する
  */
 class ConfigStore {
-  private store: ElectronStore<ConfigType>;
+  private store: ElectronStore<any>;
 
   constructor() {
-    this.store = new ElectronStore<ConfigType>({
+    this.store = new ElectronStore<any>({
       cwd: this.getConfigFilePath(),
       name: 'config',
       fileExtension: 'json',
@@ -35,9 +29,10 @@ class ConfigStore {
   private getConfigFilePath(): string {
     let configFilePath;
     console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`);
-    // 開発環境と本番環境でconfigファイルの場所を切り替える
+
+    // 開発環境と本番環境でconfigファイルの場所を切り替え
     if (process.env.NODE_ENV === 'development') {
-      // 開発環境の場合は、プロジェクトのディレクトリにあるconfig.jsonを参照
+      // 開発環境の場合は、このファイルのディレクトリにあるconfig.jsonを参照
       configFilePath = path.join(__dirname);
     } else {
       // 本番環境の場合は、アプリケーションの実行ファイルが格納されているディレクトリにあるconfig.jsonを参照
@@ -50,16 +45,4 @@ class ConfigStore {
   }
 }
 
-/**
- * 設定値を取得する
- * @returns 設定値
- */
-const getConfig = (): ConfigType => {
-  const configStore = new ConfigStore();
-  return {
-    dummy: configStore.getItem('dummy'),
-    dbPath: configStore.getItem('dbPath'),
-  };
-};
-
-export { ConfigStore, ConfigType, getConfig };
+export { ConfigStore };

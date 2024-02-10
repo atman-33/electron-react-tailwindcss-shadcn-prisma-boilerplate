@@ -21,7 +21,7 @@
       "@/*": [
         "./src/renderer/*"
       ],
-      "@api/*": [
+      "@main/api/*": [
         "./src/main/api/*"
       ],
       "@main/lib/*": [

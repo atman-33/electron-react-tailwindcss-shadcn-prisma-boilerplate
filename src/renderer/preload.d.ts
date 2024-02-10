@@ -1,5 +1,4 @@
-import { CreateDummyInput } from '@api/dummies/dto/create-dummy-input.dto';
-import { ConfigType } from '@main/lib/config';
+import { CreateDummyInput } from '@main/api/dummies/dto/create-dummy-input.dto';
 import { Dummy } from '@main/lib/data-access-db/generated';
 import { ElectronHandler } from '../main/preload';
 
@@ -14,7 +13,6 @@ declare global {
     config: {
       getItem: (key: string) => Promise<any>;
       setItem: (key: string, value: any) => Promise<void>;
-      getConfig: () => Promise<ConfigType>;
     };
   }
 }

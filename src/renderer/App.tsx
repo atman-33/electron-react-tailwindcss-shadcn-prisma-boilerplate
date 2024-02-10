@@ -2,16 +2,14 @@ import '@/styles/globals.css';
 
 import { Button } from '@/components/ui/button';
 import { useDummies } from '@/features/dummy/hooks/useDummies';
-import { CreateDummyInput } from '@api/dummies/dto/create-dummy-input.dto';
+import { CreateDummyInput } from '@main/api/dummies/dto/create-dummy-input.dto';
 import { Dummy } from '@prisma/client';
 import { useState } from 'react';
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
-import { useConfig } from './hooks/useConfig';
 
 function Home() {
   const [dummies, setDummies] = useState<Dummy[]>([]);
   const { getDummies, createDummy } = useDummies();
-  const { getConfig } = useConfig();
 
   const handleLoadButtonClick = async () => {
     console.log('Load button clicked');
@@ -27,10 +25,8 @@ function Home() {
   };
 
   const handleConfigButtonClick = async () => {
-    // const value = await window.config.getItem('dummy');
-    // console.log(value);
-    const config = await getConfig();
-    console.log(config.dummy);
+    const value = await window.config.getItem('dummy');
+    console.log(value);
   };
 
   return (
