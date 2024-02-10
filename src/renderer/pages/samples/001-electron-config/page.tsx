@@ -10,19 +10,30 @@ const ElectronConfig = () => {
     console.log(value);
     setDummy(JSON.stringify(value));
   };
-  const handleSetConfigButtonClick = async () => {
-    const value = await window.config.setItem('dummy', 'Hellow World!');
-    console.log(value);
-    setDummy(JSON.stringify(value));
+  const handleSetConfigButtonClick = async (value: string) => {
+    const item = await window.config.setItem('dummy', value);
+    console.log(item);
+    setDummy(JSON.stringify(item));
   };
 
   return (
     <SampleLayout>
       <div className="flex space-x-4">
-        <Button variant="default" onClick={handleGetConfigButtonClick}>
+        <Button variant="default" onClick={() => handleGetConfigButtonClick()}>
           Get config data
         </Button>
-        <Button variant="default" onClick={handleSetConfigButtonClick}>
+
+        <Button
+          variant="default"
+          onClick={() => handleSetConfigButtonClick('')}
+        >
+          Clear config data
+        </Button>
+
+        <Button
+          variant="default"
+          onClick={() => handleSetConfigButtonClick('hello world')}
+        >
           Set config data
         </Button>
       </div>

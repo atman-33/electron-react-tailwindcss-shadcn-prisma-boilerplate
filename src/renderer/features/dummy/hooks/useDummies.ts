@@ -1,4 +1,5 @@
 import { CreateDummyInput } from '@main/api/dummies/dto/create-dummy-input.dto';
+import { UpdateDummyInput } from '@main/api/dummies/dto/update-dummy-input.dto';
 import { Dummy } from '@prisma/client';
 import { useCallback } from 'react';
 
@@ -29,6 +30,20 @@ export const useDummies = () => {
   );
 
   /**
+   * Update dummy
+   */
+  const updateDummy = useCallback(
+    async (updateDummyInput: UpdateDummyInput): Promise<Dummy> => {
+      try {
+        return await window.db.updateDummy(updateDummyInput);
+      } catch (error) {
+        throw error;
+      }
+    },
+    [],
+  );
+
+  /**
    * Delete all dummies
    */
   const deleteDummies = useCallback(async (): Promise<void> => {
@@ -39,5 +54,5 @@ export const useDummies = () => {
     }
   }, []);
 
-  return { getDummies, createDummy, deleteDummies };
+  return { getDummies, createDummy, deleteDummies, updateDummy };
 };

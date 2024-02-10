@@ -33,6 +33,7 @@ contextBridge.exposeInMainWorld('electron', electronHandler);
 contextBridge.exposeInMainWorld('db', {
   getDummies: () => ipcRenderer.invoke('db-get-dummies'),
   createDummy: (dummy: Dummy) => ipcRenderer.invoke('db-create-dummy', dummy),
+  updateDummy: (dummy: Dummy) => ipcRenderer.invoke('db-update-dummy', dummy),
   deleteDummies: () => ipcRenderer.invoke('db-delete-dummies'),
 });
 

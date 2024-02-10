@@ -14,10 +14,12 @@ import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
 import { CreateDummyInput } from './api/dummies/dto/create-dummy-input.dto';
+import { UpdateDummyInput } from './api/dummies/dto/update-dummy-input.dto';
 import {
   createDummy,
   deleteDummies,
   getDummies,
+  updateDummy,
 } from './api/dummies/dummies.service';
 import { ConfigStore } from './lib/config';
 import { prismaClient } from './lib/prisma-client';
@@ -170,8 +172,16 @@ ipcMain.handle(
   },
 );
 
+ipcMain.handle(
+  'db-update-dummy',
+  (event, updateDummyInput: UpdateDummyInput) => {
+    console.log('---> ipc-3');
+    return updateDummy(updateDummyInput);
+  },
+);
+
 ipcMain.handle('db-delete-dummies', (event) => {
-  console.log('---> ipc-3');
+  console.log('---> ipc-4');
   return deleteDummies();
 });
 
