@@ -3,7 +3,7 @@ import { prismaClient } from '../../lib/prisma-client';
 import { CreateDummyInput } from './dto/create-dummy-input.dto';
 
 const getDummies = async (): Promise<Dummy[]> => {
-  return await prismaClient.dummy.findMany();
+  return await prismaClient.dummy.findMany({});
 };
 
 const createDummy = async (
@@ -14,4 +14,8 @@ const createDummy = async (
   });
 };
 
-export { createDummy, getDummies };
+const deleteDummies = async (): Promise<void> => {
+  await prismaClient.dummy.deleteMany({});
+};
+
+export { createDummy, deleteDummies, getDummies };

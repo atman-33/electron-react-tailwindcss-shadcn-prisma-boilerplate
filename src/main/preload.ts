@@ -28,11 +28,12 @@ const electronHandler = {
 contextBridge.exposeInMainWorld('electron', electronHandler);
 
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
-// IPC通信用の処理
+// レンダラープロセス用のAPI
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 contextBridge.exposeInMainWorld('db', {
-  loadDummies: () => ipcRenderer.invoke('db-load-dummies'),
+  getDummies: () => ipcRenderer.invoke('db-get-dummies'),
   createDummy: (dummy: Dummy) => ipcRenderer.invoke('db-create-dummy', dummy),
+  deleteDummies: () => ipcRenderer.invoke('db-delete-dummies'),
 });
 
 contextBridge.exposeInMainWorld('config', {

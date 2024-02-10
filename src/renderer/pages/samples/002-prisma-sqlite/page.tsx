@@ -7,7 +7,7 @@ import SampleLayout from '../_components/layout';
 
 const PrismaSqlite = () => {
   const [dummies, setDummies] = useState<Dummy[]>([]);
-  const { getDummies, createDummy } = useDummies();
+  const { getDummies, createDummy, deleteDummies } = useDummies();
 
   const handleLoadButtonClick = async () => {
     console.log('Load button clicked');
@@ -22,6 +22,12 @@ const PrismaSqlite = () => {
     await createDummy(data);
   };
 
+  const handleDeleteButtonClick = async () => {
+    console.log('Delete button clicked');
+    await deleteDummies();
+    // setDummies(await getDummies());
+  };
+
   return (
     <SampleLayout>
       <div className="flex space-x-4">
@@ -31,6 +37,10 @@ const PrismaSqlite = () => {
 
         <Button variant="default" onClick={handleAddButtonClick}>
           Add data
+        </Button>
+
+        <Button variant="default" onClick={handleDeleteButtonClick}>
+          Delete data
         </Button>
       </div>
 

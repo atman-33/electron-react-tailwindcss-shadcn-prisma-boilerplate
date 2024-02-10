@@ -7,8 +7,9 @@ declare global {
   interface Window {
     electron: ElectronHandler;
     db: {
-      loadDummies: () => Promise<Dummy[]>;
+      getDummies: () => Promise<Dummy[]>;
       createDummy: (createDummyInput: CreateDummyInput) => Promise<Dummy>;
+      deleteDummies: () => Promise<void>;
     };
     config: {
       getItem: (key: string) => Promise<any>;

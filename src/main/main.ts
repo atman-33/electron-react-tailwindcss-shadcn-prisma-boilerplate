@@ -14,7 +14,11 @@ import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
 import { CreateDummyInput } from './api/dummies/dto/create-dummy-input.dto';
-import { createDummy, getDummies } from './api/dummies/dummies.service';
+import {
+  createDummy,
+  deleteDummies,
+  getDummies,
+} from './api/dummies/dummies.service';
 import { ConfigStore } from './lib/config';
 import { prismaClient } from './lib/prisma-client';
 import MenuBuilder from './menu';
@@ -153,16 +157,23 @@ app
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
-ipcMain.handle('db-load-dummies', (event) => {
+ipcMain.handle('db-get-dummies', (event) => {
+  console.log('---> ipc-1');
   return getDummies();
 });
 
 ipcMain.handle(
   'db-create-dummy',
   (event, createDummyInput: CreateDummyInput) => {
+    console.log('---> ipc-2');
     return createDummy(createDummyInput);
   },
 );
+
+ipcMain.handle('db-delete-dummies', (event) => {
+  console.log('---> ipc-3');
+  return deleteDummies();
+});
 
 ipcMain.handle('config-get-item', (event, key: string) => {
   const config = new ConfigStore();
