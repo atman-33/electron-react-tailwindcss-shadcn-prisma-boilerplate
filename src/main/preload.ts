@@ -31,16 +31,20 @@ contextBridge.exposeInMainWorld('electron', electronHandler);
 // レンダラープロセス用のAPI
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 contextBridge.exposeInMainWorld('db', {
-  getDummies: () => ipcRenderer.invoke('db-get-dummies'),
-  createDummy: (dummy: Dummy) => ipcRenderer.invoke('db-create-dummy', dummy),
-  updateDummy: (dummy: Dummy) => ipcRenderer.invoke('db-update-dummy', dummy),
-  deleteDummies: () => ipcRenderer.invoke('db-delete-dummies'),
+  getDummies: () => ipcRenderer.invoke('db/get-dummies'),
+  createDummy: (dummy: Dummy) => ipcRenderer.invoke('db/create-dummy', dummy),
+  updateDummy: (dummy: Dummy) => ipcRenderer.invoke('db/update-dummy', dummy),
+  deleteDummies: () => ipcRenderer.invoke('db/delete-dummies'),
 });
 
 contextBridge.exposeInMainWorld('config', {
-  getItem: () => ipcRenderer.invoke('config-get-item'),
+  getItem: () => ipcRenderer.invoke('config/get-item'),
   setItem: (key: string, value: any) =>
-    ipcRenderer.invoke('config-set-item', key, value),
+    ipcRenderer.invoke('config/set-item', key, value),
+});
+
+contextBridge.exposeInMainWorld('env', {
+  getEnv: () => ipcRenderer.invoke('env/get-env'),
 });
 
 export type ElectronHandler = typeof electronHandler;

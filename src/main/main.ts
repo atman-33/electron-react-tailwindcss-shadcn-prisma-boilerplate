@@ -22,6 +22,7 @@ import {
   updateDummy,
 } from './api/dummies/dummies.service';
 import { ConfigStore } from './lib/config';
+import { env } from './lib/env';
 import { prismaClient } from './lib/prisma-client';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
@@ -159,13 +160,13 @@ app
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
-ipcMain.handle('db-get-dummies', (event) => {
+ipcMain.handle('db/get-dummies', (event) => {
   console.log('---> ipc-1');
   return getDummies();
 });
 
 ipcMain.handle(
-  'db-create-dummy',
+  'db/create-dummy',
   (event, createDummyInput: CreateDummyInput) => {
     console.log('---> ipc-2');
     return createDummy(createDummyInput);
@@ -173,24 +174,28 @@ ipcMain.handle(
 );
 
 ipcMain.handle(
-  'db-update-dummy',
+  'db/update-dummy',
   (event, updateDummyInput: UpdateDummyInput) => {
     console.log('---> ipc-3');
     return updateDummy(updateDummyInput);
   },
 );
 
-ipcMain.handle('db-delete-dummies', (event) => {
+ipcMain.handle('db/delete-dummies', (event) => {
   console.log('---> ipc-4');
   return deleteDummies();
 });
 
-ipcMain.handle('config-get-item', (event, key: string) => {
+ipcMain.handle('config/get-item', (event, key: string) => {
   const config = new ConfigStore();
   return config.getItem(key);
 });
 
-ipcMain.handle('config-set-item', (event, key: string, value: any) => {
+ipcMain.handle('config/set-item', (event, key: string, value: any) => {
   const config = new ConfigStore();
   return config.setItem(key, value);
+});
+
+ipcMain.handle('env/get-env', (event) => {
+  return env;
 });

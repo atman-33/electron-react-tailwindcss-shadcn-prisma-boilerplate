@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import SampleLayout from '../_components/layout';
 
-const ElectronConfig = () => {
+const ElectronConfigPage = () => {
   const [dummy, setDummy] = useState('');
 
   const handleGetConfigButtonClick = async () => {
@@ -43,4 +43,4 @@ const ElectronConfig = () => {
   );
 };
 
-export default ElectronConfig;
+export default ElectronConfigPage;

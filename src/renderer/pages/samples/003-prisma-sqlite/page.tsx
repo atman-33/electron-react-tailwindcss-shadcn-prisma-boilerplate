@@ -7,7 +7,7 @@ import { Dummy } from '@shared/lib/api/dummies/models';
 import { useState } from 'react';
 import SampleLayout from '../_components/layout';
 
-const PrismaSqlite = () => {
+const PrismaSqlitePage = () => {
   const [id, setId] = useState('');
   const [text, setText] = useState('');
 
@@ -98,4 +98,4 @@ const PrismaSqlite = () => {
   );
 };
 
-export default PrismaSqlite;
+export default PrismaSqlitePage;

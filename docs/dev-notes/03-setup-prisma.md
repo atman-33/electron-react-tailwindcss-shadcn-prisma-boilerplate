@@ -124,12 +124,12 @@ export { createDummy, getDummies };
 `src\main\main.ts`  
 
 ```ts
-ipcMain.handle('db-load-dummies', (event) => {
+ipcMain.handle('db/load-dummies', (event) => {
   return getDummies();
 });
 
 ipcMain.handle(
-  'db-create-dummy',
+  'db/create-dummy',
   (event, createDummyInput: CreateDummyInput) => {
     return createDummy(createDummyInput);
   },
@@ -142,8 +142,8 @@ ipcMain.handle(
 
 ```ts
 contextBridge.exposeInMainWorld('db', {
-  loadDummies: () => ipcRenderer.invoke('db-load-dummies'),
-  createDummy: (dummy: Dummy) => ipcRenderer.invoke('db-create-dummy', dummy),
+  loadDummies: () => ipcRenderer.invoke('db/load-dummies'),
+  createDummy: (dummy: Dummy) => ipcRenderer.invoke('db/create-dummy', dummy),
 });
 ```
 

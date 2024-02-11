@@ -18,6 +18,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-useless-catch': 'off',
     'react/function-component-definition': 'off',
+    'dot-notation': 'off',
     'boundaries/element-types': [
       2,
       {

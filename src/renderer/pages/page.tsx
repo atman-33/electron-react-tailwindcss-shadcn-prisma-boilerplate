@@ -13,7 +13,12 @@ const Home = () => {
             Electron Config
           </Button>
         </Link>
-        <Link to="/002-prisma-sqlite">
+        <Link to="/002-env">
+          <Button variant="default" className="w-full">
+            Env
+          </Button>
+        </Link>
+        <Link to="/003-prisma-sqlite">
           <Button variant="default" className="w-full">
             Prisma SQLite
           </Button>

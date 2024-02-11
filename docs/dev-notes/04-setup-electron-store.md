@@ -54,12 +54,12 @@ class ConfigStore {
 `src\main\main.ts`  
 
 ```ts
-ipcMain.handle('config-get-item', (event, key: string) => {
+ipcMain.handle('config/get-item', (event, key: string) => {
   const config = new ConfigStore();
   return config.getItem(key);
 });
 
-ipcMain.handle('config-set-item', (event, key: string, value: any) => {
+ipcMain.handle('config/set-item', (event, key: string, value: any) => {
   const config = new ConfigStore();
   return config.setItem(key, value);
 });
@@ -71,9 +71,9 @@ ipcMain.handle('config-set-item', (event, key: string, value: any) => {
 
 ```ts
 contextBridge.exposeInMainWorld('config', {
-  getItem: () => ipcRenderer.invoke('config-get-item'),
+  getItem: () => ipcRenderer.invoke('config/get-item'),
   setItem: (key: string, value: any) =>
-    ipcRenderer.invoke('config-set-item', key, value),
+    ipcRenderer.invoke('config/set-item', key, value),
 });
 ```
 

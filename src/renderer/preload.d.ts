@@ -3,6 +3,8 @@ import {
   UpdateDummyInput,
 } from '@shared/lib/api/dummies/dto';
 import { Dummy } from '@shared/lib/api/dummies/models';
+import { EnvType } from '@shared/lib/env';
+
 // eslint-disable-next-line boundaries/element-types
 import { ElectronHandler } from '../main/preload';
 
@@ -19,6 +21,10 @@ declare global {
     config: {
       getItem: (key: string) => Promise<any>;
       setItem: (key: string, value: any) => Promise<void>;
+    };
+
+    env: {
+      getEnv: () => Promise<EnvType>;
     };
   }
 }
