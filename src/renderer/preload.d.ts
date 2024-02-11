@@ -21,10 +21,12 @@ declare global {
     config: {
       getItem: (key: string) => Promise<any>;
       setItem: (key: string, value: any) => Promise<void>;
+      getConfigPath: () => Promise<string>;
     };
 
     env: {
       getEnv: () => Promise<EnvType>;
+      getEnvPath: () => Promise<string>;
     };
   }
 }

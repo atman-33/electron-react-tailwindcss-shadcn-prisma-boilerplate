@@ -22,7 +22,7 @@ import {
   updateDummy,
 } from './api/dummies/dummies.service';
 import { ConfigStore } from './lib/config';
-import { env } from './lib/env';
+import { env, envPath } from './lib/env';
 import { prismaClient } from './lib/prisma-client';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
@@ -191,6 +191,11 @@ ipcMain.handle('config/get-item', (event, key: string) => {
   return config.getItem(key);
 });
 
+ipcMain.handle('config/get-config-path', (event, key: string) => {
+  const config = new ConfigStore();
+  return config.getConfigPath();
+});
+
 ipcMain.handle('config/set-item', (event, key: string, value: any) => {
   const config = new ConfigStore();
   return config.setItem(key, value);
@@ -198,4 +203,8 @@ ipcMain.handle('config/set-item', (event, key: string, value: any) => {
 
 ipcMain.handle('env/get-env', (event) => {
   return env;
+});
+
+ipcMain.handle('env/get-env-path', (event) => {
+  return envPath;
 });

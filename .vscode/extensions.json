@@ -2,7 +2,6 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "EditorConfig.EditorConfig",
-    "davidanson.vscode-markdownlint",
     "alexcvzz.vscode-sqlite",
     "dsznajder.es7-react-js-snippets",
     "esbenp.prettier-vscode",

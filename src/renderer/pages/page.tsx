@@ -7,6 +7,9 @@ const Home = () => {
       <h1 className="text-3xl m-8">
         Electron React Tailwindcss Shadcn Prisma Boilerplate
       </h1>
+
+      <div className="ml-8">{process.env.NODE_ENV}</div>
+
       <div className="flex flex-col space-y-4 m-8 ">
         <Link to="/001-electron-config">
           <Button variant="default" className="w-full">

@@ -12,7 +12,7 @@ class ConfigStore {
 
   constructor() {
     this.store = new ElectronStore<any>({
-      cwd: this.getConfigFilePath(),
+      cwd: this.getConfigFolderPath(),
       name: 'config',
       fileExtension: 'json',
     });
@@ -26,22 +26,20 @@ class ConfigStore {
     return this.store.set(key, value);
   }
 
-  private getConfigFilePath(): string {
-    let configFilePath;
-    console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`);
+  public getConfigPath(): string {
+    return this.store.path;
+  }
 
-    // 開発環境と本番環境でconfigファイルの場所を切り替え
-    if (process.env.NODE_ENV === 'development') {
-      // 開発環境の場合は、このファイルのディレクトリにあるconfig.jsonを参照
-      configFilePath = path.join(__dirname);
-    } else {
-      // 本番環境の場合は、アプリケーションの実行ファイルが格納されているディレクトリにあるconfig.jsonを参照
-      const appDir = app.getPath('exe');
-      const exeDir = path.dirname(appDir);
-      configFilePath = path.join(exeDir, 'config');
-    }
-    console.log(`configFilePath: ${configFilePath}`);
-    return configFilePath;
+  private getConfigFolderPath(): string {
+    // console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`);
+
+    const configFolderPath =
+      process.env.NODE_ENV === 'development'
+        ? path.join(__dirname)
+        : path.join(path.dirname(app.getPath('exe')), 'config');
+
+    // console.log(`configFilePath: ${configFolderPath}`);
+    return configFolderPath;
   }
 }
 

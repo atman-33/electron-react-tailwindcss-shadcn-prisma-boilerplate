@@ -4,15 +4,24 @@ import { Label } from '@/components/ui/label';
 import { useDummies } from '@/features/dummy/hooks/useDummies';
 import { CreateDummyInput } from '@shared/lib/api/dummies/dto';
 import { Dummy } from '@shared/lib/api/dummies/models';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SampleLayout from '../_components/layout';
 
 const PrismaSqlitePage = () => {
+  const [dbUrl, setdbUrl] = useState('');
   const [id, setId] = useState('');
   const [text, setText] = useState('');
 
   const [dummies, setDummies] = useState<Dummy[]>([]);
   const { getDummies, createDummy, deleteDummies, updateDummy } = useDummies();
+
+  useEffect(() => {
+    const fetch = async () => {
+      const env = await window.env.getEnv();
+      setdbUrl(env.DATABASE_URL);
+    };
+    fetch();
+  }, []);
 
   const handleLoadButtonClick = async () => {
     console.log('Load button clicked');
@@ -45,7 +54,8 @@ const PrismaSqlitePage = () => {
 
   return (
     <SampleLayout>
-      <div className="flex flex-col">
+      <div className="flex flex-col space-y-4">
+        <div>dbUrl: {dbUrl}</div>
         <div className="flex space-x-4">
           <Button variant="default" onClick={handleLoadButtonClick}>
             Load data
@@ -60,7 +70,7 @@ const PrismaSqlitePage = () => {
           </Button>
         </div>
 
-        <div className="flex mt-4 space-x-4">
+        <div className="flex space-x-4">
           <div className="flex items-center gap-2">
             <Label htmlFor="id">ID</Label>
             <Input
