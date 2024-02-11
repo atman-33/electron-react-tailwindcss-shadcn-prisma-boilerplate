@@ -24,6 +24,9 @@
       "@main/*": [
         "./src/main/*"
       ],
+      "@shared/*": [
+        "./src/shared/*"
+      ]
     }
   },
   "exclude": [

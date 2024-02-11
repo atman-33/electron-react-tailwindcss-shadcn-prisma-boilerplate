@@ -1,6 +1,8 @@
-import { CreateDummyInput } from '@main/api/dummies/dto/create-dummy-input.dto';
-import { UpdateDummyInput } from '@main/api/dummies/dto/update-dummy-input.dto';
 import { Dummy } from '@prisma/client';
+import {
+  CreateDummyInput,
+  UpdateDummyInput,
+} from '@shared/lib/api/dummies/dto';
 import { useCallback } from 'react';
 
 export const useDummies = () => {

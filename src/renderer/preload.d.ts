@@ -1,6 +1,8 @@
-import { CreateDummyInput } from '@main/api/dummies/dto/create-dummy-input.dto';
-import { UpdateDummyInput } from '@main/api/dummies/dto/update-dummy-input.dto';
-import { Dummy } from '@main/lib/data-access-db/generated';
+import {
+  CreateDummyInput,
+  UpdateDummyInput,
+} from '@shared/lib/api/dummies/dto';
+import { Dummy } from '@shared/lib/api/dummies/models';
 import { ElectronHandler } from '../main/preload';
 
 declare global {
