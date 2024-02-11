@@ -3,6 +3,7 @@ import {
   UpdateDummyInput,
 } from '@shared/lib/api/dummies/dto';
 import { Dummy } from '@shared/lib/api/dummies/models';
+// eslint-disable-next-line boundaries/element-types
 import { ElectronHandler } from '../main/preload';
 
 declare global {

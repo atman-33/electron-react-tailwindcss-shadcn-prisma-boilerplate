@@ -1,6 +1,6 @@
 module.exports = {
   extends: 'erb',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'boundaries'],
   rules: {
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
@@ -18,6 +18,26 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-useless-catch': 'off',
     'react/function-component-definition': 'off',
+    'boundaries/element-types': [
+      2,
+      {
+        default: 'disallow',
+        rules: [
+          {
+            from: ['main'],
+            allow: ['shared'],
+          },
+          {
+            from: ['renderer'],
+            allow: ['shared'],
+          },
+          {
+            from: ['shared'],
+            allow: ['main'],
+          },
+        ],
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 2022,
@@ -35,5 +55,19 @@ module.exports = {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
+    'boundaries/elements': [
+      {
+        type: 'main',
+        pattern: 'src/main',
+      },
+      {
+        type: 'renderer',
+        pattern: 'src/renderer',
+      },
+      {
+        type: 'shared',
+        pattern: 'src/shared',
+      },
+    ],
   },
 };
