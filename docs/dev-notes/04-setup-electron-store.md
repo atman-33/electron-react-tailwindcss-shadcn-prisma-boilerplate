@@ -33,7 +33,7 @@ class ConfigStore {
 
   constructor() {
     this.store = new ElectronStore<any>({
-      cwd: this.getConfigFilePath(),
+      cwd: this.getConfigFolderPath(),
       name: 'config',
       fileExtension: 'json',
     });
@@ -93,4 +93,23 @@ declare global {
     };
   }
 }
+```
+
+## ビルド時にconfig.json出力
+
+package.json の extraResources を変更  
+
+`package.json`  
+
+```json
+  "build: {
+    ...,
+    "extraResources": [
+      "./assets/**",
+      {
+        "from": "./src/main/lib/config/config.json",
+        "to": "config/config.json"
+      }
+    ],
+  }
 ```
