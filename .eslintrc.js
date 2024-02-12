@@ -19,6 +19,7 @@ module.exports = {
     'no-useless-catch': 'off',
     'react/function-component-definition': 'off',
     'dot-notation': 'off',
+    'no-underscore-dangle': 'off',
     'boundaries/element-types': [
       2,
       {

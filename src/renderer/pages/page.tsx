@@ -1,6 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
+const links = [
+  '/samples/001-electron-config',
+  '/samples/002-env',
+  '/samples/003-prisma-sqlite',
+  '/samples/004-timer',
+];
+
 const Home = () => {
   return (
     <>
@@ -11,21 +18,13 @@ const Home = () => {
       <div className="ml-8">{process.env.NODE_ENV}</div>
 
       <div className="flex flex-col space-y-4 m-8 ">
-        <Link to="/001-electron-config">
-          <Button variant="default" className="w-full">
-            Electron Config
-          </Button>
-        </Link>
-        <Link to="/002-env">
-          <Button variant="default" className="w-full">
-            Env
-          </Button>
-        </Link>
-        <Link to="/003-prisma-sqlite">
-          <Button variant="default" className="w-full">
-            Prisma SQLite
-          </Button>
-        </Link>
+        {links.map((link) => (
+          <Link key={link} to={link}>
+            <Button variant="default" className="w-full justify-start">
+              {link.replace('/samples/', '')}
+            </Button>
+          </Link>
+        ))}
       </div>
     </>
   );
