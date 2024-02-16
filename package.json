@@ -259,11 +259,11 @@
       },
       {
         "from": "./src/main/lib/config/config.json",
-        "to": "config/config.json"
+        "to": "../config/config.json"
       },
       {
         "from": "./.env",
-        "to": ".env"
+        "to": "../.env"
       }
     ],
     "publish": {

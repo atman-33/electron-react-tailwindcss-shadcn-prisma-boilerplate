@@ -36,7 +36,7 @@ class ConfigStore {
     const configFolderPath =
       process.env.NODE_ENV === 'development'
         ? path.join(__dirname)
-        : path.join(path.dirname(app.getPath('exe')), 'resources/config');
+        : path.join(path.dirname(app.getPath('exe')), 'config');
 
     // console.log(`configFilePath: ${configFolderPath}`);
     return configFolderPath;

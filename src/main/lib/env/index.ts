@@ -9,7 +9,7 @@ export type EnvType = {
 const envPath =
   process.env.NODE_ENV === 'development'
     ? `${process.cwd()}/.env`
-    : `${path.dirname(app.getPath('exe'))}/resources/.env`;
+    : `${path.dirname(app.getPath('exe'))}/.env`;
 
 dotenv.config({ path: envPath });
 

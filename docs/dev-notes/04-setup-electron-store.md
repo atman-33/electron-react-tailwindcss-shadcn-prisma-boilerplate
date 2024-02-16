@@ -105,11 +105,13 @@ package.json の extraResources を変更
   "build: {
     ...,
     "extraResources": [
-      "./assets/**",
+      ...,
       {
         "from": "./src/main/lib/config/config.json",
-        "to": "config/config.json"
+        "to": "../config/config.json"
       }
     ],
   }
 ```
+
+> ビルド後のアプリと同じフォルダにconfigを配置したいため、`../`としている。
