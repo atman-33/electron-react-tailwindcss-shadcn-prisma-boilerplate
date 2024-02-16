@@ -20,6 +20,8 @@ npx prisma init --datasource-provider sqlite
 `schme.prisma` ファイルにモデルを追加
 
 > `prisma-client`の出力先を指定する場合は下記を参考に実施
+> ただし、Electronの場合は、パッケージしたアプリが、node_moduleフォルダ直下のファイルを
+> 読み込むため、出力先は指定してはいけない!
 
 generatedファイル生成場所を指定
 
@@ -28,7 +30,7 @@ generatedファイル生成場所を指定
 ```prisma
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/main/lib/data-access-db/generated"
+  // output   = "../src/main/lib/data-access-db/generated"
 }
 ```
 
@@ -48,7 +50,7 @@ npx prisma generate
 
 ### 5. メインプロセス側にDBアクセス処理を追加
 
-#### 1. PrismaClient 生成ファイルを作成
+#### (1) PrismaClient 生成ファイルを作成
 
 `src\main\lib\prisma-client\index.ts`
 
@@ -66,7 +68,7 @@ const prismaClient = new PrismaClient({
 export { prismaClient };
 ```
 
-#### 2. main ファイルに、「DBクローズ」を追加
+#### (2) main ファイルに、「DBクローズ」を追加
 
 `src\main\main.ts`  
 
@@ -92,14 +94,14 @@ app.on('window-all-closed', () => {
 });
 ```
 
-#### 3. service ファイルを追加
+#### (3) service ファイルを追加
 
 e.g.  
 
 `src\main\api\dummies\dummies.service.ts`
 
 ```ts
-import { Dummy } from '../../lib/data-access-db/generated';
+import { Dummy } from '@prisma/client';
 import { prismaClient } from '../../lib/prisma-client';
 import { CreateDummyInput } from './dto/create-dummy-input.dto';
 
@@ -119,7 +121,7 @@ export { createDummy, getDummies };
 
 ```
 
-#### 4. main ファイルに、IPC通信用の処理を追加
+#### (4) main ファイルに、IPC通信用の処理を追加
 
 `src\main\main.ts`  
 
@@ -136,7 +138,7 @@ ipcMain.handle(
 );
 ```
 
-#### 5. preload ファイルに、IPC通信用の処理を追加
+#### (5) preload ファイルに、IPC通信用の処理を追加
 
 `src\main\preload.ts`  
 
@@ -149,7 +151,7 @@ contextBridge.exposeInMainWorld('db', {
 
 ### 6. レンダープロセス側にDBアクセス処理を追加
 
-#### 1. preload.d.ts に db アクセスの処理を追加
+#### (1) preload.d.ts に db アクセスの処理を追加
 
 `src\renderer\preload.d.ts`
 
@@ -165,7 +167,7 @@ e.g.
   }
 ```
 
-#### 2. API処理用のカスタムフックを作成
+#### (2) API処理用のカスタムフックを作成
 
 `src\renderer\features\dummy\hooks\useDummies.ts`
 
@@ -196,7 +198,7 @@ export const useDummies = () => {
 };
 ```
 
-#### 3. カスタムフックを利用
+#### (3) カスタムフックを利用
 
 e.g.  
 
@@ -208,3 +210,24 @@ e.g.
     setDummies(await getDummies());
   };
 ```
+
+### 7. prisma を build 時に出力するように設定
+
+`package.json`
+
+```json
+    "extraResources": [
+      ...,
+      {
+        "from": "./node_modules/.prisma/",
+        "to": "../node_modules/.prisma/"
+      },
+      {
+        "from": "./node_modules/@prisma/client/",
+        "to": "../node_modules/@prisma/client/"
+      },
+      ...
+```
+
+> exe が配置されるフォルダにnode_modulesフォルダを出力すること。
+> そのようにしないと、DB操作時にエラーが発生する。

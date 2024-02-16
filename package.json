@@ -250,6 +250,14 @@
     "extraResources": [
       "./assets/**",
       {
+        "from": "./node_modules/.prisma/",
+        "to": "../node_modules/.prisma/"
+      },
+      {
+        "from": "./node_modules/@prisma/client/",
+        "to": "../node_modules/@prisma/client/"
+      },
+      {
         "from": "./src/main/lib/config/config.json",
         "to": "config/config.json"
       },

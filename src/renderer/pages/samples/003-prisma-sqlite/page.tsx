@@ -11,6 +11,7 @@ const PrismaSqlitePage = () => {
   const [dbUrl, setdbUrl] = useState('');
   const [id, setId] = useState('');
   const [text, setText] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [dummies, setDummies] = useState<Dummy[]>([]);
   const { getDummies, createDummy, deleteDummies, updateDummy } = useDummies();
@@ -25,7 +26,11 @@ const PrismaSqlitePage = () => {
 
   const handleLoadButtonClick = async () => {
     console.log('Load button clicked');
-    setDummies(await getDummies());
+    try {
+      setDummies(await getDummies());
+    } catch (e) {
+      setErrorMessage((e as Error).message);
+    }
   };
 
   const handleAddButtonClick = async () => {
@@ -56,6 +61,7 @@ const PrismaSqlitePage = () => {
     <SampleLayout>
       <div className="flex flex-col space-y-4">
         <div>dbUrl: {dbUrl}</div>
+        <div>errorMessage: {errorMessage}</div>
         <div className="flex space-x-4">
           <Button variant="default" onClick={handleLoadButtonClick}>
             Load data
