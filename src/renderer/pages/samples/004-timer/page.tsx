@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import useTimer from '@/features/bulletin-board/hooks/useTimer';
+import useTimer from '@/features/bulletin/hooks/useTimer';
 import { useState } from 'react';
 import SampleLayout from '../_components/layout';
 

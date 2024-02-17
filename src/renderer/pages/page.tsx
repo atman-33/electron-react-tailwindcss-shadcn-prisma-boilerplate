@@ -6,19 +6,19 @@ const links = [
   '/samples/002-env',
   '/samples/003-prisma-sqlite',
   '/samples/004-timer',
-  '/samples/100-bulletin-board',
+  '/samples/100-bulletin',
 ];
 
 const HomePage = () => {
   return (
     <>
-      <h1 className="text-3xl m-8">
+      <h1 className="m-8 text-3xl">
         Electron React Tailwindcss Shadcn Prisma Boilerplate
       </h1>
 
       <div className="ml-8">{process.env.NODE_ENV}</div>
 
-      <div className="flex flex-col space-y-4 m-8 ">
+      <div className="m-8 flex flex-col space-y-4 ">
         {links.map((link) => (
           <Link key={link} to={link}>
             <Button variant="default" className="w-full justify-start">

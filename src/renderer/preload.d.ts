@@ -1,9 +1,6 @@
-import {
-  CreateDummyInput,
-  UpdateDummyInput,
-} from '@shared/lib/api/dummies/dto';
-import { Dummy } from '@shared/lib/api/dummies/models';
+import { CreateDummyInput, UpdateDummyInput } from '@shared/lib/dto';
 import { EnvType } from '@shared/lib/env';
+import { Dummy } from '@shared/lib/models';
 
 // eslint-disable-next-line boundaries/element-types
 import { ElectronHandler } from '../main/preload';

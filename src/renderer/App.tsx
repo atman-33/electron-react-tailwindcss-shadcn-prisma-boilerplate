@@ -6,7 +6,7 @@ import EnvPage from '@/pages/samples/002-env/page';
 import PrismaSqlitePage from '@/pages/samples/003-prisma-sqlite/page';
 import TimerPage from '@/pages/samples/004-timer/page';
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
-import BulleinBoardPage from './pages/samples/100-bulletin-board/page';
+import BulleinPage from './pages/samples/100-bulletin/page';
 
 export default function App() {
   return (
@@ -23,10 +23,7 @@ export default function App() {
           element={<PrismaSqlitePage />}
         />
         <Route path="/samples/004-timer" element={<TimerPage />} />
-        <Route
-          path="/samples/100-bulletin-board"
-          element={<BulleinBoardPage />}
-        />
+        <Route path="/samples/100-bulletin" element={<BulleinPage />} />
       </Routes>
     </Router>
   );

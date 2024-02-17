@@ -2,8 +2,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useDummies } from '@/features/dummy/hooks/useDummies';
-import { CreateDummyInput } from '@shared/lib/api/dummies/dto';
-import { Dummy } from '@shared/lib/api/dummies/models';
+import { CreateDummyInput } from '@shared/lib/dto';
+import { Dummy } from '@shared/lib/models';
 import { useEffect, useState } from 'react';
 import SampleLayout from '../_components/layout';
 
