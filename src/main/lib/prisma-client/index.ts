@@ -1,12 +1,19 @@
 import { PrismaClient } from '../data-access-db/generated';
 import { env } from '../env';
 
-const prismaClient = new PrismaClient({
-  datasources: {
-    db: {
-      url: env.DATABASE_URL,
-    },
-  },
-});
+declare global {
+  // eslint-disable-next-line vars-on-top, no-var
+  var prisma: PrismaClient;
+}
 
-export { prismaClient };
+if (!global.prisma) {
+  global.prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url: env.DATABASE_URL,
+      },
+    },
+  });
+}
+
+export default global.prisma;

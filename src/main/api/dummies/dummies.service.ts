@@ -1,6 +1,6 @@
 // import { Dummy } from '../../lib/data-access-db/generated';
 import { Dummy } from '../../lib/data-access-db/generated';
-import { prismaClient } from '../../lib/prisma-client';
+import prismaClient from '../../lib/prisma-client';
 import { CreateDummyInput } from './dto/create-dummy-input.dto';
 import { UpdateDummyInput } from './dto/update-dummy-input.dto';
 

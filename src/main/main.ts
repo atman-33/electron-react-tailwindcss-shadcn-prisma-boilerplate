@@ -23,7 +23,7 @@ import {
 } from './api/dummies/dummies.service';
 import { ConfigStore } from './lib/config';
 import { env, envPath } from './lib/env';
-import { prismaClient } from './lib/prisma-client';
+import prismaClient from './lib/prisma-client';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 

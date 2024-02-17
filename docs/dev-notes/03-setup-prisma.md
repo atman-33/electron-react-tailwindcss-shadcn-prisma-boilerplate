@@ -6,6 +6,8 @@
 
 <https://zenn.dev/forest1040/articles/7f6794d8651fd4>
 
+<https://blog.shgnkn.io/impression-of-prisma/>
+
 ## 導入ステップ
 
 ### 1. パッケージをインストール
@@ -54,16 +56,24 @@ npx prisma generate
 
 ```ts
 import { PrismaClient } from '../data-access-db/generated';
+import { env } from '../env';
 
-const prismaClient = new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL,
+declare global {
+  // eslint-disable-next-line vars-on-top, no-var
+  var prisma: PrismaClient;
+}
+
+if (!global.prisma) {
+  global.prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url: env.DATABASE_URL,
+      },
     },
-  },
-});
+  });
+}
 
-export { prismaClient };
+export default global.prisma;
 ```
 
 #### (2) main ファイルに、「DBクローズ」を追加

@@ -79,7 +79,11 @@ module.exports = {
         'no-restricted-imports': [
           'error',
           {
-            paths: ['@prisma/client', '@main/lib/data-access-db/generated'],
+            paths: [
+              '@prisma/client',
+              '@main/lib/data-access-db/generated',
+              '@main/lib/prisma-client',
+            ],
           },
         ],
       },
