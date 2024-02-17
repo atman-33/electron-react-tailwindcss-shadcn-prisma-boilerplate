@@ -72,4 +72,17 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['src/main/**/*.ts'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            paths: ['@main/lib/data-access-db/generated'],
+          },
+        ],
+      },
+    },
+  ],
 };
