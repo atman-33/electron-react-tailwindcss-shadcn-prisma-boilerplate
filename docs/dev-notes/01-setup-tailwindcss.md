@@ -86,3 +86,35 @@ module > rules > `postcss-loader` を追加
 
 参考URL  
 <https://tailwindcss.com/blog/automatic-class-sorting-with-prettier>
+
+- パッケージをインストール  
+
+```bash
+npm install -D prettier prettier-plugin-tailwindcss
+```
+
+- prettier にプラグインを追加
+
+`package.json`
+
+```json
+  ...,
+  "prettier": {
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": [
+          ".prettierrc",
+          ".eslintrc"
+        ],
+        "options": {
+          "parser": "json"
+        }
+      }
+    ],
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
+  ...
+```
