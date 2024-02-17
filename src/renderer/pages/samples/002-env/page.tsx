@@ -30,7 +30,7 @@ const EnvPage = () => {
         </div>
       </div>
 
-      <div className="mt-4 p-2 bg-gray-300 rounded-lg">{envData}</div>
+      <div className="mt-4 rounded-lg bg-gray-300 p-2">{envData}</div>
     </SampleLayout>
   );
 };

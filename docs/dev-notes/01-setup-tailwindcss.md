@@ -79,3 +79,10 @@ module > rules > `postcss-loader` を追加
 @tailwind components;
 @tailwind utilities;
 ```
+
+## その他
+
+クラス名が自動ソートされるように、`prettier-plugin-tailwindcss`を導入を推奨  
+
+参考URL  
+<https://tailwindcss.com/blog/automatic-class-sorting-with-prettier>

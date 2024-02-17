@@ -103,7 +103,7 @@ const PrismaSqlitePage = () => {
         </div>
       </div>
 
-      <ul className="mt-4 p-2 bg-gray-300 rounded-lg">
+      <ul className="mt-4 rounded-lg bg-gray-300 p-2">
         {dummies.map((dummy) => (
           <li key={dummy.id}>
             {dummy.id} : {dummy.text}

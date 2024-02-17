@@ -8,7 +8,7 @@ const Timer = () => {
 
   return (
     <div className="flex flex-col space-y-4">
-      <h3 className="font-bold text-xl">{`${time} seconds elapsed`}</h3>
+      <h3 className="text-xl font-bold">{`${time} seconds elapsed`}</h3>
       <div className="flex space-x-4">
         <Button variant="default" onClick={toggle} className="w-20">
           {isRunning ? 'Pause' : 'Start'}

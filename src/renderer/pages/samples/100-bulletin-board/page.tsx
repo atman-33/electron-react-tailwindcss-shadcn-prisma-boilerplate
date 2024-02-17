@@ -10,7 +10,7 @@ const BulleinBoardPage = () => {
         <div>BulleinBoardPage</div>
         <button
           type="button"
-          className="hover:translate-y-0.5 hover:shadow-sm h-12 w-12 transform justify-center flex items-center rounded-full bg-green-400 shadow-lg hover:bg-green-500"
+          className="flex h-12 w-12 transform items-center justify-center rounded-full bg-green-400 shadow-lg hover:translate-y-0.5 hover:bg-green-500 hover:shadow-sm"
         >
           <FontAwesomeIcon icon={faPen} className="h-6 w-6" />
         </button>
