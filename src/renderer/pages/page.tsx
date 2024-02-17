@@ -6,9 +6,10 @@ const links = [
   '/samples/002-env',
   '/samples/003-prisma-sqlite',
   '/samples/004-timer',
+  '/samples/100-bulletin-board',
 ];
 
-const Home = () => {
+const HomePage = () => {
   return (
     <>
       <h1 className="text-3xl m-8">
@@ -30,4 +31,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

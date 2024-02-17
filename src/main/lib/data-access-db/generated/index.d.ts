@@ -18,6 +18,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type Dummy = $Result.DefaultSelection<Prisma.$DummyPayload>
+/**
+ * Model Bulletin
+ * 
+ */
+export type Bulletin = $Result.DefaultSelection<Prisma.$BulletinPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -150,6 +155,16 @@ export class PrismaClient<
     * ```
     */
   get dummy(): Prisma.DummyDelegate<ExtArgs>;
+
+  /**
+   * `prisma.bulletin`: Exposes CRUD operations for the **Bulletin** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Bulletins
+    * const bulletins = await prisma.bulletin.findMany()
+    * ```
+    */
+  get bulletin(): Prisma.BulletinDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -620,7 +635,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Dummy: 'Dummy'
+    Dummy: 'Dummy',
+    Bulletin: 'Bulletin'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -637,7 +653,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'dummy'
+      modelProps: 'dummy' | 'bulletin'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -700,6 +716,68 @@ export namespace Prisma {
           count: {
             args: Prisma.DummyCountArgs<ExtArgs>,
             result: $Utils.Optional<DummyCountAggregateOutputType> | number
+          }
+        }
+      }
+      Bulletin: {
+        payload: Prisma.$BulletinPayload<ExtArgs>
+        fields: Prisma.BulletinFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BulletinFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$BulletinPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BulletinFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$BulletinPayload>
+          }
+          findFirst: {
+            args: Prisma.BulletinFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$BulletinPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BulletinFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$BulletinPayload>
+          }
+          findMany: {
+            args: Prisma.BulletinFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$BulletinPayload>[]
+          }
+          create: {
+            args: Prisma.BulletinCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$BulletinPayload>
+          }
+          delete: {
+            args: Prisma.BulletinDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$BulletinPayload>
+          }
+          update: {
+            args: Prisma.BulletinUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$BulletinPayload>
+          }
+          deleteMany: {
+            args: Prisma.BulletinDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BulletinUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.BulletinUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$BulletinPayload>
+          }
+          aggregate: {
+            args: Prisma.BulletinAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateBulletin>
+          }
+          groupBy: {
+            args: Prisma.BulletinGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<BulletinGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BulletinCountArgs<ExtArgs>,
+            result: $Utils.Optional<BulletinCountAggregateOutputType> | number
           }
         }
       }
@@ -1737,6 +1815,875 @@ export namespace Prisma {
 
 
   /**
+   * Model Bulletin
+   */
+
+  export type AggregateBulletin = {
+    _count: BulletinCountAggregateOutputType | null
+    _avg: BulletinAvgAggregateOutputType | null
+    _sum: BulletinSumAggregateOutputType | null
+    _min: BulletinMinAggregateOutputType | null
+    _max: BulletinMaxAggregateOutputType | null
+  }
+
+  export type BulletinAvgAggregateOutputType = {
+    id: number | null
+    isEditing: number | null
+  }
+
+  export type BulletinSumAggregateOutputType = {
+    id: number | null
+    isEditing: number | null
+  }
+
+  export type BulletinMinAggregateOutputType = {
+    id: number | null
+    message: string | null
+    isEditing: number | null
+    editedAt: Date | null
+  }
+
+  export type BulletinMaxAggregateOutputType = {
+    id: number | null
+    message: string | null
+    isEditing: number | null
+    editedAt: Date | null
+  }
+
+  export type BulletinCountAggregateOutputType = {
+    id: number
+    message: number
+    isEditing: number
+    editedAt: number
+    _all: number
+  }
+
+
+  export type BulletinAvgAggregateInputType = {
+    id?: true
+    isEditing?: true
+  }
+
+  export type BulletinSumAggregateInputType = {
+    id?: true
+    isEditing?: true
+  }
+
+  export type BulletinMinAggregateInputType = {
+    id?: true
+    message?: true
+    isEditing?: true
+    editedAt?: true
+  }
+
+  export type BulletinMaxAggregateInputType = {
+    id?: true
+    message?: true
+    isEditing?: true
+    editedAt?: true
+  }
+
+  export type BulletinCountAggregateInputType = {
+    id?: true
+    message?: true
+    isEditing?: true
+    editedAt?: true
+    _all?: true
+  }
+
+  export type BulletinAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Bulletin to aggregate.
+     */
+    where?: BulletinWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bulletins to fetch.
+     */
+    orderBy?: BulletinOrderByWithRelationInput | BulletinOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BulletinWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bulletins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bulletins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Bulletins
+    **/
+    _count?: true | BulletinCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BulletinAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BulletinSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BulletinMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BulletinMaxAggregateInputType
+  }
+
+  export type GetBulletinAggregateType<T extends BulletinAggregateArgs> = {
+        [P in keyof T & keyof AggregateBulletin]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBulletin[P]>
+      : GetScalarType<T[P], AggregateBulletin[P]>
+  }
+
+
+
+
+  export type BulletinGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BulletinWhereInput
+    orderBy?: BulletinOrderByWithAggregationInput | BulletinOrderByWithAggregationInput[]
+    by: BulletinScalarFieldEnum[] | BulletinScalarFieldEnum
+    having?: BulletinScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BulletinCountAggregateInputType | true
+    _avg?: BulletinAvgAggregateInputType
+    _sum?: BulletinSumAggregateInputType
+    _min?: BulletinMinAggregateInputType
+    _max?: BulletinMaxAggregateInputType
+  }
+
+  export type BulletinGroupByOutputType = {
+    id: number
+    message: string
+    isEditing: number
+    editedAt: Date
+    _count: BulletinCountAggregateOutputType | null
+    _avg: BulletinAvgAggregateOutputType | null
+    _sum: BulletinSumAggregateOutputType | null
+    _min: BulletinMinAggregateOutputType | null
+    _max: BulletinMaxAggregateOutputType | null
+  }
+
+  type GetBulletinGroupByPayload<T extends BulletinGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BulletinGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BulletinGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BulletinGroupByOutputType[P]>
+            : GetScalarType<T[P], BulletinGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BulletinSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    message?: boolean
+    isEditing?: boolean
+    editedAt?: boolean
+  }, ExtArgs["result"]["bulletin"]>
+
+  export type BulletinSelectScalar = {
+    id?: boolean
+    message?: boolean
+    isEditing?: boolean
+    editedAt?: boolean
+  }
+
+
+  export type $BulletinPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Bulletin"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      message: string
+      isEditing: number
+      editedAt: Date
+    }, ExtArgs["result"]["bulletin"]>
+    composites: {}
+  }
+
+
+  type BulletinGetPayload<S extends boolean | null | undefined | BulletinDefaultArgs> = $Result.GetResult<Prisma.$BulletinPayload, S>
+
+  type BulletinCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<BulletinFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: BulletinCountAggregateInputType | true
+    }
+
+  export interface BulletinDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Bulletin'], meta: { name: 'Bulletin' } }
+    /**
+     * Find zero or one Bulletin that matches the filter.
+     * @param {BulletinFindUniqueArgs} args - Arguments to find a Bulletin
+     * @example
+     * // Get one Bulletin
+     * const bulletin = await prisma.bulletin.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends BulletinFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, BulletinFindUniqueArgs<ExtArgs>>
+    ): Prisma__BulletinClient<$Result.GetResult<Prisma.$BulletinPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Bulletin that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {BulletinFindUniqueOrThrowArgs} args - Arguments to find a Bulletin
+     * @example
+     * // Get one Bulletin
+     * const bulletin = await prisma.bulletin.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends BulletinFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, BulletinFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__BulletinClient<$Result.GetResult<Prisma.$BulletinPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Bulletin that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletinFindFirstArgs} args - Arguments to find a Bulletin
+     * @example
+     * // Get one Bulletin
+     * const bulletin = await prisma.bulletin.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends BulletinFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, BulletinFindFirstArgs<ExtArgs>>
+    ): Prisma__BulletinClient<$Result.GetResult<Prisma.$BulletinPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Bulletin that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletinFindFirstOrThrowArgs} args - Arguments to find a Bulletin
+     * @example
+     * // Get one Bulletin
+     * const bulletin = await prisma.bulletin.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends BulletinFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, BulletinFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__BulletinClient<$Result.GetResult<Prisma.$BulletinPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Bulletins that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletinFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Bulletins
+     * const bulletins = await prisma.bulletin.findMany()
+     * 
+     * // Get first 10 Bulletins
+     * const bulletins = await prisma.bulletin.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const bulletinWithIdOnly = await prisma.bulletin.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends BulletinFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, BulletinFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BulletinPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Bulletin.
+     * @param {BulletinCreateArgs} args - Arguments to create a Bulletin.
+     * @example
+     * // Create one Bulletin
+     * const Bulletin = await prisma.bulletin.create({
+     *   data: {
+     *     // ... data to create a Bulletin
+     *   }
+     * })
+     * 
+    **/
+    create<T extends BulletinCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, BulletinCreateArgs<ExtArgs>>
+    ): Prisma__BulletinClient<$Result.GetResult<Prisma.$BulletinPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Delete a Bulletin.
+     * @param {BulletinDeleteArgs} args - Arguments to delete one Bulletin.
+     * @example
+     * // Delete one Bulletin
+     * const Bulletin = await prisma.bulletin.delete({
+     *   where: {
+     *     // ... filter to delete one Bulletin
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends BulletinDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, BulletinDeleteArgs<ExtArgs>>
+    ): Prisma__BulletinClient<$Result.GetResult<Prisma.$BulletinPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Bulletin.
+     * @param {BulletinUpdateArgs} args - Arguments to update one Bulletin.
+     * @example
+     * // Update one Bulletin
+     * const bulletin = await prisma.bulletin.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends BulletinUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, BulletinUpdateArgs<ExtArgs>>
+    ): Prisma__BulletinClient<$Result.GetResult<Prisma.$BulletinPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Bulletins.
+     * @param {BulletinDeleteManyArgs} args - Arguments to filter Bulletins to delete.
+     * @example
+     * // Delete a few Bulletins
+     * const { count } = await prisma.bulletin.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends BulletinDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, BulletinDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Bulletins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletinUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Bulletins
+     * const bulletin = await prisma.bulletin.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends BulletinUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, BulletinUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Bulletin.
+     * @param {BulletinUpsertArgs} args - Arguments to update or create a Bulletin.
+     * @example
+     * // Update or create a Bulletin
+     * const bulletin = await prisma.bulletin.upsert({
+     *   create: {
+     *     // ... data to create a Bulletin
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Bulletin we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends BulletinUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, BulletinUpsertArgs<ExtArgs>>
+    ): Prisma__BulletinClient<$Result.GetResult<Prisma.$BulletinPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of Bulletins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletinCountArgs} args - Arguments to filter Bulletins to count.
+     * @example
+     * // Count the number of Bulletins
+     * const count = await prisma.bulletin.count({
+     *   where: {
+     *     // ... the filter for the Bulletins we want to count
+     *   }
+     * })
+    **/
+    count<T extends BulletinCountArgs>(
+      args?: Subset<T, BulletinCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BulletinCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Bulletin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletinAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BulletinAggregateArgs>(args: Subset<T, BulletinAggregateArgs>): Prisma.PrismaPromise<GetBulletinAggregateType<T>>
+
+    /**
+     * Group by Bulletin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletinGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BulletinGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BulletinGroupByArgs['orderBy'] }
+        : { orderBy?: BulletinGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BulletinGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBulletinGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Bulletin model
+   */
+  readonly fields: BulletinFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Bulletin.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BulletinClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Bulletin model
+   */ 
+  interface BulletinFieldRefs {
+    readonly id: FieldRef<"Bulletin", 'Int'>
+    readonly message: FieldRef<"Bulletin", 'String'>
+    readonly isEditing: FieldRef<"Bulletin", 'Int'>
+    readonly editedAt: FieldRef<"Bulletin", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Bulletin findUnique
+   */
+  export type BulletinFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bulletin
+     */
+    select?: BulletinSelect<ExtArgs> | null
+    /**
+     * Filter, which Bulletin to fetch.
+     */
+    where: BulletinWhereUniqueInput
+  }
+
+
+  /**
+   * Bulletin findUniqueOrThrow
+   */
+  export type BulletinFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bulletin
+     */
+    select?: BulletinSelect<ExtArgs> | null
+    /**
+     * Filter, which Bulletin to fetch.
+     */
+    where: BulletinWhereUniqueInput
+  }
+
+
+  /**
+   * Bulletin findFirst
+   */
+  export type BulletinFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bulletin
+     */
+    select?: BulletinSelect<ExtArgs> | null
+    /**
+     * Filter, which Bulletin to fetch.
+     */
+    where?: BulletinWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bulletins to fetch.
+     */
+    orderBy?: BulletinOrderByWithRelationInput | BulletinOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Bulletins.
+     */
+    cursor?: BulletinWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bulletins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bulletins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Bulletins.
+     */
+    distinct?: BulletinScalarFieldEnum | BulletinScalarFieldEnum[]
+  }
+
+
+  /**
+   * Bulletin findFirstOrThrow
+   */
+  export type BulletinFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bulletin
+     */
+    select?: BulletinSelect<ExtArgs> | null
+    /**
+     * Filter, which Bulletin to fetch.
+     */
+    where?: BulletinWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bulletins to fetch.
+     */
+    orderBy?: BulletinOrderByWithRelationInput | BulletinOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Bulletins.
+     */
+    cursor?: BulletinWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bulletins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bulletins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Bulletins.
+     */
+    distinct?: BulletinScalarFieldEnum | BulletinScalarFieldEnum[]
+  }
+
+
+  /**
+   * Bulletin findMany
+   */
+  export type BulletinFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bulletin
+     */
+    select?: BulletinSelect<ExtArgs> | null
+    /**
+     * Filter, which Bulletins to fetch.
+     */
+    where?: BulletinWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Bulletins to fetch.
+     */
+    orderBy?: BulletinOrderByWithRelationInput | BulletinOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Bulletins.
+     */
+    cursor?: BulletinWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Bulletins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Bulletins.
+     */
+    skip?: number
+    distinct?: BulletinScalarFieldEnum | BulletinScalarFieldEnum[]
+  }
+
+
+  /**
+   * Bulletin create
+   */
+  export type BulletinCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bulletin
+     */
+    select?: BulletinSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Bulletin.
+     */
+    data: XOR<BulletinCreateInput, BulletinUncheckedCreateInput>
+  }
+
+
+  /**
+   * Bulletin update
+   */
+  export type BulletinUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bulletin
+     */
+    select?: BulletinSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Bulletin.
+     */
+    data: XOR<BulletinUpdateInput, BulletinUncheckedUpdateInput>
+    /**
+     * Choose, which Bulletin to update.
+     */
+    where: BulletinWhereUniqueInput
+  }
+
+
+  /**
+   * Bulletin updateMany
+   */
+  export type BulletinUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Bulletins.
+     */
+    data: XOR<BulletinUpdateManyMutationInput, BulletinUncheckedUpdateManyInput>
+    /**
+     * Filter which Bulletins to update
+     */
+    where?: BulletinWhereInput
+  }
+
+
+  /**
+   * Bulletin upsert
+   */
+  export type BulletinUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bulletin
+     */
+    select?: BulletinSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Bulletin to update in case it exists.
+     */
+    where: BulletinWhereUniqueInput
+    /**
+     * In case the Bulletin found by the `where` argument doesn't exist, create a new Bulletin with this data.
+     */
+    create: XOR<BulletinCreateInput, BulletinUncheckedCreateInput>
+    /**
+     * In case the Bulletin was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BulletinUpdateInput, BulletinUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Bulletin delete
+   */
+  export type BulletinDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bulletin
+     */
+    select?: BulletinSelect<ExtArgs> | null
+    /**
+     * Filter which Bulletin to delete.
+     */
+    where: BulletinWhereUniqueInput
+  }
+
+
+  /**
+   * Bulletin deleteMany
+   */
+  export type BulletinDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Bulletins to delete
+     */
+    where?: BulletinWhereInput
+  }
+
+
+  /**
+   * Bulletin without action
+   */
+  export type BulletinDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Bulletin
+     */
+    select?: BulletinSelect<ExtArgs> | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -1756,6 +2703,16 @@ export namespace Prisma {
   };
 
   export type DummyScalarFieldEnum = (typeof DummyScalarFieldEnum)[keyof typeof DummyScalarFieldEnum]
+
+
+  export const BulletinScalarFieldEnum: {
+    id: 'id',
+    message: 'message',
+    isEditing: 'isEditing',
+    editedAt: 'editedAt'
+  };
+
+  export type BulletinScalarFieldEnum = (typeof BulletinScalarFieldEnum)[keyof typeof BulletinScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1864,6 +2821,55 @@ export namespace Prisma {
     text?: StringNullableWithAggregatesFilter<"Dummy"> | string | null
   }
 
+  export type BulletinWhereInput = {
+    AND?: BulletinWhereInput | BulletinWhereInput[]
+    OR?: BulletinWhereInput[]
+    NOT?: BulletinWhereInput | BulletinWhereInput[]
+    id?: IntFilter<"Bulletin"> | number
+    message?: StringFilter<"Bulletin"> | string
+    isEditing?: IntFilter<"Bulletin"> | number
+    editedAt?: DateTimeFilter<"Bulletin"> | Date | string
+  }
+
+  export type BulletinOrderByWithRelationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    isEditing?: SortOrder
+    editedAt?: SortOrder
+  }
+
+  export type BulletinWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: BulletinWhereInput | BulletinWhereInput[]
+    OR?: BulletinWhereInput[]
+    NOT?: BulletinWhereInput | BulletinWhereInput[]
+    message?: StringFilter<"Bulletin"> | string
+    isEditing?: IntFilter<"Bulletin"> | number
+    editedAt?: DateTimeFilter<"Bulletin"> | Date | string
+  }, "id">
+
+  export type BulletinOrderByWithAggregationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    isEditing?: SortOrder
+    editedAt?: SortOrder
+    _count?: BulletinCountOrderByAggregateInput
+    _avg?: BulletinAvgOrderByAggregateInput
+    _max?: BulletinMaxOrderByAggregateInput
+    _min?: BulletinMinOrderByAggregateInput
+    _sum?: BulletinSumOrderByAggregateInput
+  }
+
+  export type BulletinScalarWhereWithAggregatesInput = {
+    AND?: BulletinScalarWhereWithAggregatesInput | BulletinScalarWhereWithAggregatesInput[]
+    OR?: BulletinScalarWhereWithAggregatesInput[]
+    NOT?: BulletinScalarWhereWithAggregatesInput | BulletinScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Bulletin"> | number
+    message?: StringWithAggregatesFilter<"Bulletin"> | string
+    isEditing?: IntWithAggregatesFilter<"Bulletin"> | number
+    editedAt?: DateTimeWithAggregatesFilter<"Bulletin"> | Date | string
+  }
+
   export type DummyCreateInput = {
     date?: Date | string | null
     int?: number | null
@@ -1907,6 +2913,48 @@ export namespace Prisma {
     int?: NullableIntFieldUpdateOperationsInput | number | null
     float?: NullableFloatFieldUpdateOperationsInput | number | null
     text?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BulletinCreateInput = {
+    id: number
+    message: string
+    isEditing: number
+    editedAt: Date | string
+  }
+
+  export type BulletinUncheckedCreateInput = {
+    id: number
+    message: string
+    isEditing: number
+    editedAt: Date | string
+  }
+
+  export type BulletinUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    isEditing?: IntFieldUpdateOperationsInput | number
+    editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BulletinUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    isEditing?: IntFieldUpdateOperationsInput | number
+    editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BulletinUpdateManyMutationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    isEditing?: IntFieldUpdateOperationsInput | number
+    editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BulletinUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    isEditing?: IntFieldUpdateOperationsInput | number
+    editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -2087,6 +3135,93 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type BulletinCountOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    isEditing?: SortOrder
+    editedAt?: SortOrder
+  }
+
+  export type BulletinAvgOrderByAggregateInput = {
+    id?: SortOrder
+    isEditing?: SortOrder
+  }
+
+  export type BulletinMaxOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    isEditing?: SortOrder
+    editedAt?: SortOrder
+  }
+
+  export type BulletinMinOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    isEditing?: SortOrder
+    editedAt?: SortOrder
+  }
+
+  export type BulletinSumOrderByAggregateInput = {
+    id?: SortOrder
+    isEditing?: SortOrder
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -2117,6 +3252,14 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -2267,6 +3410,62 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedStringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
 
 
   /**
@@ -2276,6 +3475,10 @@ export namespace Prisma {
      * @deprecated Use DummyDefaultArgs instead
      */
     export type DummyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DummyDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use BulletinDefaultArgs instead
+     */
+    export type BulletinArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = BulletinDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

@@ -112,6 +112,13 @@ exports.Prisma.DummyScalarFieldEnum = {
   text: 'text'
 };
 
+exports.Prisma.BulletinScalarFieldEnum = {
+  id: 'id',
+  message: 'message',
+  isEditing: 'isEditing',
+  editedAt: 'editedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -124,7 +131,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  Dummy: 'Dummy'
+  Dummy: 'Dummy',
+  Bulletin: 'Bulletin'
 };
 
 /**

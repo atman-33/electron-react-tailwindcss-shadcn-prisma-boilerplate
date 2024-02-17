@@ -23,3 +23,12 @@ model Dummy {
 }
 
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- // 
+
+model Bulletin {
+  id        Int      @id
+  message   String   @map("message")
+  isEditing Int      @map("is_editing") // 1:編集中  0:編集中ではない
+  editedAt  DateTime @map("edited_at")
+
+  @@map("bulletin")
+}
