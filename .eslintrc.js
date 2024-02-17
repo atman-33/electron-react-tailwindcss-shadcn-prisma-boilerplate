@@ -27,15 +27,15 @@ module.exports = {
         rules: [
           {
             from: ['main'],
-            allow: ['shared'],
+            allow: ['main', 'shared'],
           },
           {
             from: ['renderer'],
-            allow: ['shared'],
+            allow: ['renderer', 'shared'],
           },
           {
             from: ['shared'],
-            allow: ['main'],
+            allow: ['shared', 'main'],
           },
         ],
       },
@@ -79,7 +79,7 @@ module.exports = {
         'no-restricted-imports': [
           'error',
           {
-            paths: ['@main/lib/data-access-db/generated'],
+            paths: ['@prisma/client', '@main/lib/data-access-db/generated'],
           },
         ],
       },

@@ -20,8 +20,6 @@ npx prisma init --datasource-provider sqlite
 `schme.prisma` ファイルにモデルを追加
 
 > `prisma-client`の出力先を指定する場合は下記を参考に実施
-> ただし、Electronの場合は、パッケージしたアプリが、node_moduleフォルダ直下のファイルを
-> 読み込むため、出力先は指定してはいけない!
 
 generatedファイル生成場所を指定
 
@@ -30,7 +28,7 @@ generatedファイル生成場所を指定
 ```prisma
 generator client {
   provider = "prisma-client-js"
-  // output   = "../src/main/lib/data-access-db/generated"
+  output   = "../src/main/lib/data-access-db/generated"
 }
 ```
 
@@ -55,7 +53,7 @@ npx prisma generate
 `src\main\lib\prisma-client\index.ts`
 
 ```ts
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../data-access-db/generated';
 
 const prismaClient = new PrismaClient({
   datasources: {
@@ -101,7 +99,7 @@ e.g.
 `src\main\api\dummies\dummies.service.ts`
 
 ```ts
-import { Dummy } from '@prisma/client';
+import { Dummy } from '../../lib/data-access-db/generated';
 import { prismaClient } from '../../lib/prisma-client';
 import { CreateDummyInput } from './dto/create-dummy-input.dto';
 

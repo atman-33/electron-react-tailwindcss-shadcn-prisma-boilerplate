@@ -1,7 +1,7 @@
 // Disable no-unused-vars, broken for spread args
 /* eslint no-unused-vars: off */
-import { Dummy } from '@prisma/client';
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { Dummy } from './lib/data-access-db/generated';
 
 export type Channels = 'ipc-example';
 

@@ -54,15 +54,15 @@ rule に、要素間のアクセス制限を追加
         rules: [
           {
             from: ['main'],
-            allow: ['shared'],
+            allow: ['main', 'shared'],
           },
           {
             from: ['renderer'],
-            allow: ['shared'],
+            allow: ['renderer', 'shared'],
           },
           {
             from: ['shared'],
-            allow: ['main'],
+            allow: ['shared', 'main'],
           },
         ],
       },

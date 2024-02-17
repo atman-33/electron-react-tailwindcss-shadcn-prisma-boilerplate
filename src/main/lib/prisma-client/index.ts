@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../data-access-db/generated';
 import { env } from '../env';
 
 const prismaClient = new PrismaClient({
