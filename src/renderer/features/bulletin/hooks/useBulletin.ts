@@ -1,3 +1,4 @@
+import { UpsertBulletinInput } from '@shared/lib/dto';
 import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { bulletinState } from '../stores/bulletinStates';
 
@@ -13,38 +14,65 @@ const useBulletin = () => {
   const initBulletin = useRecoilCallback(
     ({ set }) =>
       async () => {
-        let data = await window.db.getBulletin(0);
+        let res = await window.db.getBulletin(0);
 
-        if (!data) {
-          data = await window.db.upsertBulletin({
+        if (!res) {
+          res = await window.db.upsertBulletin({
             id: 0,
-            message: 'initial message',
+            message: 'Hello bulletin world!',
             isEditing: 0,
-            editedAt: new Date(),
+            editStartedAt: new Date(),
           });
         }
 
-        set(bulletinState(0), data);
+        set(bulletinState(0), res);
       },
-    [],
+    [bulletin],
+  );
+
+  /**
+   * 連絡板を更新する。
+   */
+  const upsertBulletin = useRecoilCallback(
+    ({ set }) =>
+      async (upsertBulletinInput: UpsertBulletinInput) => {
+        const res = await window.db.upsertBulletin(upsertBulletinInput);
+        set(bulletinState(0), res);
+      },
+    [bulletin],
   );
 
   /**
    * 連絡板編集中フラグを設定する。
    * 編集中の時はisEditing=1、編集中じゃない時は0
    */
-  const setIsEditing = useRecoilCallback(({ set }) => (isEditing: boolean) => {
-    set(bulletinState(0), (prev: any) => {
-      return {
-        ...prev,
-        isEditing: isEditing ? 1 : 0,
-      };
-    });
-  });
+  const setIsEditing = useRecoilCallback(
+    ({ set }) =>
+      async (isEditing: boolean) => {
+        const res = await window.db.upsertBulletin({
+          id: 0,
+          message: bulletin?.message ?? '',
+          isEditing: isEditing ? 1 : 0,
+          editStartedAt: isEditing
+            ? new Date()
+            : bulletin?.editStartedAt ?? new Date(),
+        });
+        console.log(res.editStartedAt);
+        set(bulletinState(0), (prev: any) => {
+          return {
+            ...prev,
+            isEditing: res.isEditing,
+            editStartedAt: res.editStartedAt,
+          };
+        });
+      },
+    [bulletin],
+  );
 
   return {
     bulletin,
     initBulletin,
+    upsertBulletin,
     setIsEditing,
   };
 };

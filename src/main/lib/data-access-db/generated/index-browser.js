@@ -116,7 +116,7 @@ exports.Prisma.BulletinScalarFieldEnum = {
   id: 'id',
   message: 'message',
   isEditing: 'isEditing',
-  editedAt: 'editedAt',
+  editStartedAt: 'editStartedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

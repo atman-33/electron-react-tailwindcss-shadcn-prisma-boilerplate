@@ -25,10 +25,10 @@ model Dummy {
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- // 
 
 model Bulletin {
-  id        Int      @id
-  message   String   @map("message")
-  isEditing Int      @map("is_editing") // 1:編集中  0:編集中ではない
-  editedAt  DateTime @map("edited_at")
+  id            Int      @id
+  message       String   @map("message")
+  isEditing     Int      @map("is_editing") // 1:編集中  0:編集中ではない
+  editStartedAt DateTime @map("edit_started_at")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")

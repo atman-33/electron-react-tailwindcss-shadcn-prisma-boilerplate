@@ -1,31 +1,47 @@
 /* eslint-disable react/jsx-boolean-value */
 import { Textarea } from '@/components/ui/textarea';
+import CancelButton from '@/features/bulletin/components/CancelButton';
+import EditButton from '@/features/bulletin/components/EditButton';
+import SaveButton from '@/features/bulletin/components/SaveButton';
 import { useBulletin } from '@/features/bulletin/hooks/useBulletin';
-import { useEffect, useState } from 'react';
-import CancelButton from '../../../features/bulletin/components/CancelButton';
-import EditButton from '../../../features/bulletin/components/EditButton';
+import { useCallback, useEffect, useState } from 'react';
 import SampleLayout from '../_components/SampleLayout';
 
 const BulleinPage = () => {
   const [message, setMessage] = useState('');
-  const { bulletin, initBulletin, setIsEditing } = useBulletin();
+  const { bulletin, initBulletin, upsertBulletin, setIsEditing } =
+    useBulletin();
 
   useEffect(() => {
     initBulletin();
+    setMessage(bulletin?.message ?? '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleEditButtonClick = () => {
+  const handleEditButtonClick = useCallback(() => {
     console.log('Edit button clicked');
     setIsEditing(true);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bulletin]);
 
-  const handleCancelButtonClick = () => {
+  const handleSaveButtonClick = useCallback(() => {
+    console.log('Save button clicked');
+    upsertBulletin({
+      id: bulletin?.id ?? 0,
+      message,
+      isEditing: 0,
+      editStartedAt: bulletin?.editStartedAt ?? new Date(),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bulletin, message]);
+
+  const handleCancelButtonClick = useCallback(() => {
     console.log('Cancel button clicked');
+    setMessage(bulletin?.message ?? '');
     setIsEditing(false);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bulletin]);
 
-  // TODO: RecoilRoot でエラーが発生
   return (
     <SampleLayout>
       <div className="my-2 font-bold">BulleinBoardPage</div>
@@ -33,7 +49,11 @@ const BulleinPage = () => {
         <div className="flex items-baseline justify-between">
           <div className="text-sm">Last updated: yyyy/mm/dd hh:mm:ss</div>
           <div className="flex space-x-2">
-            <EditButton onClick={handleEditButtonClick} />
+            {bulletin?.isEditing ? (
+              <SaveButton onClick={handleSaveButtonClick} />
+            ) : (
+              <EditButton onClick={handleEditButtonClick} />
+            )}
             <CancelButton
               disabled={!bulletin?.isEditing}
               onClick={handleCancelButtonClick}
@@ -42,6 +62,12 @@ const BulleinPage = () => {
         </div>
         <div className="flex flex-col space-y-2">
           <Textarea
+            style={{
+              backgroundColor: `${bulletin?.isEditing ? 'lightblue' : 'white'}`,
+              fontSize: '18px',
+              fontWeight: 'bold',
+              color: 'red',
+            }}
             onChange={(e) => setMessage(e.target.value)}
             value={message}
             readOnly={!bulletin?.isEditing}
@@ -50,7 +76,12 @@ const BulleinPage = () => {
           />
         </div>
       </div>
-      <div>{message}</div>
+      <div className="mt-4 flex flex-col space-y-2">
+        <div>{`id: ${bulletin?.id}`}</div>
+        <div>{`message: ${bulletin?.message}`}</div>
+        <div>{`isEditing: ${bulletin?.isEditing}`}</div>
+        <div>{`editStartedAt: ${bulletin?.editStartedAt}`}</div>
+      </div>
     </SampleLayout>
   );
 };

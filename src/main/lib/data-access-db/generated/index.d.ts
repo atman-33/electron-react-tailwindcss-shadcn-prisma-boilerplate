@@ -1840,7 +1840,7 @@ export namespace Prisma {
     id: number | null
     message: string | null
     isEditing: number | null
-    editedAt: Date | null
+    editStartedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1849,7 +1849,7 @@ export namespace Prisma {
     id: number | null
     message: string | null
     isEditing: number | null
-    editedAt: Date | null
+    editStartedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1858,7 +1858,7 @@ export namespace Prisma {
     id: number
     message: number
     isEditing: number
-    editedAt: number
+    editStartedAt: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1879,7 +1879,7 @@ export namespace Prisma {
     id?: true
     message?: true
     isEditing?: true
-    editedAt?: true
+    editStartedAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1888,7 +1888,7 @@ export namespace Prisma {
     id?: true
     message?: true
     isEditing?: true
-    editedAt?: true
+    editStartedAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1897,7 +1897,7 @@ export namespace Prisma {
     id?: true
     message?: true
     isEditing?: true
-    editedAt?: true
+    editStartedAt?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1993,7 +1993,7 @@ export namespace Prisma {
     id: number
     message: string
     isEditing: number
-    editedAt: Date
+    editStartedAt: Date
     createdAt: Date
     updatedAt: Date
     _count: BulletinCountAggregateOutputType | null
@@ -2021,7 +2021,7 @@ export namespace Prisma {
     id?: boolean
     message?: boolean
     isEditing?: boolean
-    editedAt?: boolean
+    editStartedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["bulletin"]>
@@ -2030,7 +2030,7 @@ export namespace Prisma {
     id?: boolean
     message?: boolean
     isEditing?: boolean
-    editedAt?: boolean
+    editStartedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -2043,7 +2043,7 @@ export namespace Prisma {
       id: number
       message: string
       isEditing: number
-      editedAt: Date
+      editStartedAt: Date
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["bulletin"]>
@@ -2427,7 +2427,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Bulletin", 'Int'>
     readonly message: FieldRef<"Bulletin", 'String'>
     readonly isEditing: FieldRef<"Bulletin", 'Int'>
-    readonly editedAt: FieldRef<"Bulletin", 'DateTime'>
+    readonly editStartedAt: FieldRef<"Bulletin", 'DateTime'>
     readonly createdAt: FieldRef<"Bulletin", 'DateTime'>
     readonly updatedAt: FieldRef<"Bulletin", 'DateTime'>
   }
@@ -2731,7 +2731,7 @@ export namespace Prisma {
     id: 'id',
     message: 'message',
     isEditing: 'isEditing',
-    editedAt: 'editedAt',
+    editStartedAt: 'editStartedAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -2852,7 +2852,7 @@ export namespace Prisma {
     id?: IntFilter<"Bulletin"> | number
     message?: StringFilter<"Bulletin"> | string
     isEditing?: IntFilter<"Bulletin"> | number
-    editedAt?: DateTimeFilter<"Bulletin"> | Date | string
+    editStartedAt?: DateTimeFilter<"Bulletin"> | Date | string
     createdAt?: DateTimeFilter<"Bulletin"> | Date | string
     updatedAt?: DateTimeFilter<"Bulletin"> | Date | string
   }
@@ -2861,7 +2861,7 @@ export namespace Prisma {
     id?: SortOrder
     message?: SortOrder
     isEditing?: SortOrder
-    editedAt?: SortOrder
+    editStartedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2873,7 +2873,7 @@ export namespace Prisma {
     NOT?: BulletinWhereInput | BulletinWhereInput[]
     message?: StringFilter<"Bulletin"> | string
     isEditing?: IntFilter<"Bulletin"> | number
-    editedAt?: DateTimeFilter<"Bulletin"> | Date | string
+    editStartedAt?: DateTimeFilter<"Bulletin"> | Date | string
     createdAt?: DateTimeFilter<"Bulletin"> | Date | string
     updatedAt?: DateTimeFilter<"Bulletin"> | Date | string
   }, "id">
@@ -2882,7 +2882,7 @@ export namespace Prisma {
     id?: SortOrder
     message?: SortOrder
     isEditing?: SortOrder
-    editedAt?: SortOrder
+    editStartedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: BulletinCountOrderByAggregateInput
@@ -2899,7 +2899,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Bulletin"> | number
     message?: StringWithAggregatesFilter<"Bulletin"> | string
     isEditing?: IntWithAggregatesFilter<"Bulletin"> | number
-    editedAt?: DateTimeWithAggregatesFilter<"Bulletin"> | Date | string
+    editStartedAt?: DateTimeWithAggregatesFilter<"Bulletin"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"Bulletin"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Bulletin"> | Date | string
   }
@@ -2953,7 +2953,7 @@ export namespace Prisma {
     id: number
     message: string
     isEditing: number
-    editedAt: Date | string
+    editStartedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2962,7 +2962,7 @@ export namespace Prisma {
     id: number
     message: string
     isEditing: number
-    editedAt: Date | string
+    editStartedAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2971,7 +2971,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     isEditing?: IntFieldUpdateOperationsInput | number
-    editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editStartedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2980,7 +2980,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     isEditing?: IntFieldUpdateOperationsInput | number
-    editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editStartedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2989,7 +2989,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     isEditing?: IntFieldUpdateOperationsInput | number
-    editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editStartedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2998,7 +2998,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     isEditing?: IntFieldUpdateOperationsInput | number
-    editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editStartedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3210,7 +3210,7 @@ export namespace Prisma {
     id?: SortOrder
     message?: SortOrder
     isEditing?: SortOrder
-    editedAt?: SortOrder
+    editStartedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3224,7 +3224,7 @@ export namespace Prisma {
     id?: SortOrder
     message?: SortOrder
     isEditing?: SortOrder
-    editedAt?: SortOrder
+    editStartedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3233,7 +3233,7 @@ export namespace Prisma {
     id?: SortOrder
     message?: SortOrder
     isEditing?: SortOrder
-    editedAt?: SortOrder
+    editStartedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }

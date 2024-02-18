@@ -1,0 +1,18 @@
+-- CreateTable
+CREATE TABLE "Dummy" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "date" DATETIME DEFAULT CURRENT_TIMESTAMP,
+    "int" INTEGER,
+    "float" REAL,
+    "text" TEXT
+);
+
+-- CreateTable
+CREATE TABLE "bulletin" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "message" TEXT NOT NULL,
+    "is_editing" INTEGER NOT NULL,
+    "edit_started_at" DATETIME NOT NULL,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
