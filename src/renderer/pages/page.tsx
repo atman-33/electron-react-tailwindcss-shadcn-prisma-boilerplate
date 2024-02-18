@@ -6,7 +6,7 @@ const links = [
   '/samples/002-env',
   '/samples/003-prisma-sqlite',
   '/samples/004-timer',
-  '/samples/100-bulletin',
+  '/samples/101-bulletin',
 ];
 
 const HomePage = () => {
