@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
-import SampleLayout from '../_components/layout';
+import SampleLayout from '../_components/SampleLayout';
 
 const ElectronConfigPage = () => {
   const [configPath, setConfigPath] = useState('');
@@ -54,7 +54,7 @@ const ElectronConfigPage = () => {
         </div>
       </div>
 
-      <div className="mt-4 p-2 bg-gray-300 rounded-lg">{dummy}</div>
+      <div className="mt-4 rounded-lg bg-gray-300 p-2">{dummy}</div>
     </SampleLayout>
   );
 };

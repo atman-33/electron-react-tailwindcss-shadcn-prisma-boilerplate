@@ -83,6 +83,8 @@ module.exports = {
               '@prisma/client',
               '@main/lib/data-access-db/generated',
               '@main/lib/prisma-client',
+              '@shared/lib/dto',
+              '@shared/lib/models',
             ],
           },
         ],

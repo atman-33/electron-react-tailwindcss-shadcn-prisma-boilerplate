@@ -13,6 +13,8 @@ import { BrowserWindow, app, ipcMain, shell } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
+import { getBulletin, upsertBulletin } from './api/bulletins/bulletins.service';
+import { UpsertBulletinInput } from './api/bulletins/dto/upsert-bulletin-input.dto';
 import { CreateDummyInput } from './api/dummies/dto/create-dummy-input.dto';
 import { UpdateDummyInput } from './api/dummies/dto/update-dummy-input.dto';
 import {
@@ -161,14 +163,12 @@ app
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 ipcMain.handle('db/get-dummies', (event) => {
-  console.log('---> ipc-1');
   return getDummies();
 });
 
 ipcMain.handle(
   'db/create-dummy',
   (event, createDummyInput: CreateDummyInput) => {
-    console.log('---> ipc-2');
     return createDummy(createDummyInput);
   },
 );
@@ -176,13 +176,11 @@ ipcMain.handle(
 ipcMain.handle(
   'db/update-dummy',
   (event, updateDummyInput: UpdateDummyInput) => {
-    console.log('---> ipc-3');
     return updateDummy(updateDummyInput);
   },
 );
 
 ipcMain.handle('db/delete-dummies', (event) => {
-  console.log('---> ipc-4');
   return deleteDummies();
 });
 
@@ -208,3 +206,16 @@ ipcMain.handle('env/get-env', (event) => {
 ipcMain.handle('env/get-env-path', (event) => {
   return envPath;
 });
+
+ipcMain.handle('db/get-bulletin', (event, id: number) => {
+  console.log('main ---> get-bulletin');
+  return getBulletin(id);
+});
+
+ipcMain.handle(
+  'db/upsert-bulletin',
+  (event, upsertBulletinInput: UpsertBulletinInput) => {
+    console.log('main ---> upsert-bulletin');
+    return upsertBulletin(upsertBulletinInput);
+  },
+);

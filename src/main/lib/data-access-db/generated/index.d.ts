@@ -1841,6 +1841,8 @@ export namespace Prisma {
     message: string | null
     isEditing: number | null
     editedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type BulletinMaxAggregateOutputType = {
@@ -1848,6 +1850,8 @@ export namespace Prisma {
     message: string | null
     isEditing: number | null
     editedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type BulletinCountAggregateOutputType = {
@@ -1855,6 +1859,8 @@ export namespace Prisma {
     message: number
     isEditing: number
     editedAt: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -1874,6 +1880,8 @@ export namespace Prisma {
     message?: true
     isEditing?: true
     editedAt?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type BulletinMaxAggregateInputType = {
@@ -1881,6 +1889,8 @@ export namespace Prisma {
     message?: true
     isEditing?: true
     editedAt?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type BulletinCountAggregateInputType = {
@@ -1888,6 +1898,8 @@ export namespace Prisma {
     message?: true
     isEditing?: true
     editedAt?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -1982,6 +1994,8 @@ export namespace Prisma {
     message: string
     isEditing: number
     editedAt: Date
+    createdAt: Date
+    updatedAt: Date
     _count: BulletinCountAggregateOutputType | null
     _avg: BulletinAvgAggregateOutputType | null
     _sum: BulletinSumAggregateOutputType | null
@@ -2008,6 +2022,8 @@ export namespace Prisma {
     message?: boolean
     isEditing?: boolean
     editedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["bulletin"]>
 
   export type BulletinSelectScalar = {
@@ -2015,6 +2031,8 @@ export namespace Prisma {
     message?: boolean
     isEditing?: boolean
     editedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
 
@@ -2026,6 +2044,8 @@ export namespace Prisma {
       message: string
       isEditing: number
       editedAt: Date
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["bulletin"]>
     composites: {}
   }
@@ -2408,6 +2428,8 @@ export namespace Prisma {
     readonly message: FieldRef<"Bulletin", 'String'>
     readonly isEditing: FieldRef<"Bulletin", 'Int'>
     readonly editedAt: FieldRef<"Bulletin", 'DateTime'>
+    readonly createdAt: FieldRef<"Bulletin", 'DateTime'>
+    readonly updatedAt: FieldRef<"Bulletin", 'DateTime'>
   }
     
 
@@ -2709,7 +2731,9 @@ export namespace Prisma {
     id: 'id',
     message: 'message',
     isEditing: 'isEditing',
-    editedAt: 'editedAt'
+    editedAt: 'editedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type BulletinScalarFieldEnum = (typeof BulletinScalarFieldEnum)[keyof typeof BulletinScalarFieldEnum]
@@ -2829,6 +2853,8 @@ export namespace Prisma {
     message?: StringFilter<"Bulletin"> | string
     isEditing?: IntFilter<"Bulletin"> | number
     editedAt?: DateTimeFilter<"Bulletin"> | Date | string
+    createdAt?: DateTimeFilter<"Bulletin"> | Date | string
+    updatedAt?: DateTimeFilter<"Bulletin"> | Date | string
   }
 
   export type BulletinOrderByWithRelationInput = {
@@ -2836,6 +2862,8 @@ export namespace Prisma {
     message?: SortOrder
     isEditing?: SortOrder
     editedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type BulletinWhereUniqueInput = Prisma.AtLeast<{
@@ -2846,6 +2874,8 @@ export namespace Prisma {
     message?: StringFilter<"Bulletin"> | string
     isEditing?: IntFilter<"Bulletin"> | number
     editedAt?: DateTimeFilter<"Bulletin"> | Date | string
+    createdAt?: DateTimeFilter<"Bulletin"> | Date | string
+    updatedAt?: DateTimeFilter<"Bulletin"> | Date | string
   }, "id">
 
   export type BulletinOrderByWithAggregationInput = {
@@ -2853,6 +2883,8 @@ export namespace Prisma {
     message?: SortOrder
     isEditing?: SortOrder
     editedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: BulletinCountOrderByAggregateInput
     _avg?: BulletinAvgOrderByAggregateInput
     _max?: BulletinMaxOrderByAggregateInput
@@ -2868,6 +2900,8 @@ export namespace Prisma {
     message?: StringWithAggregatesFilter<"Bulletin"> | string
     isEditing?: IntWithAggregatesFilter<"Bulletin"> | number
     editedAt?: DateTimeWithAggregatesFilter<"Bulletin"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"Bulletin"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Bulletin"> | Date | string
   }
 
   export type DummyCreateInput = {
@@ -2920,6 +2954,8 @@ export namespace Prisma {
     message: string
     isEditing: number
     editedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type BulletinUncheckedCreateInput = {
@@ -2927,6 +2963,8 @@ export namespace Prisma {
     message: string
     isEditing: number
     editedAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type BulletinUpdateInput = {
@@ -2934,6 +2972,8 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     isEditing?: IntFieldUpdateOperationsInput | number
     editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BulletinUncheckedUpdateInput = {
@@ -2941,6 +2981,8 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     isEditing?: IntFieldUpdateOperationsInput | number
     editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BulletinUpdateManyMutationInput = {
@@ -2948,6 +2990,8 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     isEditing?: IntFieldUpdateOperationsInput | number
     editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BulletinUncheckedUpdateManyInput = {
@@ -2955,6 +2999,8 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     isEditing?: IntFieldUpdateOperationsInput | number
     editedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -3165,6 +3211,8 @@ export namespace Prisma {
     message?: SortOrder
     isEditing?: SortOrder
     editedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type BulletinAvgOrderByAggregateInput = {
@@ -3177,6 +3225,8 @@ export namespace Prisma {
     message?: SortOrder
     isEditing?: SortOrder
     editedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type BulletinMinOrderByAggregateInput = {
@@ -3184,6 +3234,8 @@ export namespace Prisma {
     message?: SortOrder
     isEditing?: SortOrder
     editedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type BulletinSumOrderByAggregateInput = {

@@ -1,14 +1,20 @@
 /* eslint-disable react/jsx-boolean-value */
 import RecoilProvider from '@/components/providers/RecoilProvider';
 import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
-import SampleLayout from '../_components/layout';
-import CancelButton from './_components/CancelButton';
-import EditButton from './_components/EditButton';
+import { useBulletin } from '@/features/bulletin/hooks/useBulletin';
+import { useEffect, useState } from 'react';
+import CancelButton from '../../../features/bulletin/components/CancelButton';
+import EditButton from '../../../features/bulletin/components/EditButton';
+import SampleLayout from '../_components/SampleLayout';
 
 const BulleinPage = () => {
-  const [message, setMessage] = useState<string>('');
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [message, setMessage] = useState('');
+  const { bulletin, initBulletin, setIsEditing } = useBulletin();
+
+  useEffect(() => {
+    initBulletin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleEditButtonClick = () => {
     console.log('Edit button clicked');
@@ -20,6 +26,7 @@ const BulleinPage = () => {
     setIsEditing(false);
   };
 
+  // TODO: RecoilRoot でエラーが発生
   return (
     <RecoilProvider>
       <SampleLayout>
@@ -30,7 +37,7 @@ const BulleinPage = () => {
             <div className="flex space-x-2">
               <EditButton onClick={handleEditButtonClick} />
               <CancelButton
-                disabled={!isEditing}
+                disabled={!bulletin?.isEditing}
                 onClick={handleCancelButtonClick}
               />
             </div>
@@ -39,7 +46,7 @@ const BulleinPage = () => {
             <Textarea
               onChange={(e) => setMessage(e.target.value)}
               value={message}
-              readOnly={!isEditing}
+              readOnly={!bulletin?.isEditing}
               placeholder="Write something..."
               className="h-60"
             />

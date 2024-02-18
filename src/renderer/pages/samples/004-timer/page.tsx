@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
-import useTimer from '@/features/bulletin/hooks/useTimer';
+import useTimer from '@/pages/samples/004-timer/_hooks/useTimer';
 import { useState } from 'react';
-import SampleLayout from '../_components/layout';
+import SampleLayout from '../_components/SampleLayout';
 
 const Timer = () => {
   const { time, isRunning, toggle, reset } = useTimer();

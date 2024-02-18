@@ -5,7 +5,7 @@ import { useDummies } from '@/features/dummy/hooks/useDummies';
 import { CreateDummyInput } from '@shared/lib/dto';
 import { Dummy } from '@shared/lib/models';
 import { useEffect, useState } from 'react';
-import SampleLayout from '../_components/layout';
+import SampleLayout from '../_components/SampleLayout';
 
 const PrismaSqlitePage = () => {
   const [dbUrl, setdbUrl] = useState('');

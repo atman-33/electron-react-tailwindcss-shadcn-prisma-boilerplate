@@ -1,6 +1,10 @@
-import { CreateDummyInput, UpdateDummyInput } from '@shared/lib/dto';
+import {
+  CreateDummyInput,
+  UpdateDummyInput,
+  UpsertBulletinInput,
+} from '@shared/lib/dto';
 import { EnvType } from '@shared/lib/env';
-import { Dummy } from '@shared/lib/models';
+import { Bulletin, Dummy } from '@shared/lib/models';
 
 // eslint-disable-next-line boundaries/element-types
 import { ElectronHandler } from '../main/preload';
@@ -14,6 +18,10 @@ declare global {
       createDummy: (createDummyInput: CreateDummyInput) => Promise<Dummy>;
       updateDummy: (updateDummyInput: UpdateDummyInput) => Promise<Dummy>;
       deleteDummies: () => Promise<void>;
+      getBulletin: (id: number) => Promise<Bulletin | null>;
+      upsertBulletin: (
+        upsertBulletinInput: UpsertBulletinInput,
+      ) => Promise<Bulletin>;
     };
     config: {
       getItem: (key: string) => Promise<any>;

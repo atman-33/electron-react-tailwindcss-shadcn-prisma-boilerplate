@@ -116,7 +116,9 @@ exports.Prisma.BulletinScalarFieldEnum = {
   id: 'id',
   message: 'message',
   isEditing: 'isEditing',
-  editedAt: 'editedAt'
+  editedAt: 'editedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {

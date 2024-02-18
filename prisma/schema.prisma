@@ -30,5 +30,8 @@ model Bulletin {
   isEditing Int      @map("is_editing") // 1:編集中  0:編集中ではない
   editedAt  DateTime @map("edited_at")
 
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
   @@map("bulletin")
 }
