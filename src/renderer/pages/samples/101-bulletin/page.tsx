@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-boolean-value */
-import RecoilProvider from '@/components/providers/RecoilProvider';
 import { Textarea } from '@/components/ui/textarea';
 import { useBulletin } from '@/features/bulletin/hooks/useBulletin';
 import { useEffect, useState } from 'react';
@@ -28,33 +27,31 @@ const BulleinPage = () => {
 
   // TODO: RecoilRoot でエラーが発生
   return (
-    <RecoilProvider>
-      <SampleLayout>
-        <div className="my-2 font-bold">BulleinBoardPage</div>
-        <div className="flex flex-col space-y-2">
-          <div className="flex items-baseline justify-between">
-            <div className="text-sm">Last updated: yyyy/mm/dd hh:mm:ss</div>
-            <div className="flex space-x-2">
-              <EditButton onClick={handleEditButtonClick} />
-              <CancelButton
-                disabled={!bulletin?.isEditing}
-                onClick={handleCancelButtonClick}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <Textarea
-              onChange={(e) => setMessage(e.target.value)}
-              value={message}
-              readOnly={!bulletin?.isEditing}
-              placeholder="Write something..."
-              className="h-60"
+    <SampleLayout>
+      <div className="my-2 font-bold">BulleinBoardPage</div>
+      <div className="flex flex-col space-y-2">
+        <div className="flex items-baseline justify-between">
+          <div className="text-sm">Last updated: yyyy/mm/dd hh:mm:ss</div>
+          <div className="flex space-x-2">
+            <EditButton onClick={handleEditButtonClick} />
+            <CancelButton
+              disabled={!bulletin?.isEditing}
+              onClick={handleCancelButtonClick}
             />
           </div>
         </div>
-        <div>{message}</div>
-      </SampleLayout>
-    </RecoilProvider>
+        <div className="flex flex-col space-y-2">
+          <Textarea
+            onChange={(e) => setMessage(e.target.value)}
+            value={message}
+            readOnly={!bulletin?.isEditing}
+            placeholder="Write something..."
+            className="h-60"
+          />
+        </div>
+      </div>
+      <div>{message}</div>
+    </SampleLayout>
   );
 };
 

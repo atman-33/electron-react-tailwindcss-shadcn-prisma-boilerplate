@@ -26,14 +26,16 @@ export default RecoilProvider;
 
 ### 3. RecoilProviderを適用
 
-e.g.  
+`src\renderer\App.tsx`
 
 ```tsx
-const Page = () => {
+export default function App() {
   return (
     <RecoilProvider>
-      ...
+      <Router>
+        ...
+      </Router>
     </RecoilProvider>
   );
-};
+}
 ```
