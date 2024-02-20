@@ -9,9 +9,9 @@ const useBulletin = () => {
   const bulletin = useRecoilValue(bulletinState(0));
 
   /**
-   * 連絡板を初期化する。
+   * 連絡板を取得する。
    */
-  const initBulletin = useRecoilCallback(
+  const getBulletin = useRecoilCallback(
     ({ set }) =>
       async () => {
         let res = await window.db.getBulletin(0);
@@ -26,6 +26,7 @@ const useBulletin = () => {
         }
 
         set(bulletinState(0), res);
+        return res;
       },
     [bulletin],
   );
@@ -71,7 +72,7 @@ const useBulletin = () => {
 
   return {
     bulletin,
-    initBulletin,
+    getBulletin,
     upsertBulletin,
     setIsEditing,
   };

@@ -9,12 +9,19 @@ import SampleLayout from '../_components/SampleLayout';
 
 const BulleinPage = () => {
   const [message, setMessage] = useState('');
-  const { bulletin, initBulletin, upsertBulletin, setIsEditing } =
-    useBulletin();
+  const { bulletin, getBulletin, upsertBulletin, setIsEditing } = useBulletin();
 
   useEffect(() => {
-    initBulletin();
-    setMessage(bulletin?.message ?? '');
+    getBulletin()
+      .then((res) => {
+        if (res) {
+          setMessage(res.message);
+        }
+        return null;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -63,7 +70,8 @@ const BulleinPage = () => {
         <div className="flex flex-col space-y-2">
           <Textarea
             style={{
-              backgroundColor: `${bulletin?.isEditing ? 'lightblue' : 'white'}`,
+              backgroundColor: `${bulletin?.isEditing ? 'lightyellow' : 'white'}`,
+              borderColor: `${bulletin?.isEditing ? 'red' : 'black'}`,
               fontSize: '18px',
               fontWeight: 'bold',
               color: 'red',
