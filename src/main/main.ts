@@ -101,6 +101,13 @@ const createWindow = async () => {
     },
   });
 
+  // 常に最前面表示モード
+  console.log(`SHOW_ON_TOP: ${env.SHOW_ON_TOP}`);
+  if (env.SHOW_ON_TOP) {
+    console.log('SHOW_ON_TOP: true');
+    mainWindow.setAlwaysOnTop(true, 'screen-saver');
+  }
+
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
   mainWindow.on('ready-to-show', () => {
