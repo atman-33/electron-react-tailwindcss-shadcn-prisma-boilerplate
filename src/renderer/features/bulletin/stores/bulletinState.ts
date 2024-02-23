@@ -17,7 +17,7 @@ const initialDataState = atom<Bulletin[] | null>({
     key: 'bulletin/initialDataState/default',
     get: async () => {
       let res = await window.db.getBulletin(0);
-      console.log('res', res);
+      // console.log('res', res);
 
       // id=0 のデータが無ければ作成
       if (!res) {

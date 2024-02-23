@@ -6,22 +6,39 @@ import EditButton from '@/features/bulletin/components/EditButton';
 import SaveButton from '@/features/bulletin/components/SaveButton';
 import { useBulletinDispatcher } from '@/features/bulletin/hooks/useBulletinDispatcher';
 import { bulletinSelectors } from '@/features/bulletin/stores/bulletinState';
+import { useBackgroundWorker } from '@/hooks/useBackgroundWorker';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import SampleLayout from '../_components/SampleLayout';
 
 const BulleinPage = () => {
   const [message, setMessage] = useState('');
+  const [updatedAt, setUpdatedAt] = useState(new Date());
   const bulletinDispatcher = useBulletinDispatcher();
   const bulletin = bulletinSelectors.useGetBulletin(0);
 
+  const {
+    start: autoReloadStart,
+    stop: autoReloadStop,
+    error: autoReloadError,
+  } = useBackgroundWorker({
+    func: async () => {
+      await bulletinDispatcher.reloadBulletins();
+      setMessage(bulletin?.message ?? '');
+      setUpdatedAt(new Date());
+    },
+    interval: 3000,
+  });
+
   useEffect(() => {
     setMessage(bulletin?.message ?? '');
+    autoReloadStart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleEditButtonClick = useCallback(() => {
     console.log('Edit button clicked');
     bulletinDispatcher.setIsEditing(true);
+    autoReloadStop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bulletin]);
 
@@ -33,6 +50,7 @@ const BulleinPage = () => {
       isEditing: 0,
       editStartedAt: bulletin?.editStartedAt ?? new Date(),
     });
+    autoReloadStart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bulletin, message]);
 
@@ -40,6 +58,7 @@ const BulleinPage = () => {
     console.log('Cancel button clicked');
     setMessage(bulletin?.message ?? '');
     bulletinDispatcher.setIsEditing(false);
+    autoReloadStart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bulletin]);
 
@@ -55,7 +74,7 @@ const BulleinPage = () => {
         <div className="my-2 font-bold">BulleinBoardPage</div>
         <div className="flex flex-col space-y-2">
           <div className="flex items-baseline justify-between">
-            <div className="text-sm">Last updated: yyyy/mm/dd hh:mm:ss</div>
+            <div className="text-sm">{`Last updated: ${updatedAt}`}</div>
             <div className="flex space-x-2">
               {bulletin?.isEditing ? (
                 <SaveButton onClick={handleSaveButtonClick} />
@@ -90,6 +109,7 @@ const BulleinPage = () => {
           <div>{`message: ${bulletin?.message}`}</div>
           <div>{`isEditing: ${bulletin?.isEditing}`}</div>
           <div>{`editStartedAt: ${bulletin?.editStartedAt}`}</div>
+          <div>{`autoReloadError: ${autoReloadError}`}</div>
         </div>
       </Suspense>
     </SampleLayout>

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-type UsePollingOptions<T> = {
-  /** データを取得する関数 */
-  fetch: () => Promise<T>;
-  /** ポーリングの間隔（デフォルトは3000ms） */
+type UseBackgroundWorkerOptions = {
+  /** 定期的に実行する関数 */
+  func: () => Promise<void>;
+  /** 実行間隔（デフォルトは3000ms） */
   interval?: number;
 };
 
@@ -12,16 +12,17 @@ type UsePollingOptions<T> = {
  * @param param0
  * @returns
  */
-const usePolling = <T>({ fetch, interval = 3000 }: UsePollingOptions<T>) => {
-  const [data, setData] = useState<T | null>(null);
+const useBackgroundWorker = ({
+  func,
+  interval = 3000,
+}: UseBackgroundWorkerOptions) => {
   const [error, setError] = useState<Error | null>(null);
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
     const fetchAndUpdate = async () => {
       try {
-        const res = await fetch();
-        setData(res);
+        await func();
       } catch (e: any) {
         setError(e);
       }
@@ -35,7 +36,7 @@ const usePolling = <T>({ fetch, interval = 3000 }: UsePollingOptions<T>) => {
 
     // コンポーネントのアンマウント時にタイマーをクリア
     return () => clearInterval(intervalId);
-  }, [fetch, interval, isRunning]);
+  }, [func, interval, isRunning]);
 
   const start = () => {
     setIsRunning(true);
@@ -45,7 +46,7 @@ const usePolling = <T>({ fetch, interval = 3000 }: UsePollingOptions<T>) => {
     setIsRunning(false);
   };
 
-  return { data, error, isRunning, start, stop };
+  return { error, isRunning, start, stop };
 };
 
-export { usePolling };
+export { useBackgroundWorker };
