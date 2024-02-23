@@ -21,8 +21,11 @@
       "@/*": [
         "./src/renderer/*"
       ],
-      "@api/*": [
-        "./src/main/api/*"
+      "@main/*": [
+        "./src/main/*"
+      ],
+      "@shared/*": [
+        "./src/shared/*"
       ]
     }
   },

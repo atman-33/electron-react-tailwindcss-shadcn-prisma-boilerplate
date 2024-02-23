@@ -1,6 +1,6 @@
 module.exports = {
   extends: 'erb',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'boundaries'],
   rules: {
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
@@ -17,6 +17,29 @@ module.exports = {
     'no-console': 'off',
     'import/prefer-default-export': 'off',
     'no-useless-catch': 'off',
+    'react/function-component-definition': 'off',
+    'dot-notation': 'off',
+    'no-underscore-dangle': 'off',
+    'boundaries/element-types': [
+      2,
+      {
+        default: 'disallow',
+        rules: [
+          {
+            from: ['main'],
+            allow: ['main', 'shared'],
+          },
+          {
+            from: ['renderer'],
+            allow: ['renderer', 'shared'],
+          },
+          {
+            from: ['shared'],
+            allow: ['shared', 'main'],
+          },
+        ],
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 2022,
@@ -34,5 +57,38 @@ module.exports = {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
+    'boundaries/elements': [
+      {
+        type: 'main',
+        pattern: 'src/main',
+      },
+      {
+        type: 'renderer',
+        pattern: 'src/renderer',
+      },
+      {
+        type: 'shared',
+        pattern: 'src/shared',
+      },
+    ],
   },
+  overrides: [
+    {
+      files: ['src/main/**/*.ts'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            paths: [
+              '@prisma/client',
+              '@main/lib/data-access-db/generated',
+              '@main/lib/prisma-client',
+              '@shared/lib/dto',
+              '@shared/lib/models',
+            ],
+          },
+        ],
+      },
+    },
+  ],
 };

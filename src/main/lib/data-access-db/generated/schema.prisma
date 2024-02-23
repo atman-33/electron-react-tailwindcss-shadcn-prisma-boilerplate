@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/main/lib/data-access-db/generated"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- // 
+// Dummy for sqlite
+model Dummy {
+  //   id       String    @id
+  id    Int       @id @default(autoincrement())
+  date  DateTime? @default(now())
+  int   Int?
+  float Float?
+  text  String?
+}
+
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- // 
+
+model Bulletin {
+  id            Int      @id
+  message       String   @map("message")
+  isEditing     Int      @map("is_editing") // 1:編集中  0:編集中ではない
+  editStartedAt DateTime @map("edit_started_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("bulletin")
+}

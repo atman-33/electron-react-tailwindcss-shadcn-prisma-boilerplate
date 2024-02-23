@@ -1,56 +1,37 @@
-import { Button } from '@/components/ui/button';
-import { useDummies } from '@/features/dummy/hooks/useDummies';
 import '@/styles/globals.css';
-import { CreateDummyInput } from '@api/dummies/dto/create-dummy-input.dto';
-import { Dummy } from '@prisma/client';
-import { useState } from 'react';
+
+import Spinner from '@/components/elements/Spinner';
+import RecoilProvider from '@/components/providers/RecoilProvider';
+import HomePage from '@/pages/page';
+import ElectronConfigPage from '@/pages/samples/001-electron-config/page';
+import EnvPage from '@/pages/samples/002-env/page';
+import PrismaSqlitePage from '@/pages/samples/003-prisma-sqlite/page';
+import TimerPage from '@/pages/samples/004-timer/page';
+import BulleinPage from '@/pages/samples/101-bulletin/page';
+import { Suspense } from 'react';
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
-
-function Home() {
-  const [dummies, setDummies] = useState<Dummy[]>([]);
-  const { getDummies, createDummy } = useDummies();
-
-  const handleLoadButtonClick = async () => {
-    console.log('Load button clicked');
-    setDummies(await getDummies());
-  };
-
-  const handAddButtonClick = async () => {
-    console.log('Add button clicked');
-    const data: CreateDummyInput = {
-      text: 'test message...',
-    };
-    await createDummy(data);
-  };
-
-  return (
-    <>
-      <div className="m-4 p-4 bg-gray-100 rounded-lg">Sample Application</div>
-      <Button variant="default" className="m-4" onClick={handleLoadButtonClick}>
-        データ取得ボタン
-      </Button>
-
-      <Button variant="default" className="m-4" onClick={handAddButtonClick}>
-        データ追加ボタン
-      </Button>
-
-      <ul className="m-4">
-        {dummies.map((dummy) => (
-          <li key={dummy.id}>
-            {dummy.id} : {dummy.text}
-          </li>
-        ))}
-      </ul>
-    </>
-  );
-}
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
+    <RecoilProvider>
+      <Suspense fallback={<Spinner />}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/samples/001-electron-config"
+              element={<ElectronConfigPage />}
+            />
+            <Route path="/samples/002-env" element={<EnvPage />} />
+            <Route
+              path="/samples/003-prisma-sqlite"
+              element={<PrismaSqlitePage />}
+            />
+            <Route path="/samples/004-timer" element={<TimerPage />} />
+            <Route path="/samples/101-bulletin" element={<BulleinPage />} />
+          </Routes>
+        </Router>
+      </Suspense>
+    </RecoilProvider>
   );
 }

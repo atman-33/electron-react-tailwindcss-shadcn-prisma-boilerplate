@@ -1,20 +1,20 @@
 ## 参考URL
 
-https://qiita.com/udayaan/items/2a7c8fd0771d4d995b69
+<https://qiita.com/udayaan/items/2a7c8fd0771d4d995b69>
 
 ## 開発環境セットアップ
 
-1. Node.js をインストール  
+### 1. Node.js をインストール  
 
-https://nodejs.org/en
+<https://nodejs.org/en>
 
-2. パッケージをインストール
+### 2. パッケージをインストール
 
 ```bash
 npm i
 ```
 
-3. 開発モードで実行
+### 3. 開発モードで実行
 
 ```bash
 npm run start
@@ -22,7 +22,7 @@ npm run start
 
 ## パッケージを配布
 
-1. Build 
+### 1. パッケージング
 
 ```bash
 npm run package
@@ -41,7 +41,9 @@ npm run package
 
 /release          : 内にはビルドしたアプリが保存
 ```
+
 ___  
+
 <br />
 
 # Electron React Boilerplate
@@ -102,4 +104,4 @@ See our [docs and guides here](https://electron-react-boilerplate.js.org/docs/in
 
 ## Community
 
-Join our Discord: https://discord.gg/Fjy3vfgy5q
+Join our Discord: <https://discord.gg/Fjy3vfgy5q>

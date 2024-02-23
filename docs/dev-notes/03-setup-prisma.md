@@ -2,9 +2,11 @@
 
 ## 参考URL
 
-https://www.prisma.io/docs/getting-started/quickstart
+<https://www.prisma.io/docs/getting-started/quickstart>
 
-https://zenn.dev/forest1040/articles/7f6794d8651fd4
+<https://zenn.dev/forest1040/articles/7f6794d8651fd4>
+
+<https://blog.shgnkn.io/impression-of-prisma/>
 
 ## 導入ステップ
 
@@ -18,6 +20,19 @@ npx prisma init --datasource-provider sqlite
 ### 2. モデル作成
 
 `schme.prisma` ファイルにモデルを追加
+
+> `prisma-client`の出力先を指定する場合は下記を参考に実施
+
+generatedファイル生成場所を指定
+
+`prisma\schema.prisma`  
+
+```prisma
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/main/lib/data-access-db/generated"
+}
+```
 
 ### 3. マイグレーション
 
@@ -35,21 +50,45 @@ npx prisma generate
 
 ### 5. メインプロセス側にDBアクセス処理を追加
 
-1. main ファイルに、「Prisma初期化」と「DBクローズ」を追加
+#### (1) PrismaClient 生成ファイルを作成
+
+`src\main\lib\prisma-client\index.ts`
+
+```ts
+import { PrismaClient } from '../data-access-db/generated';
+import { env } from '../env';
+
+declare global {
+  // eslint-disable-next-line vars-on-top, no-var
+  var prisma: PrismaClient;
+}
+
+if (!global.prisma) {
+  global.prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url: env.DATABASE_URL,
+      },
+    },
+  });
+}
+
+export default global.prisma;
+```
+
+#### (2) main ファイルに、「DBクローズ」を追加
 
 `src\main\main.ts`  
 
 ```ts
-// prisma初期化
-const prisma = new PrismaClient();
-
+import { prismaClient } from './lib/prisma-client';
 ...
 
 /**
  * DBコネクションをクローズ
  */
 const closeDB = async () => {
-  await prisma.$disconnect();
+  await prismaClient.$disconnect();
 };
 
 app.on('window-all-closed', () => {
@@ -63,50 +102,64 @@ app.on('window-all-closed', () => {
 });
 ```
 
-2. service ファイルを追加
+#### (3) service ファイルを追加
 
 e.g.  
 
 `src\main\api\dummies\dummies.service.ts`
 
 ```ts
-import { Dummy, PrismaClient } from '@prisma/client';
+import { Dummy } from '../../lib/data-access-db/generated';
+import { prismaClient } from '../../lib/prisma-client';
+import { CreateDummyInput } from './dto/create-dummy-input.dto';
 
-const getDummies = async (prisma: PrismaClient): Promise<Dummy[]> => {
-  return await prisma.dummy.findMany();
+const getDummies = async (): Promise<Dummy[]> => {
+  return await prismaClient.dummy.findMany();
 };
 
 const createDummy = async (
-  prisma: PrismaClient,
-  dummy: Dummy,
+  createDummyInput: CreateDummyInput,
 ): Promise<Dummy> => {
-  return await prisma.dummy.create({
-    data: dummy,
+  return await prismaClient.dummy.create({
+    data: createDummyInput,
   });
 };
 
 export { createDummy, getDummies };
+
 ```
 
-3. main ファイルに、IPC通信用の処理を追加
+#### (4) main ファイルに、IPC通信用の処理を追加
 
 `src\main\main.ts`  
 
 ```ts
-ipcMain.handle('load-dummies', (event, message: any) => {
-  console.log(message);
-  return getDummies(prisma);
+ipcMain.handle('db/load-dummies', (event) => {
+  return getDummies();
 });
 
-ipcMain.handle('create-dummy', (event, dummy: any) => {
-  console.log(dummy);
-  return createDummy(prisma, dummy);
+ipcMain.handle(
+  'db/create-dummy',
+  (event, createDummyInput: CreateDummyInput) => {
+    return createDummy(createDummyInput);
+  },
+);
+```
+
+#### (5) preload ファイルに、IPC通信用の処理を追加
+
+`src\main\preload.ts`  
+
+```ts
+contextBridge.exposeInMainWorld('db', {
+  loadDummies: () => ipcRenderer.invoke('db/load-dummies'),
+  createDummy: (dummy: Dummy) => ipcRenderer.invoke('db/create-dummy', dummy),
 });
 ```
 
 ### 6. レンダープロセス側にDBアクセス処理を追加
 
-1. preload.d.ts に db アクセスの処理を追加
+#### (1) preload.d.ts に db アクセスの処理を追加
 
 `src\renderer\preload.d.ts`
 
@@ -122,30 +175,38 @@ e.g.
   }
 ```
 
-2. API処理用のカスタムフックを作成
+#### (2) API処理用のカスタムフックを作成
 
-`src\main\api\dummies\dummies.service.ts`
+`src\renderer\features\dummy\hooks\useDummies.ts`
 
 ```ts
-import { Dummy, PrismaClient } from '@prisma/client';
+import { CreateDummyInput } from '@api/dummies/dto/create-dummy-input.dto';
+import { Dummy } from '@main/lib/data-access-db/generated';
 
-const getDummies = async (prisma: PrismaClient): Promise<Dummy[]> => {
-  return await prisma.dummy.findMany();
+export const useDummies = () => {
+  const getDummies = async (): Promise<Dummy[]> => {
+    try {
+      return await window.db.loadDummies();
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const createDummy = async (
+    createDummyInput: CreateDummyInput,
+  ): Promise<Dummy> => {
+    try {
+      return await window.db.createDummy(createDummyInput);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  return { getDummies, createDummy };
 };
-
-const createDummy = async (
-  prisma: PrismaClient,
-  dummy: Dummy,
-): Promise<Dummy> => {
-  return await prisma.dummy.create({
-    data: dummy,
-  });
-};
-
-export { createDummy, getDummies };
 ```
 
-3. カスタムフックを利用
+#### (3) カスタムフックを利用
 
 e.g.  
 
@@ -157,3 +218,24 @@ e.g.
     setDummies(await getDummies());
   };
 ```
+
+### 7. prisma を build 時に出力するように設定
+
+`package.json`
+
+```json
+    "extraResources": [
+      ...,
+      {
+        "from": "./node_modules/.prisma/",
+        "to": "../node_modules/.prisma/"
+      },
+      {
+        "from": "./node_modules/@prisma/client/",
+        "to": "../node_modules/@prisma/client/"
+      },
+      ...
+```
+
+> exe が配置されるフォルダにnode_modulesフォルダを出力すること。
+> そのようにしないと、DB操作時にエラーが発生する。

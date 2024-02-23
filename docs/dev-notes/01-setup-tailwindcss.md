@@ -2,12 +2,11 @@
 
 ## 参考URL
 
-https://zenn.dev/helloyuki/scraps/22320af3cb32fb
+<https://zenn.dev/helloyuki/scraps/22320af3cb32fb>
 
-https://blog.saeloun.com/2023/02/24/integrate-tailwind-css-with-electron/
+<https://blog.saeloun.com/2023/02/24/integrate-tailwind-css-with-electron/>
 
-https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/3552
-
+<https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/3552>
 
 ## 導入ステップ
 
@@ -79,4 +78,43 @@ module > rules > `postcss-loader` を追加
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+```
+
+## その他
+
+クラス名が自動ソートされるように、`prettier-plugin-tailwindcss`を導入を推奨  
+
+参考URL  
+<https://tailwindcss.com/blog/automatic-class-sorting-with-prettier>
+
+- パッケージをインストール  
+
+```bash
+npm install -D prettier prettier-plugin-tailwindcss
+```
+
+- prettier にプラグインを追加
+
+`package.json`
+
+```json
+  ...,
+  "prettier": {
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": [
+          ".prettierrc",
+          ".eslintrc"
+        ],
+        "options": {
+          "parser": "json"
+        }
+      }
+    ],
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
+  ...
 ```

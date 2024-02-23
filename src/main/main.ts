@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint global-require: off, no-console: off, promise/always-return: off */
 
 /**
@@ -8,24 +9,31 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-import { CreateDummyInput } from '@api/dummies/dto/create-dummy-input.dto';
-import { PrismaClient } from '@prisma/client';
 import { BrowserWindow, app, ipcMain, shell } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
-import { createDummy, getDummies } from './api/dummies/dummies.service';
+import {
+  getBulletin,
+  getBulletins,
+  updateBulletinIsEditing,
+  upsertBulletin,
+} from './api/bulletins/bulletins.service';
+import { UpdateBulletinIsEditingInput } from './api/bulletins/dto/update-bulletin-is-editing-input.dto';
+import { UpsertBulletinInput } from './api/bulletins/dto/upsert-bulletin-input.dto';
+import { CreateDummyInput } from './api/dummies/dto/create-dummy-input.dto';
+import { UpdateDummyInput } from './api/dummies/dto/update-dummy-input.dto';
+import {
+  createDummy,
+  deleteDummies,
+  getDummies,
+  updateDummy,
+} from './api/dummies/dummies.service';
+import { ConfigStore } from './lib/config';
+import { env, envPath } from './lib/env';
+import prismaClient from './lib/prisma-client';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-
-// prisma初期化
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL,
-    },
-  },
-});
 
 class AppUpdater {
   constructor() {
@@ -93,6 +101,13 @@ const createWindow = async () => {
     },
   });
 
+  // 常に最前面表示モード
+  console.log(`SHOW_ON_TOP: ${env.SHOW_ON_TOP}`);
+  if (env.SHOW_ON_TOP) {
+    console.log('SHOW_ON_TOP: true');
+    mainWindow.setAlwaysOnTop(true, 'screen-saver');
+  }
+
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
   mainWindow.on('ready-to-show', () => {
@@ -132,7 +147,7 @@ const createWindow = async () => {
  * DBコネクションをクローズ
  */
 const closeDB = async () => {
-  await prisma.$disconnect();
+  await prismaClient.$disconnect();
 };
 
 app.on('window-all-closed', () => {
@@ -160,13 +175,73 @@ app
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-ipcMain.handle('load-dummies', (event) => {
-  console.log('load-dummies');
-  return getDummies(prisma);
+ipcMain.handle('db/get-dummies', (event) => {
+  return getDummies();
 });
 
-ipcMain.handle('create-dummy', (event, createDummyInput: CreateDummyInput) => {
-  console.log(createDummyInput);
-  return createDummy(prisma, createDummyInput);
+ipcMain.handle(
+  'db/create-dummy',
+  (event, createDummyInput: CreateDummyInput) => {
+    return createDummy(createDummyInput);
+  },
+);
+
+ipcMain.handle(
+  'db/update-dummy',
+  (event, updateDummyInput: UpdateDummyInput) => {
+    return updateDummy(updateDummyInput);
+  },
+);
+
+ipcMain.handle('db/delete-dummies', (event) => {
+  return deleteDummies();
 });
+
+ipcMain.handle('config/get-item', (event, key: string) => {
+  const config = new ConfigStore();
+  return config.getItem(key);
+});
+
+ipcMain.handle('config/get-config-path', (event, key: string) => {
+  const config = new ConfigStore();
+  return config.getConfigPath();
+});
+
+ipcMain.handle('config/set-item', (event, key: string, value: any) => {
+  const config = new ConfigStore();
+  return config.setItem(key, value);
+});
+
+ipcMain.handle('env/get-env', (event) => {
+  return env;
+});
+
+ipcMain.handle('env/get-env-path', (event) => {
+  return envPath;
+});
+
+ipcMain.handle('db/get-bulletins', (event) => {
+  console.log('main ---> get-bulletins');
+  return getBulletins();
+});
+
+ipcMain.handle('db/get-bulletin', (event, id: number) => {
+  console.log('main ---> get-bulletin');
+  return getBulletin(id);
+});
+
+ipcMain.handle(
+  'db/upsert-bulletin',
+  (event, upsertBulletinInput: UpsertBulletinInput) => {
+    console.log('main ---> upsert-bulletin');
+    return upsertBulletin(upsertBulletinInput);
+  },
+);
+
+ipcMain.handle(
+  'db/update-bulletin-is-editing',
+  (event, updateBulletinIsEditingInput: UpdateBulletinIsEditingInput) => {
+    console.log('main ---> update-bulletin-is-editing');
+    return updateBulletinIsEditing(updateBulletinIsEditingInput);
+  },
+);
