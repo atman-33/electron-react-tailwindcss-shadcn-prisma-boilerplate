@@ -39,6 +39,7 @@ contextBridge.exposeInMainWorld('db', {
   updateDummy: (updateDummyInput: UpdateDummyInput) =>
     ipcRenderer.invoke('db/update-dummy', updateDummyInput),
   deleteDummies: () => ipcRenderer.invoke('db/delete-dummies'),
+  getBulletins: () => ipcRenderer.invoke('db/get-bulletins'),
   getBulletin: (id: number) => ipcRenderer.invoke('db/get-bulletin', id),
   upsertBulletin: (upsertBulletinInput: UpsertBulletinInput) =>
     ipcRenderer.invoke('db/upsert-bulletin', upsertBulletinInput),

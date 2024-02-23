@@ -13,7 +13,11 @@ import { BrowserWindow, app, ipcMain, shell } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
-import { getBulletin, upsertBulletin } from './api/bulletins/bulletins.service';
+import {
+  getBulletin,
+  getBulletins,
+  upsertBulletin,
+} from './api/bulletins/bulletins.service';
 import { UpsertBulletinInput } from './api/bulletins/dto/upsert-bulletin-input.dto';
 import { CreateDummyInput } from './api/dummies/dto/create-dummy-input.dto';
 import { UpdateDummyInput } from './api/dummies/dto/update-dummy-input.dto';
@@ -205,6 +209,11 @@ ipcMain.handle('env/get-env', (event) => {
 
 ipcMain.handle('env/get-env-path', (event) => {
   return envPath;
+});
+
+ipcMain.handle('db/get-bulletins', (event) => {
+  console.log('main ---> get-bulletins');
+  return getBulletins();
 });
 
 ipcMain.handle('db/get-bulletin', (event, id: number) => {

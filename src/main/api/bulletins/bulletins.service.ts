@@ -3,6 +3,14 @@ import prismaClient from '../../lib/prisma-client';
 import { UpsertBulletinInput } from './dto/upsert-bulletin-input.dto';
 
 /**
+ * 連絡板のデータを全て取得する。
+ * @returns
+ */
+const getBulletins = async (): Promise<Bulletin[] | null> => {
+  return await prismaClient.bulletin.findMany();
+};
+
+/**
  * 連絡板のデータを取得する。
  * @param id
  * @returns
@@ -32,4 +40,4 @@ const upsertBulletin = async (
   });
 };
 
-export { getBulletin, upsertBulletin };
+export { getBulletin, getBulletins, upsertBulletin };

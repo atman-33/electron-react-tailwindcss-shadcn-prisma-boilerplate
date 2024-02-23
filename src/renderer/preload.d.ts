@@ -18,6 +18,7 @@ declare global {
       createDummy: (createDummyInput: CreateDummyInput) => Promise<Dummy>;
       updateDummy: (updateDummyInput: UpdateDummyInput) => Promise<Dummy>;
       deleteDummies: () => Promise<void>;
+      getBulletins: () => Promise<Bulletin[] | null>;
       getBulletin: (id: number) => Promise<Bulletin | null>;
       upsertBulletin: (
         upsertBulletinInput: UpsertBulletinInput,

@@ -1,5 +1,9 @@
 # Recoil セットアップ
 
+## 参考URL
+
+<https://zenn.dev/yamakenji24/articles/55d9f15b03eb7f>
+<https://tech.spacely.co.jp/entry/2023/09/27/184625>
 
 ## 導入ステップ
 
