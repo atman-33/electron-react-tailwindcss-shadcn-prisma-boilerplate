@@ -1,5 +1,6 @@
 import { Bulletin } from '../../lib/data-access-db/generated';
 import prismaClient from '../../lib/prisma-client';
+import { UpdateBulletinIsEditingInput } from './dto/update-bulletin-is-editing-input.dto';
 import { UpsertBulletinInput } from './dto/upsert-bulletin-input.dto';
 
 /**
@@ -40,4 +41,18 @@ const upsertBulletin = async (
   });
 };
 
-export { getBulletin, getBulletins, upsertBulletin };
+const updateBulletinIsEditing = async (
+  updateBulletinIsEditingInput: UpdateBulletinIsEditingInput,
+): Promise<Bulletin> => {
+  return await prismaClient.bulletin.update({
+    where: {
+      id: updateBulletinIsEditingInput.id,
+    },
+    data: {
+      isEditing: updateBulletinIsEditingInput.isEditing,
+      editStartedAt: updateBulletinIsEditingInput.editStartedAt,
+    },
+  });
+};
+
+export { getBulletin, getBulletins, updateBulletinIsEditing, upsertBulletin };

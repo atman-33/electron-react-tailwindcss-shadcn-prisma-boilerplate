@@ -1,5 +1,6 @@
 import {
   CreateDummyInput,
+  UpdateBulletinIsEditingInput,
   UpdateDummyInput,
   UpsertBulletinInput,
 } from '@shared/lib/dto';
@@ -14,14 +15,19 @@ declare global {
   interface Window {
     electron: ElectronHandler;
     db: {
+      // Dummies
       getDummies: () => Promise<Dummy[]>;
       createDummy: (createDummyInput: CreateDummyInput) => Promise<Dummy>;
       updateDummy: (updateDummyInput: UpdateDummyInput) => Promise<Dummy>;
       deleteDummies: () => Promise<void>;
+      // Bulletins
       getBulletins: () => Promise<Bulletin[] | null>;
       getBulletin: (id: number) => Promise<Bulletin | null>;
       upsertBulletin: (
         upsertBulletinInput: UpsertBulletinInput,
+      ) => Promise<Bulletin>;
+      updateBulletinIsEditing: (
+        updateBulletinIsEditingInput: UpdateBulletinIsEditingInput,
       ) => Promise<Bulletin>;
     };
     config: {

@@ -1,6 +1,7 @@
 // Disable no-unused-vars, broken for spread args
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { UpdateBulletinIsEditingInput } from './api/bulletins/dto/update-bulletin-is-editing-input.dto';
 import { UpsertBulletinInput } from './api/bulletins/dto/upsert-bulletin-input.dto';
 import { CreateDummyInput } from './api/dummies/dto/create-dummy-input.dto';
 import { UpdateDummyInput } from './api/dummies/dto/update-dummy-input.dto';
@@ -33,16 +34,25 @@ contextBridge.exposeInMainWorld('electron', electronHandler);
 // レンダラープロセス通信用のAPI
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 contextBridge.exposeInMainWorld('db', {
+  // Dummies
   getDummies: () => ipcRenderer.invoke('db/get-dummies'),
   createDummy: (createDummyInput: CreateDummyInput) =>
     ipcRenderer.invoke('db/create-dummy', createDummyInput),
   updateDummy: (updateDummyInput: UpdateDummyInput) =>
     ipcRenderer.invoke('db/update-dummy', updateDummyInput),
   deleteDummies: () => ipcRenderer.invoke('db/delete-dummies'),
+  // Bulletins
   getBulletins: () => ipcRenderer.invoke('db/get-bulletins'),
   getBulletin: (id: number) => ipcRenderer.invoke('db/get-bulletin', id),
   upsertBulletin: (upsertBulletinInput: UpsertBulletinInput) =>
     ipcRenderer.invoke('db/upsert-bulletin', upsertBulletinInput),
+  updateBulletinIsEditing: (
+    updateBulletinIsEditingInput: UpdateBulletinIsEditingInput,
+  ) =>
+    ipcRenderer.invoke(
+      'db/update-bulletin-is-editing',
+      updateBulletinIsEditingInput,
+    ),
 });
 
 contextBridge.exposeInMainWorld('config', {

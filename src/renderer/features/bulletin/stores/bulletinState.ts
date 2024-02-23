@@ -79,9 +79,27 @@ const bulletinSelector = selectorFamily({
 });
 
 /**
+ * 編集開始からの経過時間を返す。単位は秒。
+ */
+const durationSinceEditStartedSelector = selectorFamily({
+  key: 'bulletin/durationSinceEditStartedSelector',
+  get:
+    (id: number) =>
+    ({ get }) => {
+      const bulletin = get(bulletinSelector(id));
+      if (!bulletin) return null;
+      const duration =
+        new Date().getTime() - new Date(bulletin.editStartedAt).getTime();
+      return duration / 1000;
+    },
+});
+
+/**
  * bulletin に対してデータを取得するセレクターを集約したオブジェクト（Read系）
  */
 export const bulletinSelectors = {
   useGetBulletins: () => useRecoilValue(bulletinsSelector),
   useGetBulletin: (id: number) => useRecoilValue(bulletinSelector(id)),
+  useGetDurationSinceEditStarted: (id: number) =>
+    useRecoilValue(durationSinceEditStartedSelector(id)),
 };

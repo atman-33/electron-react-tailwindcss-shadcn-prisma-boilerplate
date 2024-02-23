@@ -16,8 +16,10 @@ import path from 'path';
 import {
   getBulletin,
   getBulletins,
+  updateBulletinIsEditing,
   upsertBulletin,
 } from './api/bulletins/bulletins.service';
+import { UpdateBulletinIsEditingInput } from './api/bulletins/dto/update-bulletin-is-editing-input.dto';
 import { UpsertBulletinInput } from './api/bulletins/dto/upsert-bulletin-input.dto';
 import { CreateDummyInput } from './api/dummies/dto/create-dummy-input.dto';
 import { UpdateDummyInput } from './api/dummies/dto/update-dummy-input.dto';
@@ -226,5 +228,13 @@ ipcMain.handle(
   (event, upsertBulletinInput: UpsertBulletinInput) => {
     console.log('main ---> upsert-bulletin');
     return upsertBulletin(upsertBulletinInput);
+  },
+);
+
+ipcMain.handle(
+  'db/update-bulletin-is-editing',
+  (event, updateBulletinIsEditingInput: UpdateBulletinIsEditingInput) => {
+    console.log('main ---> update-bulletin-is-editing');
+    return updateBulletinIsEditing(updateBulletinIsEditingInput);
   },
 );

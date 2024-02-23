@@ -46,9 +46,8 @@ const useBulletinDispatcher = () => {
   const setIsEditing = useRecoilCallback(
     ({ set }) =>
       async (isEditing: boolean) => {
-        const newBulletin = await window.db.upsertBulletin({
+        const newBulletin = await window.db.updateBulletinIsEditing({
           id: 0,
-          message: bulletin?.message ?? '',
           isEditing: isEditing ? 1 : 0,
           editStartedAt: isEditing
             ? new Date()

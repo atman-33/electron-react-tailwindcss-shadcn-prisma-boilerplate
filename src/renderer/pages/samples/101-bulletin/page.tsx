@@ -1,12 +1,14 @@
 /* eslint-disable react/jsx-boolean-value */
 import Spinner from '@/components/elements/Spinner';
-import { Textarea } from '@/components/ui/textarea';
 import CancelButton from '@/features/bulletin/components/CancelButton';
 import EditButton from '@/features/bulletin/components/EditButton';
+import MessageArea from '@/features/bulletin/components/MessageArea';
 import SaveButton from '@/features/bulletin/components/SaveButton';
 import { useBulletinDispatcher } from '@/features/bulletin/hooks/useBulletinDispatcher';
 import { bulletinSelectors } from '@/features/bulletin/stores/bulletinState';
 import { useBackgroundWorker } from '@/hooks/useBackgroundWorker';
+import { formatDate } from '@/lib/format';
+import { envSelectors } from '@/stores/envState';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import SampleLayout from '../_components/SampleLayout';
 
@@ -15,6 +17,9 @@ const BulleinPage = () => {
   const [updatedAt, setUpdatedAt] = useState(new Date());
   const bulletinDispatcher = useBulletinDispatcher();
   const bulletin = bulletinSelectors.useGetBulletin(0);
+  const durationSinceEditStart =
+    bulletinSelectors.useGetDurationSinceEditStarted(0);
+  const env = envSelectors.useGetEnv();
 
   const {
     start: autoReloadStart,
@@ -25,8 +30,16 @@ const BulleinPage = () => {
       await bulletinDispatcher.reloadBulletins();
       setMessage(bulletin?.message ?? '');
       setUpdatedAt(new Date());
+
+      // 指定時間経過したら自動で編集終了
+      if (
+        durationSinceEditStart &&
+        durationSinceEditStart >= env.AUTO_EDIT_END_SEC
+      ) {
+        bulletinDispatcher.setIsEditing(false);
+      }
     },
-    interval: 3000,
+    interval: env.UPDATE_INTERVAL_SEC * 1000,
   });
 
   useEffect(() => {
@@ -74,7 +87,7 @@ const BulleinPage = () => {
         <div className="my-2 font-bold">BulleinBoardPage</div>
         <div className="flex flex-col space-y-2">
           <div className="flex items-baseline justify-between">
-            <div className="text-sm">{`Last updated: ${updatedAt}`}</div>
+            <div className="text-sm">{`Last updated: ${formatDate(updatedAt)}`}</div>
             <div className="flex space-x-2">
               {bulletin?.isEditing ? (
                 <SaveButton onClick={handleSaveButtonClick} />
@@ -88,28 +101,19 @@ const BulleinPage = () => {
             </div>
           </div>
           <div className="flex flex-col space-y-2">
-            <Textarea
-              style={{
-                backgroundColor: `${bulletin?.isEditing ? 'lightyellow' : 'white'}`,
-                borderColor: `${bulletin?.isEditing ? 'red' : 'black'}`,
-                fontSize: '18px',
-                fontWeight: 'bold',
-                color: 'red',
-              }}
-              onChange={(e) => setMessage(e.target.value)}
-              value={message}
-              readOnly={!bulletin?.isEditing}
-              placeholder="Write something..."
-              className="h-60"
-            />
+            <MessageArea message={message} setMessage={setMessage} />
+            <div className="text-xl font-bold text-red-500">
+              {bulletin?.isEditing ? 'メッセージを編集中です...' : ''}
+            </div>
           </div>
         </div>
         <div className="mt-4 flex flex-col space-y-2">
+          <div>{`データ更新エラー: ${autoReloadError}`}</div>
           <div>{`id: ${bulletin?.id}`}</div>
           <div>{`message: ${bulletin?.message}`}</div>
           <div>{`isEditing: ${bulletin?.isEditing}`}</div>
-          <div>{`editStartedAt: ${bulletin?.editStartedAt}`}</div>
-          <div>{`autoReloadError: ${autoReloadError}`}</div>
+          <div>{`editStartedAt: ${formatDate(new Date(bulletin?.editStartedAt ?? 0))}`}</div>
+          <div>{`編集開始からの経過時間: ${durationSinceEditStart}`}</div>
         </div>
       </Suspense>
     </SampleLayout>
