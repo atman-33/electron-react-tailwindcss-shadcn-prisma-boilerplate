@@ -1,4 +1,4 @@
-import { EnvType } from '@shared/lib/env';
+import { EnvType } from '@shared/types';
 import { atom, selector, useRecoilValue } from 'recoil';
 
 export const envState = atom<EnvType>({
