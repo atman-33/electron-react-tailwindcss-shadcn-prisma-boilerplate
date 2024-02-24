@@ -1,1 +1,1 @@
-export { EnvType } from '@main/lib/env';
+export { EnvType } from '@main/types';

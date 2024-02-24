@@ -20,9 +20,9 @@ import { UpsertBulletinInput } from './api/bulletins/dto/upsert-bulletin-input.d
 import { CreateDummyInput } from './api/dummies/dto/create-dummy-input.dto';
 import { UpdateDummyInput } from './api/dummies/dto/update-dummy-input.dto';
 import { dummiesService } from './api/dummies/dummies.service';
-import { ConfigStore } from './lib/config';
+import { config } from './lib/config';
 import { env, envPath } from './lib/env';
-import prismaClient from './lib/prisma-client';
+import { closeDB } from './lib/prisma-client';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
@@ -82,8 +82,10 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    x: config.store.get('x'),
+    y: config.store.get('y'),
+    width: config.store.get('width'),
+    height: config.store.get('height'),
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged
@@ -112,6 +114,12 @@ const createWindow = async () => {
     }
   });
 
+  // ウィンドウのサイズを保存
+  mainWindow.on('close', () => {
+    const { x, y, width, height } = mainWindow?.getBounds() || {};
+    config.store.set({ x, y, width, height });
+  });
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -133,14 +141,6 @@ const createWindow = async () => {
 /**
  * Add event listeners...
  */
-
-/**
- * DBコネクションをクローズ
- */
-const closeDB = async () => {
-  await prismaClient.$disconnect();
-};
-
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
@@ -189,18 +189,15 @@ ipcMain.handle('db/delete-dummies', (event) => {
 });
 
 ipcMain.handle('config/get-item', (event, key: string) => {
-  const config = new ConfigStore();
-  return config.getItem(key);
+  return config.store.get(key);
 });
 
 ipcMain.handle('config/get-config-path', (event, key: string) => {
-  const config = new ConfigStore();
-  return config.getConfigPath();
+  return config.store.path;
 });
 
 ipcMain.handle('config/set-item', (event, key: string, value: any) => {
-  const config = new ConfigStore();
-  return config.setItem(key, value);
+  return config.store.set(key, value);
 });
 
 ipcMain.handle('env/get-env', (event) => {

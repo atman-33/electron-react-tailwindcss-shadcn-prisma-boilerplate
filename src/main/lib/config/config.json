@@ -1,3 +1,7 @@
 {
-	"dummy": "hello world"
+	"width": 1035,
+	"height": 584,
+	"dummy": "hello world",
+	"x": 162,
+	"y": 84
 }

@@ -3,31 +3,30 @@
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 import path from 'path';
+import { ConfigStoreType } from '../../types';
 
 /**
  * Electron Storeを使用して設定値を取得・保存する
  */
 class ConfigStore {
-  private store: ElectronStore<any>;
+  private _store: ElectronStore<ConfigStoreType>;
 
   constructor() {
-    this.store = new ElectronStore<any>({
+    this._store = new ElectronStore<any>({
       cwd: this.getConfigFolderPath(),
       name: 'config',
       fileExtension: 'json',
+      defaults: {
+        x: undefined,
+        y: undefined,
+        width: 1024,
+        height: 728,
+      },
     });
   }
 
-  public getItem(key: string): any {
-    return this.store.get(key);
-  }
-
-  public setItem(key: string, value: any): any {
-    return this.store.set(key, value);
-  }
-
-  public getConfigPath(): string {
-    return this.store.path;
+  get store(): ElectronStore<ConfigStoreType> {
+    return this._store;
   }
 
   private getConfigFolderPath(): string {
@@ -43,4 +42,4 @@ class ConfigStore {
   }
 }
 
-export { ConfigStore };
+export const config = new ConfigStore();
