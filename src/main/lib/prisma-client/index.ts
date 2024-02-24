@@ -22,4 +22,12 @@ if (!global.prisma) {
   });
 }
 
+/**
+ * DBコネクションをクローズ
+ */
+const closeDB = async () => {
+  await global.prisma.$disconnect();
+};
+
+export { closeDB };
 export default global.prisma;

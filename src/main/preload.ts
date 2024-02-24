@@ -34,14 +34,15 @@ contextBridge.exposeInMainWorld('electron', electronHandler);
 // レンダラープロセス通信用のAPI
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 contextBridge.exposeInMainWorld('db', {
-  // Dummies
+  // ---- Dummies ---- //
   getDummies: () => ipcRenderer.invoke('db/get-dummies'),
   createDummy: (createDummyInput: CreateDummyInput) =>
     ipcRenderer.invoke('db/create-dummy', createDummyInput),
   updateDummy: (updateDummyInput: UpdateDummyInput) =>
     ipcRenderer.invoke('db/update-dummy', updateDummyInput),
   deleteDummies: () => ipcRenderer.invoke('db/delete-dummies'),
-  // Bulletins
+
+  // ---- Bulletins ---- //
   getBulletins: () => ipcRenderer.invoke('db/get-bulletins'),
   getBulletin: (id: number) => ipcRenderer.invoke('db/get-bulletin', id),
   upsertBulletin: (upsertBulletinInput: UpsertBulletinInput) =>
@@ -56,7 +57,7 @@ contextBridge.exposeInMainWorld('db', {
 });
 
 contextBridge.exposeInMainWorld('config', {
-  getItem: () => ipcRenderer.invoke('config/get-item'),
+  getItem: (key: string) => ipcRenderer.invoke('config/get-item', key),
   setItem: (key: string, value: any) =>
     ipcRenderer.invoke('config/set-item', key, value),
   getConfigPath: () => ipcRenderer.invoke('config/get-config-path'),

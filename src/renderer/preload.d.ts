@@ -3,9 +3,9 @@ import {
   UpdateBulletinIsEditingInput,
   UpdateDummyInput,
   UpsertBulletinInput,
-} from '@shared/lib/dto';
-import { EnvType } from '@shared/lib/env';
-import { Bulletin, Dummy } from '@shared/lib/models';
+} from '@shared/api/dto';
+import { Bulletin, Dummy } from '@shared/api/models';
+import { EnvType } from '@shared/types';
 
 // eslint-disable-next-line boundaries/element-types
 import { ElectronHandler } from '../main/preload';

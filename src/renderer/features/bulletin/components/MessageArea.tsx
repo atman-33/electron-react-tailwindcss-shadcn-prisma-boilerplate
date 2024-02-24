@@ -1,5 +1,6 @@
 import { Textarea } from '@/components/ui/textarea';
 import { bulletinSelectors } from '../stores/bulletinState';
+import { fontSizeSelectors } from '../stores/fontSizeState';
 
 type Props = {
   message: string;
@@ -8,13 +9,14 @@ type Props = {
 
 const MessageArea = ({ message, setMessage }: Props) => {
   const bulletin = bulletinSelectors.useGetBulletin(0);
+  const fontSize = fontSizeSelectors.useGetFontSize();
 
   return (
     <Textarea
       style={{
         backgroundColor: `${bulletin?.isEditing ? 'lightyellow' : 'white'}`,
         borderColor: `${bulletin?.isEditing ? 'red' : 'black'}`,
-        fontSize: '18px',
+        fontSize: `${fontSize}`,
         fontWeight: 'bold',
         color: `${bulletin?.isEditing ? 'red' : 'blue'}`,
       }}

@@ -1,4 +1,4 @@
-import { UpsertBulletinInput } from '@shared/lib/dto';
+import { UpsertBulletinInput } from '@shared/api/dto';
 import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { bulletinIdsState, bulletinsState } from '../stores/bulletinState';
 

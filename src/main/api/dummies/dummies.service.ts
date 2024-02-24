@@ -1,43 +1,46 @@
-// import { Dummy } from '../../lib/data-access-db/generated';
-import { Dummy } from '../../lib/data-access-db/generated';
+import { Dummy, PrismaClient } from '../../lib/data-access-db/generated';
 import prismaClient from '../../lib/prisma-client';
 import { CreateDummyInput } from './dto/create-dummy-input.dto';
 import { UpdateDummyInput } from './dto/update-dummy-input.dto';
 
-const getDummies = async (): Promise<Dummy[]> => {
-  return await prismaClient.dummy.findMany({});
-};
+class DummiesService {
+  /**
+   * コンストラクタ
+   */
+  // eslint-disable-next-line no-useless-constructor, no-empty-function
+  constructor(private readonly prisma: PrismaClient) {}
 
-const createDummy = async (
-  createDummyInput: CreateDummyInput,
-): Promise<Dummy> => {
-  return await prismaClient.dummy.create({
-    data: createDummyInput,
-  });
-};
-
-const updateDummy = async (
-  updateDummyInput: UpdateDummyInput,
-): Promise<Dummy | null> => {
-  const find = await prismaClient.dummy.findUnique({
-    where: {
-      id: updateDummyInput.id,
-    },
-  });
-
-  if (!find) {
-    return null;
+  async getDummies(): Promise<Dummy[]> {
+    return await this.prisma.dummy.findMany({});
   }
-  return await prismaClient.dummy.update({
-    where: {
-      id: updateDummyInput.id,
-    },
-    data: updateDummyInput,
-  });
-};
 
-const deleteDummies = async (): Promise<void> => {
-  await prismaClient.dummy.deleteMany({});
-};
+  async createDummy(createDummyInput: CreateDummyInput): Promise<Dummy> {
+    return await this.prisma.dummy.create({
+      data: createDummyInput,
+    });
+  }
 
-export { createDummy, deleteDummies, getDummies, updateDummy };
+  async updateDummy(updateDummyInput: UpdateDummyInput): Promise<Dummy | null> {
+    const find = await this.prisma.dummy.findUnique({
+      where: {
+        id: updateDummyInput.id,
+      },
+    });
+
+    if (!find) {
+      return null;
+    }
+    return await this.prisma.dummy.update({
+      where: {
+        id: updateDummyInput.id,
+      },
+      data: updateDummyInput,
+    });
+  }
+
+  async deleteDummies(): Promise<void> {
+    await this.prisma.dummy.deleteMany({});
+  }
+}
+
+export const dummiesService = new DummiesService(prismaClient);

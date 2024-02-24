@@ -13,25 +13,16 @@ import { BrowserWindow, app, ipcMain, shell } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
-import {
-  getBulletin,
-  getBulletins,
-  updateBulletinIsEditing,
-  upsertBulletin,
-} from './api/bulletins/bulletins.service';
+
+import { bulletinsService } from './api/bulletins/bulletins.service';
 import { UpdateBulletinIsEditingInput } from './api/bulletins/dto/update-bulletin-is-editing-input.dto';
 import { UpsertBulletinInput } from './api/bulletins/dto/upsert-bulletin-input.dto';
 import { CreateDummyInput } from './api/dummies/dto/create-dummy-input.dto';
 import { UpdateDummyInput } from './api/dummies/dto/update-dummy-input.dto';
-import {
-  createDummy,
-  deleteDummies,
-  getDummies,
-  updateDummy,
-} from './api/dummies/dummies.service';
-import { ConfigStore } from './lib/config';
+import { dummiesService } from './api/dummies/dummies.service';
+import { config } from './lib/config';
 import { env, envPath } from './lib/env';
-import prismaClient from './lib/prisma-client';
+import { closeDB } from './lib/prisma-client';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
@@ -91,8 +82,10 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    x: config.store.get('x'),
+    y: config.store.get('y'),
+    width: config.store.get('width'),
+    height: config.store.get('height'),
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged
@@ -121,6 +114,12 @@ const createWindow = async () => {
     }
   });
 
+  // ウィンドウのサイズを保存
+  mainWindow.on('close', () => {
+    const { x, y, width, height } = mainWindow?.getBounds() || {};
+    config.store.set({ x, y, width, height });
+  });
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -142,14 +141,6 @@ const createWindow = async () => {
 /**
  * Add event listeners...
  */
-
-/**
- * DBコネクションをクローズ
- */
-const closeDB = async () => {
-  await prismaClient.$disconnect();
-};
-
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
@@ -176,40 +167,38 @@ app
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 ipcMain.handle('db/get-dummies', (event) => {
-  return getDummies();
+  return dummiesService.getDummies();
 });
 
 ipcMain.handle(
   'db/create-dummy',
   (event, createDummyInput: CreateDummyInput) => {
-    return createDummy(createDummyInput);
+    return dummiesService.createDummy(createDummyInput);
   },
 );
 
 ipcMain.handle(
   'db/update-dummy',
   (event, updateDummyInput: UpdateDummyInput) => {
-    return updateDummy(updateDummyInput);
+    return dummiesService.updateDummy(updateDummyInput);
   },
 );
 
 ipcMain.handle('db/delete-dummies', (event) => {
-  return deleteDummies();
+  return dummiesService.deleteDummies();
 });
 
 ipcMain.handle('config/get-item', (event, key: string) => {
-  const config = new ConfigStore();
-  return config.getItem(key);
+  console.log('config/get-item: ', key);
+  return config.store.get(key);
 });
 
 ipcMain.handle('config/get-config-path', (event, key: string) => {
-  const config = new ConfigStore();
-  return config.getConfigPath();
+  return config.store.path;
 });
 
 ipcMain.handle('config/set-item', (event, key: string, value: any) => {
-  const config = new ConfigStore();
-  return config.setItem(key, value);
+  return config.store.set(key, value);
 });
 
 ipcMain.handle('env/get-env', (event) => {
@@ -222,19 +211,19 @@ ipcMain.handle('env/get-env-path', (event) => {
 
 ipcMain.handle('db/get-bulletins', (event) => {
   console.log('main ---> get-bulletins');
-  return getBulletins();
+  return bulletinsService.getBulletins();
 });
 
 ipcMain.handle('db/get-bulletin', (event, id: number) => {
   console.log('main ---> get-bulletin');
-  return getBulletin(id);
+  return bulletinsService.getBulletin(id);
 });
 
 ipcMain.handle(
   'db/upsert-bulletin',
   (event, upsertBulletinInput: UpsertBulletinInput) => {
     console.log('main ---> upsert-bulletin');
-    return upsertBulletin(upsertBulletinInput);
+    return bulletinsService.upsertBulletin(upsertBulletinInput);
   },
 );
 
@@ -242,6 +231,8 @@ ipcMain.handle(
   'db/update-bulletin-is-editing',
   (event, updateBulletinIsEditingInput: UpdateBulletinIsEditingInput) => {
     console.log('main ---> update-bulletin-is-editing');
-    return updateBulletinIsEditing(updateBulletinIsEditingInput);
+    return bulletinsService.updateBulletinIsEditing(
+      updateBulletinIsEditingInput,
+    );
   },
 );

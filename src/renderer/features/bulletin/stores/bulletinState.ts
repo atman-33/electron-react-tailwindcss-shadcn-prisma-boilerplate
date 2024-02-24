@@ -1,4 +1,4 @@
-import { Bulletin } from '@shared/lib/models';
+import { Bulletin } from '@shared/api/models';
 import {
   atom,
   atomFamily,

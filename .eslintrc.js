@@ -5,6 +5,7 @@ module.exports = {
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/require-default-props': 'off',
     'react/jsx-filename-extension': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
@@ -27,7 +28,7 @@ module.exports = {
         rules: [
           {
             from: ['main'],
-            allow: ['main', 'shared'],
+            allow: ['main'],
           },
           {
             from: ['renderer'],
@@ -83,8 +84,6 @@ module.exports = {
               '@prisma/client',
               '@main/lib/data-access-db/generated',
               '@main/lib/prisma-client',
-              '@shared/lib/dto',
-              '@shared/lib/models',
             ],
           },
         ],
