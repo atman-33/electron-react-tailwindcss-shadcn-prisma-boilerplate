@@ -1,7 +1,8 @@
 {
-	"width": 1035,
-	"height": 584,
-	"dummy": "hello world",
-	"x": 162,
-	"y": 84
+	"x": 642,
+	"y": 139,
+	"width": 866,
+	"height": 687,
+	"fontSize": "26px",
+	"dummy": "hello world"
 }

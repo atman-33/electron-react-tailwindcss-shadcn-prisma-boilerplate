@@ -11,4 +11,5 @@ export type ConfigStoreType = {
   y?: number;
   width?: number;
   height?: number;
+  fontSize?: string;
 };

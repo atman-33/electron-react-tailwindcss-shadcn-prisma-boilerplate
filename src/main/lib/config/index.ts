@@ -21,6 +21,7 @@ class ConfigStore {
         y: undefined,
         width: 1024,
         height: 728,
+        fontSize: '14px',
       },
     });
   }

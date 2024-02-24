@@ -57,7 +57,7 @@ contextBridge.exposeInMainWorld('db', {
 });
 
 contextBridge.exposeInMainWorld('config', {
-  getItem: () => ipcRenderer.invoke('config/get-item'),
+  getItem: (key: string) => ipcRenderer.invoke('config/get-item', key),
   setItem: (key: string, value: any) =>
     ipcRenderer.invoke('config/set-item', key, value),
   getConfigPath: () => ipcRenderer.invoke('config/get-config-path'),

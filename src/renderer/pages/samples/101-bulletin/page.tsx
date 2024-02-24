@@ -1,5 +1,8 @@
 /* eslint-disable react/jsx-boolean-value */
 import Spinner from '@/components/elements/Spinner';
+import DecreaseFontSizeButton from '@/features/bulletin/components/(font-size)/DecreaseFontSizeButton';
+import IncreaseFontSizeButton from '@/features/bulletin/components/(font-size)/IncreaseFontSizeButton';
+import SaveFontSizeButton from '@/features/bulletin/components/(font-size)/SaveFontSizeButton';
 import CancelButton from '@/features/bulletin/components/CancelButton';
 import EditButton from '@/features/bulletin/components/EditButton';
 import MessageArea from '@/features/bulletin/components/MessageArea';
@@ -84,7 +87,14 @@ const BulleinPage = () => {
           </div>
         }
       >
-        <div className="my-2 font-bold">BulleinBoardPage</div>
+        <div className="flex justify-start space-x-4">
+          <div className="my-2 font-bold">BulleinBoardPage</div>
+          <div className="flex items-center justify-start space-x-2">
+            <DecreaseFontSizeButton />
+            <IncreaseFontSizeButton />
+            <SaveFontSizeButton />
+          </div>
+        </div>
         <div className="flex flex-col space-y-2">
           <div className="flex items-baseline justify-between">
             <div className="text-sm">{`Last updated: ${formatDate(updatedAt)}`}</div>
@@ -104,11 +114,11 @@ const BulleinPage = () => {
             <MessageArea message={message} setMessage={setMessage} />
             <div className="text-xl font-bold text-red-500">
               {bulletin?.isEditing ? 'メッセージを編集中です...' : ''}
+              <div>{autoReloadError ? `エラー: ${autoReloadError}` : ''}</div>
             </div>
           </div>
         </div>
         <div className="mt-4 flex flex-col space-y-2">
-          <div>{`データ更新エラー: ${autoReloadError}`}</div>
           <div>{`id: ${bulletin?.id}`}</div>
           <div>{`message: ${bulletin?.message}`}</div>
           <div>{`isEditing: ${bulletin?.isEditing}`}</div>

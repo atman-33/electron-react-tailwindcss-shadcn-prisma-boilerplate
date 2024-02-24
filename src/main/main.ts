@@ -189,6 +189,7 @@ ipcMain.handle('db/delete-dummies', (event) => {
 });
 
 ipcMain.handle('config/get-item', (event, key: string) => {
+  console.log('config/get-item: ', key);
   return config.store.get(key);
 });
 
