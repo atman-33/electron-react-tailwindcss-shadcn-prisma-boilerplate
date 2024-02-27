@@ -22,6 +22,7 @@ import { UpdateDummyInput } from './api/dummies/dto/update-dummy-input.dto';
 import { dummiesService } from './api/dummies/dummies.service';
 import { config } from './lib/config';
 import { env, envPath } from './lib/env';
+import { jsonDB } from './lib/node-json-db';
 import { closeDB } from './lib/prisma-client';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
@@ -166,13 +167,16 @@ app
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
 ipcMain.handle('db/get-dummies', (event) => {
   return dummiesService.getDummies();
 });
 
 ipcMain.handle(
   'db/create-dummy',
-  (event, createDummyInput: CreateDummyInput) => {
+  async (event, createDummyInput: CreateDummyInput) => {
+    // TODO: テスト用のデータを追加。後で削除すること。
+    await jsonDB.push('/dummies', []);
     return dummiesService.createDummy(createDummyInput);
   },
 );
