@@ -14,6 +14,7 @@ const useFontSizeDispatcher = () => {
         if (index !== -1 && index < fontSizes.length - 1) {
           // console.log(`fontSize: ${fontSize} -> ${fontSizes[index + 1]}`);
           set(fontSizeState, fontSizes[index + 1]);
+          window.config.setItem('fontSize', fontSizes[index + 1]);
         }
       },
     [fontSize],
@@ -28,6 +29,7 @@ const useFontSizeDispatcher = () => {
         if (index > 0) {
           // console.log(`fontSize: ${fontSize} -> ${fontSizes[index - 1]}`);
           set(fontSizeState, fontSizes[index - 1]);
+          window.config.setItem('fontSize', fontSizes[index - 1]);
         }
       },
     [fontSize],

@@ -1,34 +1,36 @@
 import '@/styles/globals.css';
 
-import Spinner from '@/components/elements/Spinner';
 import RecoilProvider from '@/components/providers/RecoilProvider';
+import ElectronConfigPage from '@/pages/debug/001-electron-config/page';
+import EnvPage from '@/pages/debug/002-env/page';
+import PrismaSqlitePage from '@/pages/debug/003-prisma-sqlite/page';
+import TimerPage from '@/pages/debug/004-timer/page';
 import HomePage from '@/pages/page';
-import ElectronConfigPage from '@/pages/samples/001-electron-config/page';
-import EnvPage from '@/pages/samples/002-env/page';
-import PrismaSqlitePage from '@/pages/samples/003-prisma-sqlite/page';
-import TimerPage from '@/pages/samples/004-timer/page';
-import BulleinPage from '@/pages/samples/101-bulletin/page';
 import { Suspense } from 'react';
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
+import DotFlasing from './components/elements/DotFlashing';
+import BulleinPage from './pages/bulletin/page';
+import SuspensePage from './pages/debug/005-suspense/page';
 
 export default function App() {
   return (
     <RecoilProvider>
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<DotFlasing />}>
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route
-              path="/samples/001-electron-config"
+              path="/debug/001-electron-config"
               element={<ElectronConfigPage />}
             />
-            <Route path="/samples/002-env" element={<EnvPage />} />
+            <Route path="/debug/002-env" element={<EnvPage />} />
             <Route
-              path="/samples/003-prisma-sqlite"
+              path="/debug/003-prisma-sqlite"
               element={<PrismaSqlitePage />}
             />
-            <Route path="/samples/004-timer" element={<TimerPage />} />
-            <Route path="/samples/101-bulletin" element={<BulleinPage />} />
+            <Route path="/debug/004-timer" element={<TimerPage />} />
+            <Route path="/debug/005-suspense" element={<SuspensePage />} />
+            <Route path="/bulletin" element={<BulleinPage />} />
           </Routes>
         </Router>
       </Suspense>

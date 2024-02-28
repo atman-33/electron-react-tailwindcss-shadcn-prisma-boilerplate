@@ -9,7 +9,7 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-import { BrowserWindow, app, ipcMain, shell } from 'electron';
+import { BrowserWindow, app, dialog, ipcMain, shell } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
@@ -33,6 +33,12 @@ class AppUpdater {
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
+
+process.on('uncaughtException', (err) => {
+  dialog.showErrorBox('Error', err.message);
+  // アプリを終了する (継続しない方が良い)
+  app.quit();
+});
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -166,6 +172,7 @@ app
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
 ipcMain.handle('db/get-dummies', (event) => {
   return dummiesService.getDummies();
 });

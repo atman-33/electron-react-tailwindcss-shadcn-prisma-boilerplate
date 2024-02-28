@@ -262,12 +262,8 @@
     "extraResources": [
       "./assets/**",
       {
-        "from": "./node_modules/.prisma/",
-        "to": "../node_modules/.prisma/"
-      },
-      {
-        "from": "./node_modules/@prisma/client/",
-        "to": "../node_modules/@prisma/client/"
+        "from": "./src/main/lib/data-access-db/generated/query_engine-windows.dll.node",
+        "to": "./.prisma/client/query_engine-windows.dll.node"
       },
       {
         "from": "./src/main/lib/config/config.json",

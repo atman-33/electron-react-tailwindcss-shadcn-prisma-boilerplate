@@ -2,11 +2,12 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const links = [
-  '/samples/001-electron-config',
-  '/samples/002-env',
-  '/samples/003-prisma-sqlite',
-  '/samples/004-timer',
-  '/samples/101-bulletin',
+  '/debug/001-electron-config',
+  '/debug/002-env',
+  '/debug/003-prisma-sqlite',
+  '/debug/004-timer',
+  '/debug/005-suspense',
+  '/bulletin',
 ];
 
 const HomePage = () => {
@@ -22,7 +23,7 @@ const HomePage = () => {
         {links.map((link) => (
           <Link key={link} to={link}>
             <Button variant="default" className="w-full justify-start">
-              {link.replace('/samples/', '')}
+              {link}
             </Button>
           </Link>
         ))}
