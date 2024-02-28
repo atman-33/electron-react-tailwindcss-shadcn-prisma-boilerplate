@@ -227,15 +227,11 @@ e.g.
     "extraResources": [
       ...,
       {
-        "from": "./node_modules/.prisma/",
-        "to": "../node_modules/.prisma/"
-      },
-      {
-        "from": "./node_modules/@prisma/client/",
-        "to": "../node_modules/@prisma/client/"
+        "from": "./src/main/lib/data-access-db/generated/query_engine-windows.dll.node",
+        "to": "./.prisma/client/query_engine-windows.dll.node"
       },
       ...
 ```
 
-> exe が配置されるフォルダにnode_modulesフォルダを出力すること。
-> そのようにしないと、DB操作時にエラーが発生する。
+> `package`コマンド時に、`query_engine-windows.dll.node`を出力すること。
+> そうしないと、DB操作時にエラーが発生する。

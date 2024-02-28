@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-boolean-value */
-import Spinner from '@/components/elements/Spinner';
+import DotFlasing from '@/components/elements/DotFlashing';
 import DecreaseFontSizeButton from '@/features/bulletin/components/(font-size)/DecreaseFontSizeButton';
 import IncreaseFontSizeButton from '@/features/bulletin/components/(font-size)/IncreaseFontSizeButton';
-import SaveFontSizeButton from '@/features/bulletin/components/(font-size)/SaveFontSizeButton';
 import CancelButton from '@/features/bulletin/components/CancelButton';
 import EditButton from '@/features/bulletin/components/EditButton';
 import MessageArea from '@/features/bulletin/components/MessageArea';
@@ -83,21 +82,20 @@ const BulleinPage = () => {
       <Suspense
         fallback={
           <div>
-            <Spinner />
+            <DotFlasing />
           </div>
         }
       >
         <div className="flex justify-start space-x-4">
           <div className="my-2 font-bold">BulleinBoardPage</div>
-          <div className="flex items-center justify-start space-x-2">
-            <DecreaseFontSizeButton />
-            <IncreaseFontSizeButton />
-            <SaveFontSizeButton />
-          </div>
         </div>
         <div className="flex flex-col space-y-2">
           <div className="flex items-baseline justify-between">
-            <div className="text-sm">{`Last updated: ${formatDate(updatedAt)}`}</div>
+            <div className="flex items-center justify-start space-x-2">
+              <div className="text-sm">{`Last updated: ${formatDate(updatedAt)}`}</div>
+              <DecreaseFontSizeButton />
+              <IncreaseFontSizeButton />
+            </div>
             <div className="flex space-x-2">
               {bulletin?.isEditing ? (
                 <SaveButton onClick={handleSaveButtonClick} />

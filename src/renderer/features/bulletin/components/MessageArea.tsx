@@ -19,6 +19,7 @@ const MessageArea = ({ message, setMessage }: Props) => {
         fontSize: `${fontSize}`,
         fontWeight: 'bold',
         color: `${bulletin?.isEditing ? 'red' : 'blue'}`,
+        lineHeight: '1',
       }}
       onChange={(e) => setMessage(e.target.value)}
       value={message}

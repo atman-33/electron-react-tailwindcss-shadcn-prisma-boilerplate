@@ -9,7 +9,7 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-import { BrowserWindow, app, ipcMain, shell } from 'electron';
+import { BrowserWindow, app, dialog, ipcMain, shell } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
@@ -22,7 +22,6 @@ import { UpdateDummyInput } from './api/dummies/dto/update-dummy-input.dto';
 import { dummiesService } from './api/dummies/dummies.service';
 import { config } from './lib/config';
 import { env, envPath } from './lib/env';
-import { jsonDB } from './lib/node-json-db';
 import { closeDB } from './lib/prisma-client';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
@@ -34,6 +33,12 @@ class AppUpdater {
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
+
+process.on('uncaughtException', (err) => {
+  dialog.showErrorBox('Error', err.message);
+  // アプリを終了する (継続しない方が良い)
+  app.quit();
+});
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -174,9 +179,7 @@ ipcMain.handle('db/get-dummies', (event) => {
 
 ipcMain.handle(
   'db/create-dummy',
-  async (event, createDummyInput: CreateDummyInput) => {
-    // TODO: テスト用のデータを追加。後で削除すること。
-    await jsonDB.push('/dummies', []);
+  (event, createDummyInput: CreateDummyInput) => {
     return dummiesService.createDummy(createDummyInput);
   },
 );

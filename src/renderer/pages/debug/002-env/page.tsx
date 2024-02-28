@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
-import SampleLayout from '../_components/SampleLayout';
+import SampleLayout from '../../_components/SampleLayout';
 
 const EnvPage = () => {
   const [envPath, setEnvPath] = useState('');
