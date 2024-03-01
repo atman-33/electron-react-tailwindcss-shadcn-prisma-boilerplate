@@ -34,6 +34,7 @@ class AppUpdater {
   }
 }
 
+// エラーメッセージを表示
 process.on('uncaughtException', (err) => {
   dialog.showErrorBox('Error', err.message);
   // アプリを終了する (継続しない方が良い)
@@ -107,6 +108,12 @@ const createWindow = async () => {
     mainWindow.setAlwaysOnTop(true, 'screen-saver');
   }
 
+  // サブメニュー表示
+  if (!env.SHOW_SUB_MENU) {
+    console.log('SHOW_SUB_MENU: true');
+    mainWindow.setMenuBarVisibility(false);
+  }
+
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
   mainWindow.on('ready-to-show', () => {
@@ -120,10 +127,12 @@ const createWindow = async () => {
     }
   });
 
-  // ウィンドウのサイズを保存
+  // 本番環境はconfigを保存
   mainWindow.on('close', () => {
-    const { x, y, width, height } = mainWindow?.getBounds() || {};
-    config.store.set({ x, y, width, height });
+    if (process.env.NODE_ENV !== 'development') {
+      const { x, y, width, height } = mainWindow?.getBounds() || {};
+      config.store.set({ x, y, width, height });
+    }
   });
 
   mainWindow.on('closed', () => {

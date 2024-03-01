@@ -5,7 +5,6 @@ import {
   app,
   shell,
 } from 'electron';
-import { env } from './lib/env';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -286,10 +285,6 @@ export default class MenuBuilder {
       },
     ];
 
-    console.log('SHWO_SUB_MENU:', env.SHOW_SUB_MENU);
-    if (env.SHOW_SUB_MENU) {
-      return templateDefault;
-    }
-    return [{ label: '' }];
+    return templateDefault;
   }
 }

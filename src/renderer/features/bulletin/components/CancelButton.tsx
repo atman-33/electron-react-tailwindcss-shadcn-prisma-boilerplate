@@ -13,7 +13,7 @@ const CancelButton = ({
       type="button"
       disabled={disabled}
       onClick={() => onClick()}
-      className={`flex h-10 w-10 items-center justify-center rounded-full  text-white shadow-lg  hover:shadow-sm ${disabled ? 'bg-destructive/50 hover:bg-destructive/40' : 'bg-destructive hover:bg-destructive/90'}`}
+      className={`flex h-8 w-8 items-center justify-center rounded-full  text-white shadow-lg  hover:shadow-sm ${disabled ? 'bg-destructive/50 hover:bg-destructive/40' : 'bg-destructive hover:bg-destructive/90'}`}
     >
       <FontAwesomeIcon icon={faXmark} className="h-5 w-5" />
     </button>

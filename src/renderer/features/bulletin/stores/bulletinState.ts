@@ -6,6 +6,7 @@ import {
   selectorFamily,
   useRecoilValue,
 } from 'recoil';
+import { BulletinIds } from '../types';
 
 /**
  * 初期データ。bulletinIdsState と bulletinsState の初期データを格納するための状態。
@@ -16,20 +17,26 @@ const initialDataState = atom<Bulletin[] | null>({
   default: selector({
     key: 'bulletin/initialDataState/default',
     get: async () => {
-      let res = await window.db.getBulletin(0);
-      // console.log('res', res);
+      try {
+        let res = await window.db.getBulletin(BulletinIds.Common);
+        // console.log('res', res);
 
-      // id=0 のデータが無ければ作成
-      if (!res) {
-        res = await window.db.upsertBulletin({
-          id: 0,
-          message: 'Hello bulletin world!',
-          isEditing: 0,
-          editStartedAt: new Date(),
-        });
+        // id=BulletinIds.Common のデータが無ければ作成
+        if (!res) {
+          res = await window.db.upsertBulletin({
+            id: BulletinIds.Common,
+            message: 'Hello bulletin world!',
+            isEditing: 0,
+            editStartedAt: new Date(),
+          });
+        }
+        return await window.db.getBulletins();
+      } catch (error) {
+        if (error instanceof Error) {
+          console.log(error);
+        }
       }
-
-      return await window.db.getBulletins();
+      return null;
     },
   }),
 });

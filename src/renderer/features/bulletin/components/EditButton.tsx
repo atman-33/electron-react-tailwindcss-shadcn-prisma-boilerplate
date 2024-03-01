@@ -6,7 +6,7 @@ const EditButton = ({ onClick }: { onClick: () => void }) => {
     <button
       type="button"
       onClick={() => onClick()}
-      className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 hover:shadow-sm"
+      className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 hover:shadow-sm"
     >
       <FontAwesomeIcon icon={faPen} className="h-5 w-5" />
     </button>
