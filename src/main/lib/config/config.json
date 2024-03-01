@@ -1,8 +1,8 @@
 {
-	"x": 397,
-	"y": 117,
-	"width": 872,
-	"height": 690,
-	"fontSize": "24px",
-	"dummy": "hello world"
+  "x": 100,
+  "y": 100,
+  "width": 500,
+  "height": 400,
+  "fontSize": "16px",
+  "dummy": "hello world"
 }

@@ -8,6 +8,7 @@ import MessageArea from '@/features/bulletin/components/MessageArea';
 import SaveButton from '@/features/bulletin/components/SaveButton';
 import { useBulletinDispatcher } from '@/features/bulletin/hooks/useBulletinDispatcher';
 import { bulletinSelectors } from '@/features/bulletin/stores/bulletinState';
+import { BulletinIds } from '@/features/bulletin/types';
 import { useBackgroundWorker } from '@/hooks/useBackgroundWorker';
 import { formatDate } from '@/lib/format';
 import { envSelectors } from '@/stores/envState';
@@ -18,9 +19,9 @@ const BulleinPage = () => {
   const [message, setMessage] = useState('');
   const [updatedAt, setUpdatedAt] = useState(new Date());
   const bulletinDispatcher = useBulletinDispatcher();
-  const bulletin = bulletinSelectors.useGetBulletin(0);
+  const bulletin = bulletinSelectors.useGetBulletin(BulletinIds.Common);
   const durationSinceEditStart =
-    bulletinSelectors.useGetDurationSinceEditStarted(0);
+    bulletinSelectors.useGetDurationSinceEditStarted(BulletinIds.Common);
   const env = envSelectors.useGetEnv();
 
   const {
@@ -60,7 +61,7 @@ const BulleinPage = () => {
   const handleSaveButtonClick = useCallback(() => {
     console.log('Save button clicked');
     bulletinDispatcher.upsertBulletin({
-      id: bulletin?.id ?? 0,
+      id: bulletin?.id ?? BulletinIds.Common,
       message,
       isEditing: 0,
       editStartedAt: bulletin?.editStartedAt ?? new Date(),

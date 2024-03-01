@@ -14,12 +14,6 @@ if (!global.prisma) {
       },
     },
   });
-
-  // 複数アプリケーションに対応するために、WALを有効化する場合
-  // global.prisma.$queryRaw`PRAGMA journal_mode = WAL;`.catch((error) => {
-  //   console.log('Failed due to:', error);
-  //   process.exit(1);
-  // });
 }
 
 /**

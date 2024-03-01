@@ -1,6 +1,7 @@
 import { Textarea } from '@/components/ui/textarea';
 import { bulletinSelectors } from '../stores/bulletinState';
 import { fontSizeSelectors } from '../stores/fontSizeState';
+import { BulletinIds } from '../types';
 
 type Props = {
   message: string;
@@ -8,7 +9,7 @@ type Props = {
 };
 
 const MessageArea = ({ message, setMessage }: Props) => {
-  const bulletin = bulletinSelectors.useGetBulletin(0);
+  const bulletin = bulletinSelectors.useGetBulletin(BulletinIds.Common);
   const fontSize = fontSizeSelectors.useGetFontSize();
 
   return (
@@ -25,7 +26,7 @@ const MessageArea = ({ message, setMessage }: Props) => {
       value={message}
       readOnly={!bulletin?.isEditing}
       placeholder="Write something..."
-      className="h-60"
+      className="h-[70vh]"
     />
   );
 };

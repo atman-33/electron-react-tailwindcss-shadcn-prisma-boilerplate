@@ -1,13 +1,14 @@
 import { UpsertBulletinInput } from '@shared/api/dto';
 import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { bulletinIdsState, bulletinsState } from '../stores/bulletinState';
+import { BulletinIds } from '../types';
 
 /**
  * useXxxDispatcher は、recoil に対して、データを追加/更新/削除（Write系）するための関数を返す。
  * @returns
  */
 const useBulletinDispatcher = () => {
-  const bulletin = useRecoilValue(bulletinsState(0));
+  const bulletin = useRecoilValue(bulletinsState(BulletinIds.Common));
   const ids = useRecoilValue(bulletinIdsState);
 
   /**
@@ -47,14 +48,14 @@ const useBulletinDispatcher = () => {
     ({ set }) =>
       async (isEditing: boolean) => {
         const newBulletin = await window.db.updateBulletinIsEditing({
-          id: 0,
+          id: BulletinIds.Common,
           isEditing: isEditing ? 1 : 0,
           editStartedAt: isEditing
             ? new Date()
             : bulletin?.editStartedAt ?? new Date(),
         });
         console.log(newBulletin.editStartedAt);
-        set(bulletinsState(0), newBulletin);
+        set(bulletinsState(BulletinIds.Common), newBulletin);
       },
     [bulletin],
   );
