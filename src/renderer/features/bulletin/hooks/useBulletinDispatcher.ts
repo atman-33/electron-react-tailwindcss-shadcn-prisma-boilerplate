@@ -50,9 +50,7 @@ const useBulletinDispatcher = () => {
         const newBulletin = await window.db.updateBulletinIsEditing({
           id: BulletinIds.Common,
           isEditing: isEditing ? 1 : 0,
-          editStartedAt: isEditing
-            ? new Date()
-            : bulletin?.editStartedAt ?? new Date(),
+          editStartedAt: new Date(),
         });
         console.log(newBulletin.editStartedAt);
         set(bulletinsState(BulletinIds.Common), newBulletin);
