@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
+import DebugLayout from '@/pages/(__debug__)/debug/_components/DebugLayout';
 import { useEffect, useState } from 'react';
-import SampleLayout from '../../_components/SampleLayout';
 
 const EnvPage = () => {
   const [envPath, setEnvPath] = useState('');
@@ -20,7 +20,7 @@ const EnvPage = () => {
   };
 
   return (
-    <SampleLayout>
+    <DebugLayout>
       <div className="flex flex-col space-y-4">
         <div>envPath: {envPath}</div>
         <div>
@@ -31,7 +31,7 @@ const EnvPage = () => {
       </div>
 
       <div className="mt-4 rounded-lg bg-gray-300 p-2">{envData}</div>
-    </SampleLayout>
+    </DebugLayout>
   );
 };
 

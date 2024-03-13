@@ -1,34 +1,28 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
-const links = [
-  '/debug/001-electron-config',
-  '/debug/002-env',
-  '/debug/003-prisma-sqlite',
-  '/debug/004-timer',
-  '/debug/005-suspense',
-  '/bulletin',
-];
-
 const HomePage = () => {
   return (
-    <>
-      <h1 className="m-8 text-3xl">
+    <div className="m-8 flex flex-col items-center space-y-8">
+      <h1 className="text-center text-4xl font-bold">
         Electron React Tailwindcss Shadcn Prisma Boilerplate
       </h1>
 
-      <div className="ml-8">{process.env.NODE_ENV}</div>
+      <div>{process.env.NODE_ENV}</div>
+      <Link to="/debug">
+        <Button variant="secondary" className="w-full justify-start">
+          Debug Room
+        </Button>
+      </Link>
 
-      <div className="m-8 flex flex-col space-y-4 ">
-        {links.map((link) => (
-          <Link key={link} to={link}>
-            <Button variant="default" className="w-full justify-start">
-              {link}
-            </Button>
-          </Link>
-        ))}
-      </div>
-    </>
+      <h2 className="text-center text-xl font-bold">Sample Applications</h2>
+
+      <Link to="/bulletin">
+        <Button variant="default" className="w-full justify-start">
+          Bulletin
+        </Button>
+      </Link>
+    </div>
   );
 };
 

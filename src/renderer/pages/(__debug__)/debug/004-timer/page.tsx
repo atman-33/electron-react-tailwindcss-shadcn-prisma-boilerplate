@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
-import useTimer from '@/pages/debug/004-timer/_hooks/useTimer';
+import DebugLayout from '@/pages/(__debug__)/debug/_components/DebugLayout';
 import { useState } from 'react';
-import SampleLayout from '../../_components/SampleLayout';
+import useTimer from './_hooks/useTimer';
 
 const Timer = () => {
   const { time, isRunning, toggle, reset } = useTimer();
@@ -25,7 +25,7 @@ const TimerPage = () => {
   const [isDisplayed, setIsDisplayed] = useState(true);
 
   return (
-    <SampleLayout>
+    <DebugLayout>
       {isDisplayed && <Timer />}
       <Button
         variant="outline"
@@ -34,7 +34,7 @@ const TimerPage = () => {
       >
         {isDisplayed ? 'Not Displayed' : 'Displayed'}
       </Button>
-    </SampleLayout>
+    </DebugLayout>
   );
 };
 

@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
+import DebugLayout from '@/pages/(__debug__)/debug/_components/DebugLayout';
 import { useEffect, useState } from 'react';
-import SampleLayout from '../../_components/SampleLayout';
 
 const ElectronConfigPage = () => {
   const [configPath, setConfigPath] = useState('');
@@ -27,7 +27,7 @@ const ElectronConfigPage = () => {
   };
 
   return (
-    <SampleLayout>
+    <DebugLayout>
       <div className="flex flex-col space-y-4">
         <div>configPath: {configPath}</div>
         <div className="flex space-x-4">
@@ -55,7 +55,7 @@ const ElectronConfigPage = () => {
       </div>
 
       <div className="mt-4 rounded-lg bg-gray-300 p-2">{dummy}</div>
-    </SampleLayout>
+    </DebugLayout>
   );
 };
 

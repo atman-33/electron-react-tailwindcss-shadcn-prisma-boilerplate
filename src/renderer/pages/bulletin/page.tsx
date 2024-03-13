@@ -11,11 +11,11 @@ import { bulletinSelectors } from '@/features/bulletin/stores/bulletinState';
 import { BulletinIds } from '@/features/bulletin/types';
 import { useBackgroundWorker } from '@/hooks/useBackgroundWorker';
 import { formatDate } from '@/lib/format';
+import Layout from '@/pages/_components/Layout';
 import { envSelectors } from '@/stores/envState';
 import { Suspense, useCallback, useEffect, useState } from 'react';
-import SampleLayout from '../_components/SampleLayout';
 
-const BulleinPage = () => {
+const BulletinPage = () => {
   const [message, setMessage] = useState('');
   const [updatedAt, setUpdatedAt] = useState(new Date());
   const bulletinDispatcher = useBulletinDispatcher();
@@ -79,7 +79,7 @@ const BulleinPage = () => {
   }, [bulletin]);
 
   return (
-    <SampleLayout>
+    <Layout>
       <Suspense
         fallback={
           <div>
@@ -125,8 +125,8 @@ const BulleinPage = () => {
           <div>{`編集開始からの経過時間: ${durationSinceEditStart}`}</div>
         </div>
       </Suspense>
-    </SampleLayout>
+    </Layout>
   );
 };
 
-export default BulleinPage;
+export default BulletinPage;
