@@ -17,9 +17,7 @@ import path from 'path';
 import { bulletinsService } from './api/bulletins/bulletins.service';
 import { UpdateBulletinIsEditingInput } from './api/bulletins/dto/update-bulletin-is-editing-input.dto';
 import { UpsertBulletinInput } from './api/bulletins/dto/upsert-bulletin-input.dto';
-import { CreateDummyInput } from './api/dummies/dto/create-dummy-input.dto';
-import { UpdateDummyInput } from './api/dummies/dto/update-dummy-input.dto';
-import { dummiesService } from './api/dummies/dummies.service';
+import { DummiesController } from './api/dummies/dummies.controller';
 import { config } from './lib/config';
 import { env, envPath } from './lib/env';
 import { closeDB } from './lib/prisma-client';
@@ -182,27 +180,8 @@ app
 // IPC通信用の処理
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 
-ipcMain.handle('db/get-dummies', (event) => {
-  return dummiesService.getDummies();
-});
-
-ipcMain.handle(
-  'db/create-dummy',
-  (event, createDummyInput: CreateDummyInput) => {
-    return dummiesService.createDummy(createDummyInput);
-  },
-);
-
-ipcMain.handle(
-  'db/update-dummy',
-  (event, updateDummyInput: UpdateDummyInput) => {
-    return dummiesService.updateDummy(updateDummyInput);
-  },
-);
-
-ipcMain.handle('db/delete-dummies', (event) => {
-  return dummiesService.deleteDummies();
-});
+const dummiesController = new DummiesController(ipcMain);
+dummiesController.registerHandlers();
 
 ipcMain.handle('config/get-item', (event, key: string) => {
   console.log('config/get-item: ', key);
