@@ -8,7 +8,7 @@ export const useDummies = () => {
    */
   const getDummies = useCallback(async (): Promise<Dummy[]> => {
     try {
-      return await window.db.getDummies();
+      return await window.dbDummies.getDummies();
     } catch (error) {
       throw error;
     }
@@ -20,7 +20,7 @@ export const useDummies = () => {
   const createDummy = useCallback(
     async (createDummyInput: CreateDummyInput): Promise<Dummy> => {
       try {
-        return await window.db.createDummy(createDummyInput);
+        return await window.dbDummies.createDummy(createDummyInput);
       } catch (error) {
         throw error;
       }
@@ -34,7 +34,7 @@ export const useDummies = () => {
   const updateDummy = useCallback(
     async (updateDummyInput: UpdateDummyInput): Promise<Dummy> => {
       try {
-        return await window.db.updateDummy(updateDummyInput);
+        return await window.dbDummies.updateDummy(updateDummyInput);
       } catch (error) {
         throw error;
       }
@@ -47,7 +47,7 @@ export const useDummies = () => {
    */
   const deleteDummies = useCallback(async (): Promise<void> => {
     try {
-      await window.db.deleteDummies();
+      await window.dbDummies.deleteDummies();
     } catch (error) {
       throw error;
     }

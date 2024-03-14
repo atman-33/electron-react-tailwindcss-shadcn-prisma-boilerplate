@@ -17,7 +17,7 @@ const useBulletinDispatcher = () => {
   const reloadBulletins = useRecoilCallback(
     ({ set }) =>
       async () => {
-        const newBulletins = await window.db.getBulletins();
+        const newBulletins = await window.dbBulletins.getBulletins();
         newBulletins?.map((data) => set(bulletinsState(data.id), data));
       },
     [],
@@ -29,7 +29,8 @@ const useBulletinDispatcher = () => {
   const upsertBulletin = useRecoilCallback(
     ({ set }) =>
       async (upsertBulletinInput: UpsertBulletinInput) => {
-        const newBulletin = await window.db.upsertBulletin(upsertBulletinInput);
+        const newBulletin =
+          await window.dbBulletins.upsertBulletin(upsertBulletinInput);
         set(bulletinsState(newBulletin.id), newBulletin);
 
         // 新規作成した場合はbulletinIdsStateに、idを追加
@@ -47,7 +48,7 @@ const useBulletinDispatcher = () => {
   const setIsEditing = useRecoilCallback(
     ({ set }) =>
       async (isEditing: boolean) => {
-        const newBulletin = await window.db.updateBulletinIsEditing({
+        const newBulletin = await window.dbBulletins.updateBulletinIsEditing({
           id: BulletinIds.Common,
           isEditing: isEditing ? 1 : 0,
           editStartedAt: new Date(),

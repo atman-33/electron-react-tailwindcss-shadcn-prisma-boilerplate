@@ -1,5 +1,4 @@
 import { Dummy, PrismaClient } from '../../lib/data-access-db/generated';
-import prismaClient from '../../lib/prisma-client';
 import { CreateDummyInput } from './dto/create-dummy-input.dto';
 import { UpdateDummyInput } from './dto/update-dummy-input.dto';
 
@@ -43,4 +42,4 @@ class DummiesService {
   }
 }
 
-export const dummiesService = new DummiesService(prismaClient);
+export { DummiesService };

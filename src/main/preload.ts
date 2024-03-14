@@ -33,25 +33,26 @@ contextBridge.exposeInMainWorld('electron', electronHandler);
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 // レンダラープロセス通信用のAPI
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
-contextBridge.exposeInMainWorld('db', {
-  // ---- Dummies ---- //
-  getDummies: () => ipcRenderer.invoke('db/get-dummies'),
+contextBridge.exposeInMainWorld('dbDummies', {
+  getDummies: () => ipcRenderer.invoke('db/dummies/get-dummies'),
   createDummy: (createDummyInput: CreateDummyInput) =>
-    ipcRenderer.invoke('db/create-dummy', createDummyInput),
+    ipcRenderer.invoke('db/dummies/create-dummy', createDummyInput),
   updateDummy: (updateDummyInput: UpdateDummyInput) =>
-    ipcRenderer.invoke('db/update-dummy', updateDummyInput),
-  deleteDummies: () => ipcRenderer.invoke('db/delete-dummies'),
+    ipcRenderer.invoke('db/dummies/update-dummy', updateDummyInput),
+  deleteDummies: () => ipcRenderer.invoke('db/dummies/delete-dummies'),
+});
 
-  // ---- Bulletins ---- //
-  getBulletins: () => ipcRenderer.invoke('db/get-bulletins'),
-  getBulletin: (id: number) => ipcRenderer.invoke('db/get-bulletin', id),
+contextBridge.exposeInMainWorld('dbBulletins', {
+  getBulletins: () => ipcRenderer.invoke('db/bulletins/get-bulletins'),
+  getBulletin: (id: number) =>
+    ipcRenderer.invoke('db/bulletins/get-bulletin', id),
   upsertBulletin: (upsertBulletinInput: UpsertBulletinInput) =>
-    ipcRenderer.invoke('db/upsert-bulletin', upsertBulletinInput),
+    ipcRenderer.invoke('db/bulletins/upsert-bulletin', upsertBulletinInput),
   updateBulletinIsEditing: (
     updateBulletinIsEditingInput: UpdateBulletinIsEditingInput,
   ) =>
     ipcRenderer.invoke(
-      'db/update-bulletin-is-editing',
+      'db/bulletins/update-bulletin-is-editing',
       updateBulletinIsEditingInput,
     ),
 });

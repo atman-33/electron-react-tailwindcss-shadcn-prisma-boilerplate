@@ -43,3 +43,22 @@ export default function App() {
   );
 }
 ```
+
+### 4. useRecoilCallback の依存配列をチェック
+
+eslint に、useRecoilCallback の依存配列をチェックするルールを追加
+
+`.eslintrc.json`
+
+```json
+{
+  "rules": {
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': [
+      'warn',
+      {
+        additionalHooks: 'useRecoilCallback',
+      },
+    ],
+  }
+}

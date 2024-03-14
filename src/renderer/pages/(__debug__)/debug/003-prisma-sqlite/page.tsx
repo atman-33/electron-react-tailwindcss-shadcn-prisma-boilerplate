@@ -2,10 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useDummies } from '@/features/dummy/hooks/useDummies';
+import DebugLayout from '@/pages/(__debug__)/debug/_components/DebugLayout';
 import { CreateDummyInput } from '@shared/api/dto';
 import { Dummy } from '@shared/api/models';
 import { useEffect, useState } from 'react';
-import SampleLayout from '../../_components/SampleLayout';
 
 const PrismaSqlitePage = () => {
   const [dbUrl, setdbUrl] = useState('');
@@ -58,7 +58,7 @@ const PrismaSqlitePage = () => {
   };
 
   return (
-    <SampleLayout>
+    <DebugLayout>
       <div className="flex flex-col space-y-4">
         <div>dbUrl: {dbUrl}</div>
         <div>errorMessage: {errorMessage}</div>
@@ -110,7 +110,7 @@ const PrismaSqlitePage = () => {
           </li>
         ))}
       </ul>
-    </SampleLayout>
+    </DebugLayout>
   );
 };
 
