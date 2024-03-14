@@ -1,3 +1,8 @@
+import {
+  Breadcrumb,
+  BreadcrumbLink,
+  BreadcrumbList,
+} from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -12,9 +17,13 @@ const links = [
 const DebugPage = () => {
   return (
     <div className="m-4">
-      <Link to="/">
-        <Button variant="link">← Go back home</Button>
-      </Link>
+      <Breadcrumb className="my-4">
+        <BreadcrumbList>
+          <BreadcrumbLink asChild>
+            <Link to="/">Home</Link>
+          </BreadcrumbLink>
+        </BreadcrumbList>
+      </Breadcrumb>
 
       <div className="flex flex-col space-y-4 ">
         {links.map((link) => (

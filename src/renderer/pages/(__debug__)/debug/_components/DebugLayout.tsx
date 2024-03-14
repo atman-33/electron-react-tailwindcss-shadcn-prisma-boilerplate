@@ -1,20 +1,30 @@
-import { Button } from '@/components/ui/button';
+import {
+  Breadcrumb,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 const DebugLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      <div className="m-4 flex space-x-2">
-        <Link to="/">
-          <Button variant="link">← Go back home</Button>
-        </Link>
-        <Link to="/debug">
-          <Button variant="link">← Go back debug top</Button>
-        </Link>
+    <div className="m-4 flex flex-col space-y-4">
+      <div>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbLink asChild>
+              <Link to="/">Home</Link>
+            </BreadcrumbLink>
+            <BreadcrumbSeparator />
+            <BreadcrumbLink asChild>
+              <Link to="/debug">Debug Top</Link>
+            </BreadcrumbLink>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
-      <div className="m-6">{children}</div>
-    </>
+      <div>{children}</div>
+    </div>
   );
 };
 
