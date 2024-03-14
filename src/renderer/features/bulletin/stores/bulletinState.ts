@@ -18,19 +18,19 @@ const initialDataState = atom<Bulletin[] | null>({
     key: 'bulletin/initialDataState/default',
     get: async () => {
       try {
-        let res = await window.db.getBulletin(BulletinIds.Common);
+        let res = await window.dbBulletins.getBulletin(BulletinIds.Common);
         // console.log('res', res);
 
         // id=BulletinIds.Common のデータが無ければ作成
         if (!res) {
-          res = await window.db.upsertBulletin({
+          res = await window.dbBulletins.upsertBulletin({
             id: BulletinIds.Common,
             message: 'Hello bulletin world!',
             isEditing: 0,
             editStartedAt: new Date(),
           });
         }
-        return await window.db.getBulletins();
+        return await window.dbBulletins.getBulletins();
       } catch (error) {
         if (error instanceof Error) {
           console.log(error);

@@ -14,9 +14,7 @@ import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
 
-import { bulletinsService } from './api/bulletins/bulletins.service';
-import { UpdateBulletinIsEditingInput } from './api/bulletins/dto/update-bulletin-is-editing-input.dto';
-import { UpsertBulletinInput } from './api/bulletins/dto/upsert-bulletin-input.dto';
+import { BulletinsController } from './api/bulletins/bulletins.controller';
 import { DummiesController } from './api/dummies/dummies.controller';
 import { config } from './lib/config';
 import { env, envPath } from './lib/env';
@@ -183,6 +181,9 @@ app
 const dummiesController = new DummiesController(ipcMain);
 dummiesController.registerHandlers();
 
+const bulletinsController = new BulletinsController(ipcMain);
+bulletinsController.registerHandlers();
+
 ipcMain.handle('config/get-item', (event, key: string) => {
   console.log('config/get-item: ', key);
   return config.store.get(key);
@@ -203,31 +204,3 @@ ipcMain.handle('env/get-env', (event) => {
 ipcMain.handle('env/get-env-path', (event) => {
   return envPath;
 });
-
-ipcMain.handle('db/get-bulletins', (event) => {
-  console.log('main ---> get-bulletins');
-  return bulletinsService.getBulletins();
-});
-
-ipcMain.handle('db/get-bulletin', (event, id: number) => {
-  console.log('main ---> get-bulletin');
-  return bulletinsService.getBulletin(id);
-});
-
-ipcMain.handle(
-  'db/upsert-bulletin',
-  (event, upsertBulletinInput: UpsertBulletinInput) => {
-    console.log('main ---> upsert-bulletin');
-    return bulletinsService.upsertBulletin(upsertBulletinInput);
-  },
-);
-
-ipcMain.handle(
-  'db/update-bulletin-is-editing',
-  (event, updateBulletinIsEditingInput: UpdateBulletinIsEditingInput) => {
-    console.log('main ---> update-bulletin-is-editing');
-    return bulletinsService.updateBulletinIsEditing(
-      updateBulletinIsEditingInput,
-    );
-  },
-);

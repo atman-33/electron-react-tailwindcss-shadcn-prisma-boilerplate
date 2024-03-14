@@ -14,13 +14,13 @@ declare global {
   // eslint-disable-next-line no-unused-vars
   interface Window {
     electron: ElectronHandler;
-    db: {
-      // Dummies
+    dbDummies: {
       getDummies: () => Promise<Dummy[]>;
       createDummy: (createDummyInput: CreateDummyInput) => Promise<Dummy>;
       updateDummy: (updateDummyInput: UpdateDummyInput) => Promise<Dummy>;
       deleteDummies: () => Promise<void>;
-      // Bulletins
+    };
+    dbBulletins: {
       getBulletins: () => Promise<Bulletin[] | null>;
       getBulletin: (id: number) => Promise<Bulletin | null>;
       upsertBulletin: (
@@ -30,6 +30,7 @@ declare global {
         updateBulletinIsEditingInput: UpdateBulletinIsEditingInput,
       ) => Promise<Bulletin>;
     };
+
     config: {
       getItem: (key: string) => Promise<any>;
       setItem: (key: string, value: any) => Promise<void>;

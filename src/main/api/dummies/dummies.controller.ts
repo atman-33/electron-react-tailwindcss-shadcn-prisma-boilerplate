@@ -16,10 +16,10 @@ class DummiesController {
   }
 
   registerHandlers() {
-    this.ipcMain.handle('db/get-dummies', this.handleGetDummies);
-    this.ipcMain.handle('db/create-dummy', this.handleCreateDummy);
-    this.ipcMain.handle('db/update-dummy', this.handleUpdateDummy);
-    this.ipcMain.handle('db/delete-dummies', this.handleDeleteDummies);
+    this.ipcMain.handle('db/dummies/get-dummies', this.handleGetDummies);
+    this.ipcMain.handle('db/dummies/create-dummy', this.handleCreateDummy);
+    this.ipcMain.handle('db/dummies/update-dummy', this.handleUpdateDummy);
+    this.ipcMain.handle('db/dummies/delete-dummies', this.handleDeleteDummies);
   }
 
   handleGetDummies = (event: IpcMainInvokeEvent) => {

@@ -1,5 +1,4 @@
 import { Bulletin, PrismaClient } from '../../lib/data-access-db/generated';
-import prismaClient from '../../lib/prisma-client';
 import { UpdateBulletinIsEditingInput } from './dto/update-bulletin-is-editing-input.dto';
 import { UpsertBulletinInput } from './dto/upsert-bulletin-input.dto';
 
@@ -68,4 +67,4 @@ class BulletinsService {
   }
 }
 
-export const bulletinsService = new BulletinsService(prismaClient);
+export { BulletinsService };
